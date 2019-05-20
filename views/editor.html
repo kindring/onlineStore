@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改个人资料</title>
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/head_pc.css">
+    <link rel="stylesheet" href="css/editor_content_pc.css">
+</head>
+<body>
+<header class="head" id="head">
+    <nav class="head_nav">
+        <div class="titles fl">
+            <ul>
+                <li class="lis">首页</li>
+                <li class="lis">页面1</li>
+                <li class="lis">页面2</li>
+                <li class="lis">页面3</li>
+            </ul>
+        </div>
+        <div class="userBox fr" id="user">
+            <ul>
+                <li class="lis">联系客服</li>
+                <li class="lis">历史记录</li>
+                <li class="lis">购物车</li>
+                <li class="lis">
+                    <a :href="ahref" :title="user_name">个人中心</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<div class="content">
+    <div class="uploadFile">
+        <div class="file_box">
+            <input type="file" class="file" id="file">
+            <span class="tips">把图片拖动到这里或者点击此处选择头像文件</span>
+        </div>
+        <div class="ctp" id="ctp">
+            <img src="imgs/0.png" id="img" alt="上传图片开始预览">
+        </div>
+    </div>
+    <div class="uploadMsg">
+        <label for="user_name" class="label">
+            用户名:
+            <input type="text" placeholder="用户名称" id="user_name" name="user_name">
+        </label>
+        <label for="date" class="label">
+            生日:
+            <input type="date" id="date" name="date">
+        </label>
+        <label for="msg" class="user_msg">
+            <h3>个人简介:</h3>
+            <textarea id="brief" name="msg" id="msg" cols="30" rows="10" placeholder="在此输入你想要的简介"></textarea>
+        </label>
+        <span class="btn" id="save">
+            保存信息
+        </span>
+    </div>
+
+</div>
+<script>
+    let btn=document.getElementById("save");
+    let filei=document.getElementById('file');
+    let img=document.getElementById('img');
+    let ctp = document.getElementById('ctp');
+    let brief = document.getElementById('brief');
+    let date = document.getElementById('date');
+    let user_name = document.getElementById('user_name');
+    function newXml(){
+        if(window.XMLHttpRequest){
+            return new XMLHttpRequest();
+        }else{
+            return new ActiveXObject("Microsoft.XMLHTTP");
+        }
+    }
+    btn.onclick=function(){
+        console.log("保存信息");
+        save();
+    };
+    filei.onchange=function(e) {
+        let f = filei.files[0];
+        let reader = new FileReader();
+        if (!/image\/\w+/.test(f.type)) {
+            //图片文件的type值为image/png或image/jpg
+            alert("文件必须为图片！");
+            return false;
+        }
+        reader.addEventListener("load", function () {
+            img.style.display="block";
+            img.src = reader.result;
+            ctp.style.opacity="1";
+
+        }, false);
+        if (f) {
+            reader.readAsDataURL(f);
+        }
+    };
+    function save(){
+        let file=filei.files[0];
+        console.log(date.value);
+        console.log(brief.value);
+        console.log(user_name.value);
+        let xml=newXml();
+        let formData = new FormData();
+        if (file) {
+            formData.append("file", file);
+        }
+        if(user_name.value){
+            formData.append("name",user_name.value);
+        }
+        if(date.value){
+            formData.append("birthday",date.value);
+        }
+        if(brief.value){
+            formData.append("brief",brief.value);
+        }
+        xml.open("post","/upload?pid=",true);
+        xml.onload = function () {
+            let data = xml.response;    //得到返回值
+            console.log(data)
+        };
+        xml.send(formData);
+    }
+</script>
+</body>
+</html>

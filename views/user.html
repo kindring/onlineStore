@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/head_pc.css">
+    <link rel="stylesheet" href="css/user_content.css">
+    <link rel="stylesheet" href="css/user_car.css">
+    <script src="js/vue.js"></script>
+</head>
+<body>
+<header class="head" id="head">
+    <nav class="head_nav">
+        <div class="titles fl">
+            <ul>
+                <li class="lis">首页</li>
+                <li class="lis">页面1</li>
+                <li class="lis">页面2</li>
+                <li class="lis">页面3</li>
+            </ul>
+        </div>
+        <div class="userBox fr" id="user">
+            <ul>
+                <li class="lis">联系客服</li>
+                <li class="lis">历史记录</li>
+                <li class="lis">购物车</li>
+                <li class="lis">
+                    <a :href="ahref" :title="user_name">个人中心</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<div class="content mt20" id="app">
+    <div class="fl leftBox">
+        <div class="user_details fl" id="use">
+            <div class="data_box">
+                <div class="bg">
+                    <img src="imgs/0.png" alt="背景图片加载中">
+                </div>
+                <div class="data">
+                    <div class="header_img fl">
+                        <img src="/header?pid={{user.pid}}" alt="头像加载失败">
+                    </div>
+                    <div class="user_name">
+                        <span>{{user.name}}</span>
+                    </div>
+                    <div class="editor">
+                        <a href="/editor/{{user.pid}}?{{user.token}}">编辑</a>
+                    </div>
+                    <div class="data_v">
+                        <span class="list">
+                            <span class="title">金额</span>
+                            <span class="number">{{user.money}}</span>
+                        </span>
+                        <span class="list">
+                            <span class="title">已购数量</span>
+                            <span class="number">{{user.payNum}}</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="notice mt20 fl" id="notice">
+            <h3>公告栏</h3>
+            <div class="notice_msg">
+                <p>{{user.notice_msg}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="control" id="control">
+        <nav class="me">
+            <ul>
+                <li class="lis on">购物车</li>
+                <li class="lis">我的订单</li>
+                <li class="lis">我的信息</li>
+                <li class="lis">历史记录</li>
+            </ul>
+        </nav>
+        <div class="details">
+            <compoent :is="component"></compoent>
+        </div>
+    </div>
+</div>
+<template id="car">
+    <div class="det">
+        <div class="cars">
+            <ul>
+                <li v-for="(item,i) in car_list" class="lis" @click="sele(item)">
+                    <div class="msg">
+                        <div class="cover">
+                            <img :src="item.cover" alt="图片无法加载">
+                        </div>
+                        <div class="name" v-text="item.name">
+
+                        </div>
+                        <div class="brief">
+                            <p v-text="item.describe"></p>
+                        </div>
+                        <div class="money">
+                            <div class="old">加入时价格: <span v-text="item.old_money"></span></div>
+                            <div class="now">当前价格: <span v-text="item.now_money"></span></div>
+                        </div>
+                        <div :class="{
+                            check:true,
+                            on:item.flag
+                        }">
+                            <div class="ch"></div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="btn_box">
+            <div class="nav">
+                <div class="btn prev" @click="prev_page"><</div>
+                <div class="btn next" @click="next_page">></div>
+            </div>
+            <span class="btn del">删除</span>
+            <span class="btn settle">结算</span>
+        </div>
+    </div>
+</template>
+<template id="order">
+    <div class="det">
+        <div class="cars">
+            <ul>
+                <li v-for="(item,i) in car_list" class="lis" @click="sele(item)">
+                    <div class="msg">
+                        <div class="cover">
+                            <img :src="item.cover" alt="图片无法加载">
+                        </div>
+                        <div class="name" v-text="item.name">
+
+                        </div>
+                        <div class="brief">
+                            <p v-text="item.describe"></p>
+                        </div>
+                        <div class="money">
+                            <div class="old">加入时价格: <span v-text="item.old_money"></span></div>
+                            <div class="now">当前价格: <span v-text="item.now_money"></span></div>
+                        </div>
+                        <div :class="{
+                            check:true,
+                            on:item.flag
+                        }">
+                            <div class="ch"></div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="btn_box">
+            <div class="nav">
+                <div class="btn prev" @click="prev_page"><</div>
+                <div class="btn next" @click="next_page">></div>
+            </div>
+            <span class="btn del">删除</span>
+            <span class="btn settle">结算</span>
+        </div>
+    </div>
+</template>
+<script>
+    Vue.config.devtools = true;
+    Vue.component('car',{
+        template:'#car',
+        data:function(){
+            let data={
+                car_list:null,
+                page_num:0,
+                pageAll:[
+                    [
+                        {
+                            goods_id:"33060155",
+                            name:"大棒子",
+                            describe:"这个棒子,用起来非常安全卫生,不仅卫生还特别有感觉,另一个优点就是粗这个棒子,用起来非常安全卫生,不仅卫生还特别有感觉,另一个优点就是粗",
+                            now_money:"45.5",
+                            old_money:"52.4",
+                            flag:false,
+                            cover:"imgs/0.png",
+                        },
+                        {
+                            goods_id:"33060155",
+                            name:"大棒子2",
+                            describe:"测试数据二号",
+                            now_money:"45.5",
+                            old_money:"52.4",
+                            flag:false,
+                            cover:"imgs/2.png",
+                        },
+                        {
+                            goods_id:"33060155",
+                            name:"大棒子3",
+                            describe:"一个非常非常大的大棒子",
+                            now_money:"45.5",
+                            old_money:"52.4",
+                            flag:false,
+                            cover:"imgs/5.png",
+                        },
+                        {
+                            goods_id:"33060155",
+                            name:"大棒子4",
+                            describe:"这个棒子,用起来非常非常",
+                            now_money:"45.5",
+                            old_money:"52.4",
+                            flag:false,
+                            cover:"imgs/0.png",
+                        },
+                        {
+                            goods_id:"33060155",
+                            name:"大棒子5根据",
+                            describe:"这个棒子,用起来非常非常非常",
+                            now_money:"45.5",
+                            old_money:"52.4",
+                            flag:false,
+                            cover:"imgs/3.png",
+                        },
+                        {
+                            goods_id:"33060155",
+                            name:"大棒子6",
+                            describe:"这个棒子,用起来非常非常非常非常非常非常",
+                            now_money:"15.5",
+                            old_money:"2.4",
+                            flag:false,
+                            cover:"imgs/7.png",
+                        }
+                    ],[
+                        {
+                            goods_id:"33060155",
+                            name:"商品",
+                            describe:"这个棒子,用起来非常安全卫生,不仅卫生还特别有感觉,另一个优点就是粗这个棒子,用起来非常安全卫生,不仅卫生还特别有感觉,另一个优点就是粗",
+                            now_money:"1425.5",
+                            old_money:"152.4",
+                            flag:false,
+                            cover:"imgs/0.png",
+                        },
+                        {
+                            goods_id:"33060155",
+                            name:"大棒子2",
+                            describe:"测试数据二号",
+                            now_money:"45.5",
+                            old_money:"52.4",
+                            flag:false,
+                            cover:"imgs/2.png",
+                        },
+                        {
+                            goods_id:"33060155",
+                            name:"大棒子3",
+                            describe:"一个非常非常大的大棒子",
+                            now_money:"45.5",
+                            old_money:"52.4",
+                            flag:false,
+                            cover:"imgs/5.png",
+                        },
+                        {
+                            goods_id:"33060155",
+                            name:"大棒子4",
+                            describe:"这个棒子,用起来非常非常",
+                            now_money:"45.5",
+                            old_money:"52.4",
+                            flag:false,
+                            cover:"imgs/0.png",
+                        },
+                        {
+                            goods_id:"33060155",
+                            name:"大棒子5根据",
+                            describe:"这个棒子,用起来非常非常非常",
+                            now_money:"45.5",
+                            old_money:"52.4",
+                            flag:false,
+                            cover:"imgs/3.png",
+                        },
+                        {
+                            goods_id:"33060155",
+                            name:"大棒子6",
+                            describe:"这个棒子,用起来非常非常非常非常非常非常",
+                            now_money:"15.5",
+                            old_money:"2.4",
+                            flag:false,
+                            cover:"imgs/7.png",
+                        }
+                    ],[
+                        {
+                            goods_id:"33060155",
+                            name:"大棒子",
+                            describe:"这个棒子,用起来非常安全卫生,不仅卫生还特别有感觉,另一个优点就是粗这个棒子,用起来非常安全卫生,不仅卫生还特别有感觉,另一个优点就是粗",
+                            now_money:"45.5",
+                            old_money:"52.4",
+                            flag:false,
+                            cover:"imgs/0.png",
+                        },
+                        {
+                            goods_id:"33060155",
+                            name:"大棒子2",
+                            describe:"测试数据二号",
+                            now_money:"45.5",
+                            old_money:"52.4",
+                            flag:false,
+                            cover:"imgs/2.png",
+                        },
+                        {
+                            goods_id:"33060155",
+                            name:"大棒子3",
+                            describe:"一个非常非常大的大棒子",
+                            now_money:"45.5",
+                            old_money:"52.4",
+                            flag:false,
+                            cover:"imgs/5.png",
+                        },
+                        {
+                            goods_id:"33060155",
+                            name:"大棒子4",
+                            describe:"这个棒子,用起来非常非常",
+                            now_money:"45.5",
+                            old_money:"52.4",
+                            flag:false,
+                            cover:"imgs/0.png",
+                        },
+                        {
+                            goods_id:"33060155",
+                            name:"大棒子5根据",
+                            describe:"这个棒子,用起来非常非常非常",
+                            now_money:"45.5",
+                            old_money:"52.4",
+                            flag:false,
+                            cover:"imgs/3.png",
+                        },
+                        {
+                            goods_id:"33060155",
+                            name:"大棒子6",
+                            describe:"这个棒子,用起来非常非常非常非常非常非常",
+                            now_money:"15.5",
+                            old_money:"2.4",
+                            flag:false,
+                            cover:"imgs/7.png",
+                        }
+                    ]
+                ]
+            };
+            data.car_list=data.pageAll[data.page_num];
+            return data;
+        },
+        methods:{
+            sele(item){
+                item.flag=!item.flag;
+                if(item.flag){
+                    addSelect()
+                }
+            },
+            next_page(){
+                this.page_num++;
+                if(this.pageAll[this.page_num]){
+                    this.car_list=this.pageAll[this.page_num];
+                }else{
+                    this.page_num--;
+                    alert("没有更多数据了");
+                }
+            },
+            prev_page(){
+                this.page_num--;
+                if(this.pageAll[this.page_num]){
+                    this.car_list=this.pageAll[this.page_num];
+                }else{
+                    this.page_num++;
+                    alert("已经是第一页");
+                }
+            }
+        }
+    });
+    let vm=new Vue({
+        el:"#control",
+        data:{
+            component:"car",
+            car_select:[],
+        },
+        methods:{
+
+        }
+    });
+    function addSelect(){
+
+    }
+</script>
+</body>
+</html>

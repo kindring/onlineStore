@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>成为数码宝贝会员</title>
+    <script src="js/vue.js"></script>
+    <style>
+        *{
+        margin:0;
+        padding:0;
+        }
+    body{
+        background-color:darkgrey;
+    }
+    #app{
+        width:900px;
+        height:570px;
+        margin:30px auto 20px;
+        /*无效!*border:10px solid #7bd071 #d05c4d #7bd071 #d05c4d;*!*/
+        border-left:10px solid darkgrey;
+        border-right:10px solid #d05c4d;
+        border-top:10px solid darkgrey;
+        border-bottom:10px solid #4e22d0;
+        border-radius:90% 0px 0px 0px;
+        background-color: #e8eae4;
+        box-shadow: 7px 10px 15px 5px grey;
+        position:relative;
+        transition:all 0.3s;
+    }
+    .content{
+        width:636px;
+        height:452px;
+        /*min-width:600px;*/
+        /*min-height:400px;*/
+        /*border:1px solid red;*/
+        position:absolute;
+        bottom:0px;
+        right:0px;
+    }
+    .h1{
+        font-size:50px;
+        padding-left:20px;
+        margin-top:-10px;
+    }
+    .nav{
+        width:100%;
+        min-height:35px;
+    }
+    .nav .l{
+        border-right:1px solid black;
+    }
+    .nav .r{
+        border-left:1px solid black;
+    }
+
+
+    .nav .select{
+        display:block;
+        /*635*/
+        width:316px;
+        /*height:40px;*/
+        line-height: 40px;
+        float:left;
+        text-align: center;
+        padding:2px 0;
+        font: 30px/100% Arial, Helvetica, sans-serif;
+        text-shadow: 0 2px 5px rgba(23, 23, 23, 0.2);
+        border-bottom:1px solid #000;
+        cursor:pointer;
+    }
+    .nav .on{
+        background-color: #fffcd0;
+        color:#3cbbd8;
+        border-left:0px;
+        border-right:0px;
+        border-bottom:3px solid #17d071;
+    }
+    .nav .select:hover{
+        background-color: rgba(252, 255, 92, 0.5);
+        color: #049dcf;
+    }
+    .btn{
+        display: inline-block;
+        zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+        *display: inline;
+        vertical-align: baseline;
+        margin: 0 2px;
+        outline: none;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        /*font: 14px/100% Arial, Helvetica, sans-serif;*/
+        padding: .5em 2em .55em;
+        text-shadow: 0 2px 5px rgba(23, 23, 23, 0.3);
+        -webkit-border-radius: .5em;
+        -moz-border-radius: .5em;
+        border-radius: .5em;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    }
+
+    .ocx{
+        width:634px;
+        height:357px;
+        padding:5px;
+        /*border:1px solid black;*/
+        clear:both;
+    }
+    .fieldset{
+        width:310px;
+        height:200px;
+        border:1px solid black;
+        writing-mode:lr-tb;
+    }
+    .lengend{
+        /*width:30px;*/
+        /*height:auto;*/
+        font-size:24px;
+        color: #c77243;
+        margin-left:70px;
+
+
+    }
+    .fieldset .span{
+        font-size:20px;
+
+    }
+    .put{
+        font-size:24px;
+        float:right;
+        height:210px;
+        margin-right:50px;
+    }
+    .input{
+        width:230px;
+        height:30px;
+        font-size:18px;
+        border-radius:5px;
+        margin-right:-41.184px;
+        box-shadow: 4px 4px 14px 2px cornflowerblue;
+    }
+    .put .input{
+        float:left;
+        margin-left:-41.184px;
+        margin-right:7px;
+    }
+    .tips{
+        display: block;
+        width:300px;
+        height:30px;
+        line-height:30px;
+        margin:10px auto;
+        font-size:16px;
+        clear: both;
+        color:red;
+    }
+
+    .control {
+        height: 170px;
+        position:relative;
+        top:-50px;
+        border-color:red;
+    }
+    .control .lengend{
+        margin-top:-100px;
+    }
+    .control .btn {
+        width: 140px;
+        height: 30px;
+        text-align: center;
+        font-size:18px;
+        /*background-color:greenyellow;*/
+        /*border:2px solid red;*/
+        margin:5px;
+    }
+    .control .login_btn{
+        background-color:#86ce2f;
+        float:right;
+        margin-right:-77px;
+        margin-top:-7px;
+        box-shadow:3px 4px 0px 0px rgba(00,66,00,0.55);
+    }
+    .control .reset_btn{
+        float:left;
+        width:80px;
+        border-radius:20px;
+        margin-left:-70px;
+        margin-right:200px;
+        background-color:lightskyblue;
+        box-shadow:3px 4px 0px 0px rgba(00,00,44,0.55)
+    }
+
+    .regist{
+        font-size:24px;
+        float:left;
+        height:180px;
+        margin-left:50px;
+    }
+    .regist .span {
+        float: left;
+        margin-top:5px;
+        margin-left:60px;
+
+    }
+    .regist .input{
+        float:right;
+        margin-left:7px;
+        box-shadow: 4px 4px 14px 2px cornflowerblue;
+    }
+    .password_box {
+        padding-top:20px;
+        font-size: 24px;
+        float: right;
+        height: 180px;
+        margin-right: 5px;
+        position: relative;
+        top:-40px;
+
+    }
+    .password_box .span {
+        float: left;
+    }
+    .password_box .input{
+        float:left;
+        margin-left:-41.184px;
+        margin-right:7px;
+    }
+    #register_now{
+        position:absolute;
+        background-color:lawngreen;
+        left:90px;
+        bottom:70px;
+    }
+    .uName{
+        color: #ff57c2;
+    }
+    .fl{
+        float:left;
+    }
+
+
+        .v-enter,.v-leave{
+            opacity:0;
+            transform:translate(50px,30px)
+        }
+        .v-enter-active,.v-leave-active{
+            transition:all 0.5s ease;
+        }
+
+        #log{
+            width:100%;
+            height:100%;
+            position:absolute;
+        }
+        #log .tips{
+            width:800px;
+            height:540px;
+            background-color: #d0d0d0;
+            z-index:99;
+            margin-top:25%;
+            margin-left:50%;
+            transform:translate(-50%,-50%);
+            text-align: center;
+            padding:20px;
+        }
+    </style>
+</head>
+
+<body>
+<div id="log" v-if="flag">
+    <div class="tips">
+        <h1>登录成功</h1>
+        <h3>即将开始自动跳转 将在<span class="timer">{{num}}</span>秒后自动跳转至页面</h3>
+        <a :href="a">如果没有自动跳转点击此处手动跳转</a>
+    </div>
+</div>
+<div id="app" v-if="flag">
+    <div class="content">
+        <h1 class="h1">欢迎</h1>
+        <!--<span class="btn" id="try" title="try" @click="showmsgbox">立即试用</span>-->
+        <hr/>
+        <nav class="nav">
+                <span :class="{
+                select:true,
+                l:true,
+                on:on_flag
+                }" @click="comname='login';on_flag=true">登陆</span>
+            <span :class="{
+                select:true,
+                r:true,
+                on:!on_flag
+                }" @click="comname='register';on_flag=false">注册</span>
+        </nav>
+        <transition mode="out-in">
+            <component :is="comname"></component>
+        </transition>
+
+    </div>
+    <!--<input type="range" id="range" min="0" max="100" v-model="val" onchange="fn()">-->
+    <!--<span>当前音量为{{val}}</span>-->
+</div>
+
+<!--页脚-->
+<style>
+    #bottom{
+        width:100%;
+        height:280px;
+        background-color: #f6f9fa;
+        position:absolute;
+        bottom: 0;
+        z-index:5;
+    }
+    #bottom .footer{
+        max-width:1200px;
+        margin:0 auto;
+        max-height:280px;
+        padding:10px 5px 0px;
+    }
+</style>
+<footer id="footerApp">
+
+</footer>
+<template id="publicBottom">
+    <div id="bottom">
+        <div class="footer"></div>
+    </div>
+</template>
+<script>
+    //页脚的vm实例
+    let footer_vm=new Vue({
+        el:"#footerApp",
+        data:{},
+        methods:{},
+        components:{
+            'bottom':{
+                template:"#publicBottom"
+            }
+        }
+    });//页脚的组件
+</script>
+
+
+<template id="logintemplate">
+    <div class="ocx login">
+        <form action="">
+            <!--信息填写-->
+            <fieldset class="fieldset put">
+                <legend class="lengend">登陆</legend>
+                <label for="email" class="name_label">
+                    <span class="span">邮箱</span>
+                    <input type="email" placeholder="你注册的邮箱" v-model="email" @blur.prevent="blur('email')" class="input" name="email">
+                </label>
+                <span class="tips" v-text="email_tips"></span>
+                <label for="password">
+                    <span class="span">密码</span>
+                    <input type="password" placeholder="密码" v-model="password" @blur.prevent="blur('password')" class="input" id="password" name="password">
+                </label>
+                <span class="tips" v-text="password_tips"></span>
+            </fieldset>
+            <!--用户操作-->
+            <fieldset class="fieldset control">
+                <legend class="lengend">控件</legend>
+                <span class="btn reset_btn" @click="resetting">重置</span>
+                <span class="btn login_btn" @click="login">登陆</span>
+            </fieldset>
+        </form>
+    </div>
+</template>
+<template id="registertemplate">
+<div class="ocx register">
+        <form action="" name="register">
+            <!--基本信息-->
+            <fieldset class="fieldset regist">
+                <legend class="lengend">基本信息</legend>
+                <!--用户名-->
+                <label for="username" class="name_label">
+                    <span class="span">昵称:</span>
+                    <input type="text" placeholder="仅为中文以及字母数字字符" class="input" v-model="name" @blur.prevent="blur('name')" id="username" name="username">
+                </label>
+                <span class="tips" v-text="name_tips"></span>
+
+                <!--邮箱-->
+                <label for="email" class="email_label">
+                    <span class="span">邮箱:</span>
+                    <input type="email" @blur.prevent="blur('email')" v-model="email" placeholder="你注册的邮箱"  class="input" id="email" name="email">
+                </label>
+                <span class="tips" v-text="email_tips"></span>
+            </fieldset>
+            <!--密码区域-->
+            <fieldset class="fieldset password_box">
+                <legend class="lengend">密码板块</legend>
+                <!--输入密码-->
+                <label for="regis_password">
+                    <input type="password" @blur.prevent="blur('password')" v-model="password" placeholder="密码" class="input" name="regis_password" id="regis_password">
+                    <span class="span">密码</span>
+                </label>
+                <span class="tips"  v-text="password_tips"></span>
+                <!--确认密码-->
+                <label for="repeat_password">
+                    <input type="password" class="input"  @blur.prevent="blur('password2')" v-model="password2" name="repeat_password" id="repeat_password" placeholder="确认密码">
+                    <span class="span" >确认密码</span>
+                </label>
+                <span class="tips" v-text="password2_tips"></span>
+            </fieldset>
+            <span class="btn" id="register_now" @click="register">立即注册</span>
+        </form>
+    </div>
+</template>
+<script>
+        Vue.config.devtools = true;
+        let xmlHttp,user;
+        let href=document.referrer;
+        if(href===window.location.href){
+            href="/"
+        }
+        if(window.XMLHttpRequest){
+        xmlHttp=new XMLHttpRequest();
+        }else{
+        xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }//获取xml
+        Vue.component('login',{
+            template:"#logintemplate",
+            data:function(){
+                let obj={
+                    email:'',
+                    email_tips:'',
+                    password:'',
+                    password_tips:'',
+                };
+                return obj;
+            },
+            methods:{
+                login(){
+                    if(!check("email",this.email)){
+                        this.email_tips="邮箱格式不正确";
+                        return false;
+                    }
+                    if(!check("password",this.password)){
+                        this.password_tips="密码格式不正确";
+                        return false;
+                    }
+                    alert("ok,即将注册");
+                    login({
+                        email:this.email,
+                        password:this.password,
+                    },function(){
+
+                    })
+                },
+                blur(filed){
+                    switch(filed){
+                            case("email"):
+                                if(check("email",this.email)){
+                                    this.email_tips="";
+                                }else{
+                                    this.email_tips="邮箱格式不正确";
+                                }
+                                break;
+                            case("password"):
+                                if(check("password",this.password)){
+                                    this.password_tips="";
+                                }else{
+                                    this.password_tips="密码格式不正确";
+                                }
+                                break;
+
+                        }
+
+                },
+                resetting(){
+                    this.email_tips="";
+                    this.password_tips="";
+                    this.email="";
+                    this.password="";
+                }
+
+            }
+        });
+        Vue.component('register',{
+           template:"#registertemplate",
+            data:function(){
+               let obj={
+                   name:"",
+                   name_tips:"",
+                   email:"",
+                   email_tips:"",
+                   password:"",
+                   password_tips:"",
+                   password2:"",
+                   password2_tips:""
+               };
+               return obj;
+            },
+            methods:{
+               register(){
+                   if(!check("name",this.name||this.name.length===0)){
+                       return this.name_tips="名称中不能含有非法字符或者为空";
+                   }
+                   if(!check("email",this.email)){
+                       return this.email_tips="邮箱格式不正确";
+                   }
+                   if(!check("password",this.password)){
+                       return this.password_tips="密码的格式不正确";
+                   }
+                   if(this.password!==this.password2){
+                       return this.password2_tips="两次密码的格式不正确";
+                   }
+                   alert("ok,即将开始注册");
+                   let obj={
+                       name:this.name,
+                       email:this.email,
+                       password:this.password,
+                   };
+                   register(obj,function(){
+
+                   })
+               },
+               blur(filed){
+                   switch(filed){
+                   case("email"):
+                       if(check("email",this.email)){
+                           this.email_tips="";
+                       }else{
+                           console.log(123);
+                           this.email_tips="邮箱格式不正确";
+                       }
+                       break;
+                   case("password"):
+                       if(check("password",this.password)){
+                           this.password_tips="";
+                       }else{
+                           this.password_tips="密码格式不正确";
+                       }
+                       break;
+                   case("name"):
+                       if(!check("name",this.name)||this.name===0){
+                           this.name_tips="名称不能有特殊字符,并且必须要填写";
+                       }else{
+                           this.name_tips="";
+                       }
+                       break;
+                   case("password2"):
+                       if(this.password!==this.password2){
+                           this.password2_tips="两次密码不一致";
+                       }else{
+                           this.password2_tips=""
+                       }
+                       break;
+                   }
+               }
+            }
+        });
+        var vm=new Vue({
+            el:'#app',
+            data:{
+                on_flag:true,
+                flag:true,
+                comname:'login'
+            },
+            methods:{
+                login_check_email(){
+                    var reg=new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+                    var value=this.login.email;
+                    if(!reg.test(value)){
+                        this.login.email_tips="邮箱格式不正确";
+                        this.login.emailflag=false;
+                    }else{
+                        this.login.email_tips='';
+                        this.login.emailflag=true;
+                    }
+                },
+                login_check_password(){
+                    var passwordRe=/[0-9a-z]{5,12}/i;
+                    var value=this.login.password;
+                    if(!passwordRe.test(value)||value.length>12){
+                        this.login.password_tips='密码应是数字或者字母,长度为5到12位';
+                        this.login.passwordflag=false;
+                    }else{
+                        this.login.password_tips='';
+                        this.login.passwordflag=true;
+                    }
+                },
+                checkname(){
+                    if(this.register.username==''){
+                        this.register.nametips='名称不能为空'
+                        this.register.nameflag=false;
+                    }else if(this.register.username.length>12){
+                        this.register.nametips="名称字符过长"
+                        this.register.nameflag=false;
+                    }else{
+                        this.register.nametips='';
+                        this.register.nameflag=true;
+                    }
+                },
+                checkemail(){
+                    var reg=new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+                    var value=this.register.Email;
+                    if(!reg.test(value)){
+                        this.register.emailtips="邮箱格式不正确";
+                        this.register.emailflag=false;
+                    }else{
+                        this.register.emailtips='';
+                        this.register.emailflag=true;
+                    }
+                },
+                checkpassword(){
+                    var passwordRe=/[0-9a-z]{5,12}/i;
+                    var value=this.register.password;
+                    if(!passwordRe.test(value)||value.length>12){
+                        this.register.passwordtips='密码应是数字或者字母,长度为5到12位';
+                        this.register.passwordflag=false;
+                    }else{
+                        this.register.passwordtips='';
+                        this.register.passwordflag=true;
+                    }
+                },
+                checkconfirm(){
+                    if(this.register.password==this.register.confirm){
+                        this.register.confirmtips='';
+                        this.register.confirmflag=true;
+                    }else{
+                        this.register.confirmtips='两次密码不一致,请检查';
+                        this.register.confirmflag=false;
+                    }
+                },
+                logup(){
+
+                },
+                logIn(){
+
+                },
+
+
+            }
+        });
+        var log_vm=new Vue({
+            el:"#log",
+            data:{
+                flag:false,
+                num:5,
+                a:'#'
+            }
+        });
+        function check(fileds,value,that){
+            //邮箱正则
+            value=value.toString();
+            let email_reg=new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+            let password_reg=/[0-9a-z]{5,16}/i;//密码正则
+            let name_reg=new RegExp("[^a-zA-Z0-9\_\u4e00-\u9fa5]{1,9}","i");//异常字符检查
+            let number_reg=/^-?[1-9]\d*$/;//数字字段检查
+            let this_bo=false;//数据合法性标识合法返回true,不合法返回false
+            switch (fileds){
+                case "user_id":
+                    if(!number_reg.test(value)){
+                        this_bo=false;
+                    }else{
+                        this_bo=true;
+                    }
+                    break;
+                case "id":
+                    if(!number_reg.test(value)){
+                        this_bo=true
+                    }else{
+                        this_bo=false;
+                    };
+                    break;
+                case "user_email":
+                    if(email_reg.test(value)){
+                        this_bo=true;
+                    }else{
+                        this_bo=false;
+                    }
+                    break;
+                case "email":
+                    if(email_reg.test(value)){
+                        this_bo=true;
+                    }else{
+                        this_bo=false;
+                    }
+                    break;
+                case "password":
+                    if(password_reg.test(value)){
+                        this_bo=true;
+                    } else{
+                        this_bo=false;
+                    }
+                    break;
+                case "name":
+                    if(!name_reg.test(value)){
+                        this_bo=true;
+                    }else{
+                        this_bo=false;
+                    }
+                    break;
+                case "user_name":
+                    if(!name_reg.test(value)){
+                        this_bo=true;
+                    }else{
+                        this_bo=false;
+                    }
+                    break;
+                case "identity":
+                    if(!number_reg.test(value)){
+                        this_bo=false;
+                    }else{
+                        this_bo=true;
+                    }
+                    break;
+                case "banner":
+                    if(!name_reg.test(value)){
+                        this_bo=true;
+                    }else{
+                        this_bo=false;
+                    }
+                    break;
+                case "header":
+                    this_bo=true;
+                    break;
+                case "header_url":
+                    this_bo=true;
+                    break;
+                default :
+                    console.log(`该字段我们这里没有收录呢!亲---\n查询的字段:${fileds}\n该字段需要查询的数据:${value}`);
+                    break;
+            }
+            return this_bo;
+        };//匹配验证字符非法字符
+        function blur(fileds,value,tips){
+            switch(fileds){
+                case("email"):
+                    if(check("email",value)){
+                        tips="";
+                    }else{
+                        tips="邮箱格式不正确";
+                    }
+                    break;
+                case("password"):
+                    if(check("password",value)){
+                        tips="";
+                    }else{
+                        tips="密码格式不正确";
+                    }
+                    break;
+                case("name"):
+                    if(check("name",value)){
+                        tips="";
+                    }else{
+                        tips="名称不能有特殊字符";
+                    }
+            }
+        }
+        function register(json,callback){
+            if(!json.name||!json.password||!json.email){
+                return console.log("数据缺失,无法进行注册");
+            }
+            if(!check("name",json.name)||!check("email",json.email)||!check("password",json.password)){
+                return alert("数据格式错误请检查");
+            }
+            json=JSON.stringify(json);
+            xmlHttp.open('POST','register',true);
+            xmlHttp.send(json);
+            xmlHttp.onreadystatechange=function(){
+                if(xmlHttp.status===200&&xmlHttp.readyState===4){
+                    let response=JSON.parse(xmlHttp.response);
+                    console.log(response);
+                }
+            }
+
+
+        }
+        function login(json,callback){
+            if(!json.email||!json.password){
+                return console.log("数据异常无法注册");
+            }
+            if(!check("email",json.email)||!check("password",json.password)){
+                return console.log("数据格式错误请检查");
+            };
+            xmlHttp.open("POST",'login',true);
+            xmlHttp.send(JSON.stringify({
+                email:json.email,
+                password:json.password
+            }));
+            xmlHttp.onreadystatechange=function(){
+                if(xmlHttp.status===200&&xmlHttp.readyState===4){
+                    let response=JSON.parse(xmlHttp.response);
+                    if(response.errCode){
+                        return alert(response.describe)
+                    }
+                    vm.flag=false;
+                    log_vm.flag=true;
+                    console.log(document.href);
+                    console.log(response);
+                    if(window.localStorage){
+                        console.log("保持本地");
+                        localStorage.u=JSON.stringify(response);
+                    }
+                    log_vm.a=href;
+                    console.log(response);
+                    let timer=setInterval(function(){
+                        log_vm.num--;
+                        if(log_vm.num<=0){
+                            clearInterval(timer);
+                            timer=null;
+                            if(window.localStorage){
+                                console.log("保持本地");
+                                console.log(response);
+                               localStorage.u=JSON.stringify(response);
+                            }
+                            window.location.href=href;
+                        }
+                    },1000);
+                }
+            }
+
+        }
+
+
+        function local(json){
+            if(!window.localStorage){
+                let str=JSON.stringify(json);
+                window.localStorage=str;
+                alert("浏览器支持localstorage");
+                return  false;
+            }else{
+                console.log(window.localStorage);
+                console.log("保存token");
+                let str=JSON.stringify(json);
+               window.localStorage=str;
+            }
+        }
+    </script>
+
+</body>
+</html>

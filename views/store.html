@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Oline商城</title>
+    <script src="js/vue.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="imgs/icon/main.png">
+    <style>
+        #body{
+            position:relative;
+            width:1200px;
+            height:auto;
+            margin:0 auto;
+        }
+        .fixed{
+            position:absolute;
+            width:80px;
+            right:-160px;
+            top:600px;
+            z-index:99;
+            display: none;
+            opacity: 0;
+            transition:all 1s;
+        }
+        .fixed .lis{
+            display: block;
+            list-style:none;
+            width:80px;
+            height:60px;
+            text-align: center;
+            line-height:40px;
+            background-color: #d0d0d0;
+            border-bottom: 1px solid black;
+            cursor: pointer;
+        }
+        .fixed .lis:hover{
+            background-color:orangered;
+        }
+    </style>
+    <style>
+        #bottom{
+            width:100%;
+            height:320px;
+            background-color: #f6f9fa;
+            margin-top:-6px;
+            position:relative;
+            z-index:5;
+        }
+        #bottom .footer{
+            max-width:1200px;
+            margin:0 auto;
+            height:310px;
+            padding:10px 5px 0px;
+        }
+    </style>
+    <!--页脚-->
+    <style>
+        *{
+            padding:0;
+            margin:0;
+            font-size:16px;
+        }
+        .mauto{
+            margin:0 auto;
+        }
+        .header{
+            width:100%;
+            height:180px;
+            position:relative;
+        }
+        .header .headerbg{
+            background-image: url('imgs/1.png');
+            position:absolute;
+            background-position: 0px,-200px;
+            width:100%;
+            height:100%;
+            z-index:0;
+        }
+        .header .navbox{
+            width:100%;
+            height:40px;
+            position:relative;
+            background-color: hsla(0,0%,100%,.4);
+            box-shadow: 0 1px 2px rgba(0,0,0,.1);
+            border-bottom: 1px solid rgb(42, 203, 191);
+        }
+        .header .navbox .navbg{
+            background-image: url('imgs/blurBg.png');
+            background-repeat: repeat-x;
+            width:100%;
+            height:100%;
+            position:absolute;
+            z-index: 0;
+        }
+        .header .head_nav{
+            width:1200px;
+            height:40px;
+            position:relative;
+        }
+
+        .header ul{
+            width:inherit;
+            height:inherit;
+        }
+        .header .lis{
+            display:block;
+            list-style:none;
+            float:left;
+            line-height:40px;
+            margin:0 5px;
+            padding:0 10px;
+            background-color: #00ffff1f;
+           cursor:pointer;
+        }
+        .header .titles{
+            width:500px;
+            height:40px;
+            float:left;
+            border-right:1px solid black;
+        }
+        .header .userBox,.header .userBox .lis{
+            float:right;
+        }
+        .userBox .lis:hover{
+            background-color: rgb(163, 0, 201,0.3);
+        }
+        .userBox .lis:hover>.action{
+            display: block;
+        }
+        .header .userBox{
+            width:620px;
+            height:40px;
+            border-left:1px solid black;
+        }
+        .action{
+            display: none;
+            width:170px;
+            height:40px;
+            position:absolute;
+            font-size:28px;
+            border-radius: 0 0 15px 15px;
+            cursor:pointer;
+            background-color: green;
+            color:white;
+            text-align: center;
+            z-index: 99;
+        }
+        .action:hover{
+            background-color: #00ca00;
+            color: black;
+        }
+        .header .bannerBox{
+            width:1200px;
+            height:140px;
+            position:relative;
+        }
+        .header .searchBox{
+            width:330px;
+            height:34px;
+            float:right;
+            padding-top:85px;
+        }
+        .searchBox input{
+            display: block;
+            border:0;
+            float: left;
+            outline:none;
+        }
+        .searchBox .searchI{
+            width:259px;
+            height:30px;
+            border:2px solid indianred;
+            border-right:none;
+            padding-left:15px;
+            border-radius:15px 0 0 15px;
+        }
+        .searchBox form{
+            height:34px;
+        }
+        .searchBox .btn{
+            width:53px;
+            height:34px;
+            font-size:18px;
+            border:1px solid indianred;
+            border-left:none;
+            border-radius:0 15px 15px 0;
+            cursor:pointer;
+            background-color: indianred;
+            color:white;
+            transition:all .7s;
+        }
+        .searchBox .btn:hover{
+            color:red;
+            background-color: #fffee2;
+        }
+        .result{
+            width:295px;
+            height:auto;
+            background-color:ghostwhite;
+            text-align: center;
+            margin-top:5px;
+            margin-left:13px;
+        }
+        .result .result_Title{
+            display: block;
+            width:275px;
+        }
+        .result .lis{
+            width:275px;
+            height:30px;
+            margin:0;
+            background-color:ghostwhite;
+            text-align: left;
+            line-height:30px;
+            z-index: 99;
+            position:relative;
+        }
+        .result .lis a{
+            display: inline-block;
+            width:245px;
+            color:black;
+            text-decoration:none;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow:hidden;
+        }
+        .result .lis:hover{
+            background-color: #a8b7b7;
+        }
+        .delHistory{
+            display: block;
+            float: right;
+            width:30px;
+            height:30px;
+            text-align: center;
+            line-height:30px;
+        }
+        .delHistory:hover{
+            color:red;
+        }
+
+        .logoBox{
+            width:180px;
+            height:140px;
+            padding:5px;
+            float: left;
+            font-size:200px;
+            position:absolute;
+            left:115px;
+        }
+        .logoBox .logoImag{
+            width:90%;
+            height:90%;
+            position:absolute;
+        }
+        .contents {
+            width:1200px;
+            height:700px;
+            margin:5px auto;
+        }
+        .HotList{
+            width:208px;
+            height:700px;
+            float: left;
+            border:1px solid black;
+        }
+        .Hot_top{
+            width:208px;
+            height:109px;
+            border-bottom: 1px silver dashed;
+            position:relative;
+        }
+        .Hot_top span{
+            display: block;
+            width:210px;
+            height:188px;
+            text-align: center;
+            position:absolute;
+            z-index: 99;
+            left: -65px;
+            top: -85px;
+        }
+        .Hot_top span img{
+            position:absolute;
+            left:0;
+            top:0;
+            width:100%;
+            height:100%;
+            font-size:60px;
+            color:red;
+        }
+        .Hot_top .sp{
+            height:120px;
+            line-height: 120px;
+            font-size:90px;
+            color:red;
+            left: -33px;
+            top: -10px;
+        }
+        /*.Hot_top span b{*/
+            /*font-size:150px;*/
+            /*color:red;*/
+        /*}*/
+        .HotList ul{
+            width:208px;
+            height:590px;
+        }
+        .HotList ul .lis{
+            width:208px;
+            height:97px;
+            display: block;
+            list-style: none;
+            border-bottom:1px solid;
+            position:relative;
+            float:none;
+        }
+        .HotList ul .lis .backArrow{
+            display: block;
+            width:239px;
+            height:80px;
+            position:absolute;
+            bottom:0px;
+            z-index: 0;
+        }
+        .HotList ul .lis .news{
+            width:720px;
+            height:520px;
+            position:absolute;
+            background-color: #d0d0d0;
+            left:240px;
+            display: none;
+            z-index: 5;
+         }
+
+        .new1{
+            top:30px;
+        }
+        .new2{
+            top:-68px;
+        }
+        .new3{
+            top:-166px;
+        }
+        .new4{
+            top:-264px;
+        }
+        .new5{
+            top:-362px;
+        }
+        .new6{
+            top:-460px;
+        }
+        .HotList ul .lis:hover>.news{
+            display: block;
+        }
+        .HotList ul .lis .backArrow .arrow{
+            display: block;
+            float:right;
+            border:30px solid white;
+            border-left:30px solid #e72e29;
+            border-right: 0;
+        }
+        .HotList ul .lis:hover>.backArrow .arrow{
+            border-left-color: #ff8e00;
+        }
+        .HotList ul .lis:hover{
+            background-color: #e7e7e7;
+
+        }
+        .AdBanner{
+            width:978px;
+            height:126px;
+            float: left;
+            margin-left:10px;
+            position:relative;
+            /*border:1px solid black;*/
+        }
+        .AdBanner img{
+            position:absolute;
+            width:100%;
+            height:100%;
+            z-index:1;
+        }
+        .AdBanner a{
+            display: block;
+            position:absolute;
+            width:100%;
+            height:100%;
+            z-index:3;
+        }
+        .carousel{
+            width:868px;
+            height:560px;
+            /*border:1px solid black;*/
+            float:left;
+            margin:0px 0 0 120px;
+            padding-top:5px;
+            position:relative;
+            overflow: hidden;
+        }
+        .carousel .lis{
+            list-style: none;
+            width:12.5%;
+            float: left;
+            position:relative;
+        }
+        #adc{
+            display: block;
+            width:800%;
+            height:100%;
+            position:absolute;
+            background-color: #d0d0d0;
+            padding-top:5px;
+            transition:all .8s;
+         }
+        #adc .lis{
+            height:100%;
+            background-color: #d0d0d0;
+            background-image: url("./imgs/loading40.gif");
+            background-repeat: no-repeat;
+            background-size:100% 100%;
+        }
+        #Cadc{
+            width:100%;
+            height:6px;
+            position:absolute;
+            top:0px;
+            left:0;
+        }
+        #Cadc .lis{
+            height:5px;
+            border-bottom:3.5px solid #e72e29;
+            cursor:pointer;
+            transition:all 1s;
+        }
+        #Cadc .lis:hover{
+            height:6px;
+            background-color: #b6b6b6;
+        }
+        #Cadc .on{
+            border-bottom:5px solid #1874e7;
+        }
+        .carousel #bgli{
+            display: block;
+            position:absolute;
+            width:25%;
+            height:4px;
+            top:0;
+            left:0;
+            border-radius:250% 250% 0 0;
+            background-color: #e72e29;
+            transition: all 0.5s;
+        }
+        .carousel .btn{
+            width:40px;
+            height:360px;
+            position:absolute;
+            top:100px;
+            text-align: center;
+            line-height:360px;
+            font-size:36px;
+            color: #b6b6b6;
+            background-color: rgba(00,00,00,0.41);
+            opacity: 0;
+            cursor:pointer;
+            transition:0.6s;
+            z-index: 4;
+        }
+        .carousel:hover>.btn{
+            opacity: 1;
+        }
+        .carousel .btn:hover{
+            color:white;
+            background-color: rgba(00,00,00,0.56);
+        }
+        .carousel .next{
+            right:0;
+            border-radius:15px 0 0 15px;
+        }
+        .carousel .prev{
+            left:0;
+            border-radius:0 15px 15px 0;
+        }
+
+        #app{
+            position:relative;
+            height:auto;
+        }
+        #app .wrapper{
+            width:1200px;
+            height:670px;
+            margin:0px auto 5px;
+            position:relative;
+            border-bottom:1px solid black;
+        }
+        #app .linkOne{
+            margin-top:-20px;
+        }
+        .wrapper .new{
+            position:absolute;
+        }
+        .new .store_list_box{
+            width:640px;
+            height:410px;
+            position:absolute;
+            background-color: hsla(0, 0%, 94%, 0.4);
+            box-shadow: 0 1px 2px rgba(0,0,0,.3);
+            top:5px;
+        }
+        .new .store_list_box .store_list{
+            display: block;
+            list-style: none;
+            width:27%;
+            height:195px;
+            margin:5px 3% 5px;
+            float: left;
+            background-color: rgba(215, 215, 215, 0.8);
+        }
+        .store_list .goods{
+            width:100%;
+            height:195px;
+            position:relative;
+        }
+        .store_list .goods a{
+            display:block;
+            width:100%;
+            height:195px;
+            position:absolute;
+            left:0;
+            top:0;
+            z-index:9;
+        }
+        .goods_cover{
+            max-width:96%;
+            max-height:114px;
+            margin:2px auto 0;
+            position:relative;
+        }
+        .goods_cover img{
+            width:100%;
+            height:100%;
+        }
+        .goods .information{
+            width:100%;
+            height:40px;
+            font-size:14px;
+            padding-bottom:2px;
+            margin:0 auto;
+            position:relative;
+            overflow: hidden;
+            -ms-text-overflow: ellipsis;
+            text-overflow: ellipsis;
+        }
+        .goods .information .free{
+            display:inline-block;
+            width:40px;
+            height:18px;
+            font-size:14px;
+            text-align: center;
+            line-height:18px;
+            background-color: #00ca00;
+            color:white;
+            left:2px;
+            border-radius:5px;
+            float:left;
+            position:absolute;
+        }
+        .goods .free+p{
+            text-indent:42px;
+        }
+        .goods .information p{
+            float: left;
+            display: -webkit-box;
+            word-break: break-all;
+            -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+            -webkit-line-clamp: 2; /** 显示的行数 **/
+            overflow: hidden;  /** 隐藏超出的内容 **/
+            text-overflow: ellipsis;
+            -ms-text-overflow: ellipsis;
+            width:100%;
+            height:100%;
+            overflow: hidden;
+            z-index: 5;
+        }
+        .goods .price{
+            width:100%;
+            height:40px;
+            position:relative;
+        }
+        .goods .price .class{
+            display: block;
+            position:absolute;
+            bottom:5px;
+            left:10px;
+            font-size:18px;
+        }
+        .goods .price .money{
+            margin-left:17px;
+            color: #ff4816;
+            font-size:34px;
+            position:absolute;
+            top:-5px;
+        }
+        .goods .price .money *{
+            margin-left:-2px;
+            color: #ff4816;
+            font-size:36px;
+            position:absolute;
+            top:-2px;
+        }
+        #app .linkOne .store_list_box, #app .linkLeft .store_list_box{
+            left:75px;
+        }
+        #app .linkRight .store_list_box{
+            width:660px;
+            right:55px;
+        }
+        .wrapper .back{
+            display: block;
+            position:absolute;
+            width:100%;
+            height:100%;
+            z-index:1;
+        }
+        .wrapper .newOne{
+            width:300px;
+            height:360px;
+            border:0px solid black;
+            box-shadow:9px 8px 20px 0 #1874e7;
+            background-color:#b6b6b6;
+            z-index:5;
+            top:40px;
+            left:120px;
+        }
+        .wrapper .newTwo{
+            width:720px;
+            height:420px;
+            border:1px solid #00000047;
+            z-index:4;
+            top:165px;
+            left:350px;
+        }
+        .wrapper .showContents{
+            width:100%;
+            height:100%;
+            position:absolute;
+            z-index: 4;
+            left:0;
+            top:0;
+            background-color: #d0d0d0;
+        }
+        .wrapper .newTwo .bottomBorder{
+            width:320px;
+            height:320px;
+            position:absolute;
+            bottom:-80px;
+            right:-80px;
+            border:5px solid black;
+        }
+        .wrapper .newTwo .newTwoBorder{
+            top:-30px;
+            left:-30px;
+            border:3px solid #4158abbd;
+        }
+        .wrapper .newOne2{
+            width:320px;
+            height:370px;
+            border:0px solid black;
+            box-shadow:-9px 8px 20px 0 #1874e7;
+            background-color:#b6b6b6;
+            z-index:5;
+            top:0px;
+            right:60px;
+        }
+        .wrapper .newTwo2{
+            width:720px;
+            height:420px;
+            border:1px solid #00000047;
+            z-index:4;
+            top:165px;
+            right:330px;
+        }
+        .wrapper .newTwo2 .newTwoBorder{
+            top:-30px;
+            right:-30px;
+            border:3px solid #4158abbd;
+        }
+        .wrapper .newTwo2 .bottomBorder{
+            width:320px;
+            height:320px;
+            position:absolute;
+            bottom:-80px;
+            left:-80px;
+            border:5px solid black;
+        }
+        .wrapper .newLink{
+            width:800px;
+            height:210px;
+            border: 1px solid olive;
+            top:-80px;
+            z-index:5;
+            background-color: #ebebeb;
+        }
+        #app .linkLeft .newLink{
+            width:765px;
+            right:0;
+            top:-80px;
+        }
+        #app .linkRight .newLink{
+            left:0;
+            top:-80px;
+        }
+       #app .wrapper .img_box .imgs{
+            position:absolute;
+            width:100%;
+            height:100%;
+            left:0;
+            top:0;
+        }
+        .add_fixed{
+            width:60px;
+            height:60px;
+            text-align:center;
+            background-color: #00b700;
+            color:white;
+            position:absolute;
+            right:30px;
+            top:60px;
+            z-index:999;
+            opacity:0;
+            cursor:pointer;
+            transition:all 0.5s;
+        }
+        .add_fixed:hover{
+            opacity: 1;
+        }
+    </style>
+
+</head>
+<body>
+<div class="add_fixed">
+    成为店铺
+</div>
+<header class="header">
+    <div class="headerbg"></div>
+    <div class="navbox">
+        <div class="navbg"></div>
+        <nav class="head_nav mauto">
+            <div class="titles">
+                <ul>
+                    <li class="lis">首页</li>
+                    <li class="lis">页面2</li>
+                    <li class="lis">页面3</li>
+                    <li class="lis">页面4</li>
+                </ul>
+            </div>
+            <div class="userBox" id="user">
+                <ul>
+                    <li class="lis">联系客服</li>
+                    <li class="lis">历史记录</li>
+                    <li class="lis">购物车</li>
+                    <li class="lis">
+                        <a :href="ahref" :title="user_name">个人中心</a>
+                        <div class="action">
+                            <div @click="logout">注销</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <div class="bannerBox mauto">
+        <div class="logoBox">
+            <img src="./imgs/Logo.png" alt="" class="logoImag">
+        </div>
+        <div class="searchBox" id="search" >
+            <form name="search">
+                <input type="text" class="searchI" placeholder="输入你想要的商品"
+                       v-model="searchKey" @click="key" @blur="hide()">
+                <input type="button" class="btn" value="搜索">
+            </form>
+            <div class="result" v-show="keyBoxFlag">
+                <span class="result_Title" v-text="result_Title"></span>
+                <ul>
+                    <li class="lis" v-for="(item,i) in getList()" v-key="item">
+                        <a href="" class="msg" v-text="item.searchKey"></a>
+                        <span @click="delHistory(i)" class="delHistory" v-if="historyFlag">X</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</header>
+<div id="body">
+    <nav class="fixed" id="fixed">
+        <ul>
+            <li class="lis">第一区域</li>
+            <li class="lis">第二</li>
+            <li class="lis">第三</li>
+            <li class="lis">第四</li>
+            <li class="lis">第五</li>
+            <li class="lis">回到顶部</li>
+        </ul>
+    </nav>
+
+    <div class="contents mauto">
+        <div class="HotList" id="hotlist">
+            <div class="Hot_top">
+                <span>
+                    <img src="imgs/icon/hot.png" alt="Hot" title="热门信息">
+                </span>
+                <span class="sp">Hot</span>
+
+            </div>
+            <ul>
+                <li class="lis" v-for="i in news">
+                    <span class="backArrow">
+                        <!--箭头符号-->
+                        <span class="arrow"></span>
+                    </span>
+                    <div :class="[
+                        'news',i.class
+                    ] ">
+                        新闻
+                    </div>
+                </li>
+
+           </ul>
+
+        </div>
+        <div class="AdBanner">
+            <img src="imgs/banner.png" alt="login···">
+            <a href="#" title="广告合作"></a>
+        </div>
+        <div class="carousel" id="carousel">
+            <ul id="adc">
+                <li class="lis" v-for="(item,i) in carousel">{{i}}</li>
+            </ul>
+            <ul id="Cadc">
+                <li v-for="i in carousel.length" class="lis"></li>
+            </ul>
+            <span id="bgli"></span>
+            <span class="btn next"> > </span>
+            <span class="btn prev"> < </span>
+        </div>
+    </div>
+
+    <div id="app">
+        <component v-for="(item,i) in router" :key="item" :is="item.tmp"></component>
+        <!--<component :is="'tem2'"></component>-->
+        <!--<component :is="'tem1'"></component>-->
+        <!--<component :is="'tem2'"></component>-->
+        <!--<component :is="'tem1'"></component>-->
+        <!--<component :is="'tem2'"></component>-->
+    </div>
+</div>
+<footer id="footerApp">
+    <bottom></bottom>
+</footer>
+<template id="lgi">
+    <div id="curtain">
+        <!--登录模块有一张覆盖全页面的幕布-->
+        <div class="login_casket">
+                登录享受更多特权
+        </div>
+    </div>
+</template>
+<template id="tmp">
+    <div class="wrapper linkOne" >
+        <div class="new newOne img_box">
+            <img src="imgs/0.png" alt="" class="imgs">
+        </div>
+        <div class="new newTwo">NewTwo
+            <span class="back newTwoBorder"></span>
+            <span class="back bottomBorder"></span>
+            <div class="showContents img_box">
+                <img src="imgs/3.png" alt="" class="imgs">
+                <div class="store_list_box">
+                    <ul>
+                        <li class="store_list" v-for="i in 6">
+                            <div class="goods">
+                                <a href="#" title="进入商品详情页面"></a>
+                                <div class="goods_cover">
+                                    <img src="imgs/0.png" alt="商品图片加载失败">
+                                 </div>
+                                <div class="information">
+                                    <span class="free">包邮</span>
+                                    <p>测试用的商品详情介绍测试字符床这是测试装用的一段测试文字</p>
+                                </div>
+                                <div class="price">
+                                    <span class="class"><b>$</b></span>
+                                    <span class="money"><b>2190.52</b></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<template id="tmpone">
+    <div class="wrapper linkLeft" v-if="showFlag">
+        <div class="new newLink img_box">
+            <img src="imgs/9.png" alt="" class="imgs">
+        </div>
+        <div class="new newOne img_box">
+            <img src="imgs/0.png" alt="" class="imgs">
+        </div>
+        <div class="new newTwo">NewTwo
+            <span class="back newTwoBorder"></span>
+            <span class="back bottomBorder"></span>
+            <div class="showContents img_box">
+                <img src="imgs/2.png" alt="" class="imgs">
+                <div class="store_list_box">
+                    <ul>
+                        <li class="store_list" v-for="i in 6"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<template id="tmptwo">
+    <div class="wrapper linkRight">
+        <div class="new newLink img_box">
+            <img src="imgs/9.png" alt="" class="imgs">
+        </div>
+        <div class="new newOne2 img_box">
+            <img src="imgs/4.png" alt="" class="imgs">
+        </div>
+        <div class="new newTwo2">NewTwo
+            <span class="back newTwoBorder"></span>
+            <span class="back bottomBorder"></span>
+            <div class="showContents img_box">
+                <img src="imgs/8.png" alt="" class="imgs">
+                <div class="store_list_box">
+                    <ul>
+                        <li class="store_list" v-for="i in 6"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<template id="empty">
+    <div class="wrapper"></div>
+</template>
+<template id="publicBottom">
+    <div id="bottom">
+        <div class="footer"></div>
+    </div>
+</template>
+</body>
+
+<script>
+    Vue.config.devtools = true;//该段代码可以让vue被调试
+    let xmlHttp =newXml();
+    function newXml(){
+        if(window.XMLHttpRequest){
+            return new XMLHttpRequest();
+        }else{
+            return new ActiveXObject("Microsoft.XMLHTTP");
+        }
+    }
+    let temNum=0;
+    let temData=[];
+    Vue.component('tem',{
+        template:'#tmp',
+        data:function(){
+            temData[temNum]={};
+            let xml=xmlHttp;
+            xml.open('GET','tmpDate?tmpnum=1',true);
+            xml.send();
+            xml.onreadystatechange=()=>{
+                if(xmlHttp.status==200&&xmlHttp.readyState==4){
+                    // let response=JSON.parse(xmlHttp.response);
+                    // console.log(response);
+                    // if(response.errorCode===undefined){
+                    //
+                    // }else{
+                    //     alert(response.error)
+                    // }
+                }
+            };
+            return temData[temNum]
+        },
+    });//第一个模板!无连接的板块
+    Vue.component('tem1',{
+        template:'#tmpone',
+        data:function(){
+            let obj ={};
+            obj.showFlag=true;
+            obj.msg='ok';
+            return obj
+        },
+
+    });//第二个模板有连接的板块
+    Vue.component('tem2',{
+       template:"#tmptwo",
+       data:function(){
+           let obj={};
+           return obj
+       }
+    });//第三个模板
+    Vue.component('bottom',{
+        template:"#publicBottom",
+    });
+
+
+    let search_vm=new Vue({
+        el:"#search",
+        data:{
+            searchKey:'',
+            result_Title:'',
+            historyFlag:true,
+            keyBoxFlag:false,
+        },
+        methods:{
+            key(){
+                this.keyBoxFlag=true;
+                this.result_Title='----历史纪录----';
+                this.getList()
+            },
+            delHistory(index){
+                console.log('删除历史纪录'+index);
+
+            },
+            getList(){
+                if(this.searchKey===''){
+                    this.result_Title='----历史纪录----';
+                    this.historyFlag=true;
+                    let arr=[{
+                        searchKey:'老母猪怀孕怎么办',
+                    },{
+                        searchKey:'骨灰盒'
+                    },{
+                        searchKey:'灵符'
+                    },{
+                        searchKey:'墓碑'
+                    },
+                    ];
+                    return arr
+                }else{
+                    this.result_Title='----关键词----';
+                    this.historyFlag=false;
+                    if(this.searchKey==='sb'){
+                        let arr=[{
+                            searchKey:'我是一个傻逼',
+                        },{
+                            searchKey:'为傻逼购买一个骨灰盒'
+                        },{
+                            searchKey:'为傻逼室友购买物品吧'
+                        },{
+                            searchKey:'如何与傻逼相处'
+                        },{
+                            searchKey:'如何与傻逼相处'
+                        },{
+                            searchKey:'如何与傻逼相处'
+                        },
+                        ];
+                        return arr
+                    };
+                    if(this.searchKey==='呵呵'){
+                        let arr=[{
+                            searchKey:'我是一个傻逼',
+                        },{
+                            searchKey:'为傻逼购买一个骨灰盒'
+                        },{
+                            searchKey:'为傻逼室友购买物品吧'
+                        },{
+                            searchKey:'如何与傻逼相处'
+                        },{
+                            searchKey:'如何与傻逼相处'
+                        },{
+                            searchKey:'如何与傻逼相处aaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+                        },
+                        ];
+                        return arr
+                    };
+
+                }
+            },
+            hide(){
+                setTimeout(()=>{
+                    this.keyBoxFlag=false;
+                },100)
+            }
+        },
+
+
+    });
+
+
+    let use=false;
+    let user_vm=new Vue({
+        el:"#user",
+        data:{
+            user:null,
+            ahref:'/login',
+            user_name:"登录享受更多特权",
+            pid:"null",
+            flag:false
+        },
+        methods:{
+            logout(){
+                let xml=newXml();
+                if(this.ahref!=="/login"){
+                    xml.open("GET","/logout?pid="+this.pid+"&token=10086",true);
+                    xml.send();
+                    xml.onreadystatechange=function(){
+                        if (xml.readyState==4 && xml.status==200){
+                            let response=xml.response;
+                            console.log(response);
+                        }
+                    }
+                }
+            }
+        }
+    });
+    function render(json){
+        user_vm.ahref="/user/"+json.pid+"?"+json.token;
+        user_vm.user_name=json.name+"的个人空间";
+        user_vm.pid=json.pid;
+    }
+
+
+    //历史纪录的vm实例
+    let hotlist_vm=new Vue({
+        el:"#hotlist",
+        data:{
+            news:[
+                {class:'new1'},
+                {class:'new2'},
+                {class:'new3'},
+                {class:'new4'},
+                {class:'new5'},
+                {class:'new6'}
+            ]
+        }
+    });
+
+    //轮播的vm实例
+    let carousel_vm=new Vue({
+        el:'#carousel',
+        data:{
+            carousel:new Array(8)
+        }
+    });
+
+    //将组件挂载在vm实例上
+    let vm=new Vue({
+        el:"#app",
+        data:{
+            router:[{
+                //组件的路由列表
+                tmp:'tem'
+            },{
+                tmp:'empty'
+            },{
+                tmp:'empty'
+            },{
+                tmp:'empty'
+            },{
+                tmp:'empty'
+            },{
+                tmp:'empty'
+            }]
+
+        },
+        methods:"",
+    });//组件区域的vm实例用来加载组件
+
+    //页脚的vm实例
+    let footer_vm=new Vue({
+        el:"#footerApp",
+        data:{},
+        methods:{}
+    });//页脚的组件
+
+
+    carousel();//轮播的方法
+    function carousel(){
+        //轮播的方法
+       let oldIndex=0;
+       let index=0;
+       let farter=document.getElementById('carousel');
+       let adc=document.getElementById('adc');
+       let lis=adc.getElementsByClassName('lis');
+       let lisWidth=lis[0].offsetWidth;
+       let Clis=document.getElementById('Cadc').getElementsByClassName('lis');
+        let ClisWidth=Clis[0].offsetWidth;
+        let nextEl=farter.getElementsByClassName('next')[0];
+       let prevEl=farter.getElementsByClassName('prev')[0];
+       let bgli=document.getElementById('bgli');
+       let timer=null;
+       for(let i in Clis){
+           Clis[i].index=i;
+           Clis[i].onclick=function(){
+               index=i;
+               draw()
+           }
+       }
+       function next(){
+           index++;
+           if(index===lis.length){
+               index=0;
+            }
+       }
+       function prev(){
+            index--;
+            if(index<0){
+                index=lis.length-1
+            }
+       }
+       function draw(){
+           adc.style.left=0-(lisWidth*index)+'px';
+           Clis[index].className="lis on";
+           if(index!=oldIndex){
+               Clis[oldIndex].className="lis";
+           }
+           bgli.style.height="6px";
+           let gap=index-oldIndex;
+           if(gap<0){
+               bgli.style.left=index*ClisWidth+'px';
+               bgli.style.width=ClisWidth*Math.abs(gap)+ClisWidth+"px";
+               bgli.style.backgroundColor="#41dd55";
+               setTimeout(()=>{
+                   bgli.style.height="6px";
+                   bgli.style.width=ClisWidth+"px";
+                   bgli.style.backgroundColor="#2a88dd";
+                   bgli.style.left=index*ClisWidth+'px';
+               },600)
+           }else{
+               bgli.style.width=ClisWidth*Math.abs(gap)+ClisWidth+"px";
+               bgli.style.backgroundColor="#41dd55";
+               setTimeout(()=>{
+                   bgli.style.height="6px";
+                   bgli.style.width=ClisWidth+"px";
+                   bgli.style.backgroundColor="#2a88dd";
+                   bgli.style.left=index*ClisWidth+'px';
+               },500)
+           }
+
+           oldIndex=index;
+       }
+       draw();
+       nextEl.onclick=function(){
+           next();
+           draw();
+       };
+       prevEl.onclick=function(){
+           prev();
+           draw();
+       };
+        timer=setInterval(()=>{
+            next();
+            draw();
+        },3000);
+        farter.onmouseenter=()=>{
+             clearInterval(timer);
+            timer=null;
+        };
+        farter.onmouseover=function(){
+            console.log('清除定时器');
+            clearInterval(timer);
+            timer=null;
+        };
+        farter.onmouseout=()=>{
+            if(timer==null){
+                timer=setInterval(()=>{
+                    next();
+                    draw();
+                },3000)
+            }
+
+
+
+        }
+
+    }//轮播的方法
+
+</script>
+
+
+<script>//自动登录功能
+    if(window.localStorage.u){
+        console.log(localStorage.u);
+        let autoXml=newXml();
+        console.log(autoXml);
+        autoXml.open("POST","log",true);
+        autoXml.send(localStorage.u);
+        autoXml.onreadystatechange=function(){
+            if (autoXml.readyState==4 && autoXml.status==200){
+                console.log(autoXml.response);
+                console.log(typeof(autoXml.response));
+                let response=JSON.parse(autoXml.response);
+                if(response.email&&response.pid&&response.token){
+                    console.log(autoXml.response);
+                    localStorage.u=autoXml.response;
+                    render(response);
+                }
+            }
+
+
+        }
+
+        //获取该元素发送请求至服务器尝试登录
+    }
+
+</script>
+//随滚动条滚动改变效果动态加载
+<script>
+
+    let fixed=document.getElementById('fixed');//ok
+    let fixed_lis=fixed.getElementsByClassName('lis');//ok
+    let fixedTop=0;//侧边栏的高度
+    let show_flag=null;//用来将进程锁住防止画面闪烁
+    let uninkNum=1;//记录以经加载了的组件的数量
+    const maxUninkNum=6;//最多有几个的
+    const uninkHeight=670;//单个组件的高度
+    const fixedHeight=800;//页面默认显示的高度
+    let noLoadHeight=uninkHeight+fixedHeight;//页面随意滚动不进行加载的最大值
+    let timerlock=null;
+        //即将到达页面底部时创建组件
+    window.onscroll=(e)=>{
+        let scrollTop=document.documentElement.scrollTop||document.body.scrollTop;//获取到以滚动显示的隐藏页面高度
+        let pageHeight=document.documentElement.clientHeight||document.body.clientHeight;//获取页面高度
+        let showHeight=scrollTop+pageHeight;//已经显示出来的页面高度
+        if(scrollTop<500){
+            if(!show_flag){
+                fixed.style.opacity=0;
+                fixed.style.top=-500+"px";
+                show_flag=setTimeout(()=>{
+                    fixed.style.display='none';
+                    show_flag=null;
+                },600);
+            }
+        }else if(scrollTop>700){
+            if(!show_flag){
+                fixed.style.display='block';
+                fixedTop=(scrollTop-800)+(pageHeight-120);
+                show_flag=setTimeout(()=>{
+                    fixed.style.opacity="1";
+                    fixed.style.top=fixedTop+"px";
+                    show_flag=null;
+                },10);
+            }
+        }
+        //侧边栏随着滚动条滚动一起移动
+
+        //以显示出来的内容即将到底时进行加载
+        if(showHeight>noLoadHeight-300&&uninkNum<maxUninkNum){
+            //在滚动条大于指定位置并且还没有到达最大加载值时触发
+            if(!timerlock){//使用异步锁防止多次触发事件导致一次性加载多次
+                timerlock=setTimeout(()=>{
+                    console.log('加载内容---');
+                    let ext=2;
+                    if(uninkNum%2===0){ext=1;}//如果余数为0那么
+                    vm.router[uninkNum].tmp='tem'+ext;
+                    uninkNum++;
+                    noLoadHeight=uninkNum*uninkHeight+fixedHeight-10;//更改最大高度
+                    timerlock=null;//初始化锁
+                },10)
+            }
+
+        }
+        //动态创建组件
+
+    }
+    fixed_lis[fixed_lis.length-1].onclick=function(){
+       console.log('回到顶部');
+       window.setScroll(0,1000,function () {
+           console.log('以到达顶部')
+       })
+    };
+    for(let i=0;i<fixed_lis.length;i++){
+
+    }
+    function setScroll(pos,timeNum,fn){
+        var thisScroll=document.documentElement.scrollTop||document.body.scroolTop||0
+
+        var gap=pos-thisScroll//两者值直接的差距
+        var a=timeNum/100;//次数
+        var b=gap/a;//每次的执行距离
+        var timerx=null;
+
+        var ind=0;
+
+        // timerX=window.setInterval(function(){
+        // 	if(ind<a){
+        // 		console.log(ind)
+        // 		document.documentElement.scrollTop+=b
+        //  			document.body.scrollTop+=b
+        //  			ind++;
+        // 	}else{
+        // 		document.documentElement.scrollTop=pos
+        //  			document.body.scrollTop=pos
+        //  			clearInterval(timerX);
+        //  			timerX=null;
+        // 	}
+        // 	ind++;
+        // },30)
+        function x(){
+            timerX=window.setTimeout(function(){
+                //console.log(ind)
+                if(ind<a){
+                    abc();
+                }
+            },15);
+        }
+
+        function abc(){
+            //console.log(ind)
+            document.documentElement.scrollTop+=b;
+            document.body.scrollTop+=b;
+            ind++;
+            x();
+        }
+        abc();
+    }
+
+</script>
+</html>

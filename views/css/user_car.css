@@ -1,0 +1,163 @@
+
+.cars{
+    width:860px;
+    height:640px;
+    margin:0 auto;
+}
+.cars .lis{
+    display: block;
+    list-style:none;
+    width:860px;
+    height:99px;
+    border-bottom:1px solid black;
+}
+.cars .msg{
+    width:860px;
+    height:99px;
+    position:relative;
+}
+.msg .cover{
+    width:91px;
+    height:91px;
+    margin:4px;
+    float:left;
+    position:relative;
+}
+.msg .name{
+    width:180px;
+    height:99px;
+    font-size:20px;
+    margin-left:5px;
+    float:left;
+    line-height: 99px;
+}
+.msg .brief{
+    width:240px;
+    height:91px;
+    margin:4px 0;
+    padding-left:5px;
+    border-left:1px solid red;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    position:relative;
+    float:left;
+}
+.msg .money{
+    width:210px;
+    height:91px;
+    margin:4px 5px;
+    padding-left:5px;
+    border-left:5px solid black;
+    float:left;
+}
+.money .old{
+    height:37px;
+    line-height:37px;
+    font-size:16px;
+    border-bottom:1px solid black;
+    color: #890000;
+}
+.money .now{
+    height:53px;
+    line-height:53px;
+    font-size:20px;
+    color: #dc6614;
+}
+.money .now span{
+    font-size:22px;
+    color:red;
+}
+.msg .check{
+    width:29px;
+    height:29px;
+    border:1px solid black;
+    float:right;
+    margin:34px 15px;
+    padding:2px;
+}
+.msg .on{
+    background-color: red;
+}
+.msg .check:hover .ch{
+    background-color: orangered;
+}
+.msg .check .ch{
+    width:29px;
+    height:29px;
+}
+.msg .brief:hover{
+    height:auto;
+    background-color: #9c9fa0;
+    min-height:91px;
+    z-index:99;
+}
+.cover img{
+    width:100%;
+    height:100%;
+}
+.btn_box{
+    width:880px;
+    height:95px;
+    margin:0 auto;
+    border-radius: 0 0 15px 15px;
+    position:relative;
+    background-color: #c9d0c0;
+}
+.btn_box .nav{
+    width:330px;
+    height:35px;
+    position:absolute;
+    left:275px;
+    top:-20px;
+    padding:4px;
+    background-color: #d4d4d4;
+}
+.btn_box .nav .btn{
+    position:absolute;
+    width:65px;
+    height:35px;
+    margin:0px;
+    line-height: 35px;
+    background-color: #3cbbd8;
+    transition:all 0.3s;
+}
+.btn_box .nav .btn:hover{
+    background-color: #5cc5d6;
+    color:red;
+}
+.btn_box .nav .next{
+    float:right;
+    right:5px;
+}
+.btn_box .nav .prev{
+    float:left;
+    left:5px;
+}
+.btn_box .btn{
+    display: block;
+    width:240px;
+    height:55px;
+    border-radius:15px;
+    text-align:center;
+    line-height:55px;
+    font-size:30px;
+    margin:25px 55px;
+    float:left;
+}
+.btn_box .del{
+    background-color: #c43200;
+    color:#fff;
+}
+.btn_box .del:hover{
+    background-color: #8e2600;
+    color: #979797;
+}
+.btn_box .settle{
+    background-color: orangered;
+    color:#fff;
+    float:right;
+}
+.btn_box .settle:hover{
+    background-color: #ce3a00;
+    color: #d7d7d7;
+}
