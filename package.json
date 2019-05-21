@@ -1,0 +1,29 @@
+{
+  "name": "onlinestore",
+  "version": "1.0.0",
+  "description": "this is my learn item",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kindring/new-Node.git"
+  },
+  "keywords": [
+    "S"
+  ],
+  "author": "kindring",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kindring/new-Node/issues"
+  },
+  "homepage": "https://github.com/kindring/new-Node#readme",
+  "dependencies": {
+    "art-template": "^4.13.2",
+    "formidable": "^1.2.1",
+    "mongoose": "^5.5.4",
+    "mysql": "^2.17.1",
+    "socket.io": "^2.2.0"
+  }
+}
