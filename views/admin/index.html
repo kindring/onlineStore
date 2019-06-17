@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理商品</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        html,body{
+            height:100%;
+        }
+    </style>
+    <link rel="stylesheet" href="../css/admin/public.css">
+    <script src="../js/admin.js"></script>
+</head>
+<body>
+<div class="content">
+    <div class="sidbar" id="sidbar">
+        <div class="title">
+            <h1><a href="/admin">管理中心</a></h1>
+        </div>
+        <div class="row">
+            <h2>商品管理</h2>
+            <ul>
+                <li class="lis">
+                    <a href="/goods_add">添加商品</a>
+                </li>
+                <li class="lis">
+                    <a href="/goods_lists">查询商品</a>
+                </li>
+                <li class="lis">
+                    <a href="/goods_lists">修改商品</a>
+                </li>
+                <li class="lis">
+                    <a href="/goods_lists">下架商品</a>
+                </li>
+                <li class="lis">
+                    <a href="/goods_lists">删除商品</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row hide">
+            <h2>订单管理</h2>
+            <ul>
+                <li class="lis">
+                    <a href="/order_list">订单列表</a>
+                </li>
+                <li class="lis">
+                    <a href="/order_wait">待发货</a>
+                </li>
+                <li class="lis">
+                    <a href="/order_rebate">退款订单</a>
+                </li>
+                <li class="lis">
+                    <a href="/order_server">售后订单</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row hide">
+            <h2>首页管理</h2>
+            <ul>
+                <li class="lis">
+                    <a href="/i_carousel">轮播商品</a>
+                </li>
+                <li class="lis">
+                    <a href="/i_hot">热门展示</a>
+                </li>
+                <li class="lis">
+                    <a href="/i_banner">横幅展示</a>
+                </li>
+                <li class="lis">
+                    <a href="/i_class">类别划分</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row hide">
+            <h2>数据统计</h2>
+            <ul>
+                <li class="lis">
+                    <a href="/data_vist">添加量</a>
+                </li>
+                <li class="lis">
+                    <a href="/data_month">成交量</a>
+                </li>
+                <li class="lis">
+                    <a href="/index_banner">退款量</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row hide">
+            <h2>活动中心</h2>
+            <ul>
+                <li class="lis">
+                    <a href="/data_vist">折扣</a>
+                </li>
+                <li class="lis">
+                    <a href="/data_month">优惠卷</a>
+                </li>
+                <li class="lis">
+                    <a href="/index_banner">活动页面</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="main" id="main">
+        <div class="top">
+            <div class="hide_sidbar" id="hide_sidbar">隐</div>
+        </div>
+        <div class="window" id="app">
+            <div class="title">
+                <h1>商城管理</h1>
+            </div>
+            <div class="contents">
+                <div class="index" id="index">
+                    <ul>
+                        <li class="item">
+                            <a href="/goods_add">添加商品</a>
+                        </li>
+                        <li class="item">
+                            <a href="/goods_lists">商品列表</a>
+                        </li>
+                        <li class="item">
+                            <a href="/i_carousel">主页轮播</a>
+                        </li>
+                        <li class="item">
+                            <a href="/i_hot">热门商品</a>
+                        </li>
+                        <li class="item">
+                            <a href="/i_goods">主页商品</a>
+                        </li>
+                        <li class="item">
+                            <a href="/order_management">订单管理</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+</script>
+</html>

@@ -10,7 +10,15 @@
         padding:0;
         }
     body{
-        background-color:darkgrey;
+        /* Safari 5.1 - 6.0 */
+        background: -webkit-linear-gradient(left,red,orange,yellow,green,blue,indigo,violet);
+        /* Opera 11.1 - 12.0 */
+        background: -o-linear-gradient(left,red,orange,yellow,green,blue,indigo,violet);
+        /* Firefox 3.6 - 15 */
+        background: -moz-linear-gradient(left,red,orange,yellow,green,blue,indigo,violet);
+        /* 标准的语法 */
+        background: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
+
     }
     #app{
         width:900px;
@@ -413,6 +421,13 @@
         let href=document.referrer;
         if(href===window.location.href){
             href="/"
+        }else{
+            console.log(href.indexOf('/user'));
+            if(href.indexOf('/user')!==-1){
+                console.log("刚刚是个人页面");
+                href='/'
+            }
+
         }
         if(window.XMLHttpRequest){
         xmlHttp=new XMLHttpRequest();

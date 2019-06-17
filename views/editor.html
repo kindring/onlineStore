@@ -4,32 +4,124 @@
     <meta charset="UTF-8">
     <title>修改个人资料</title>
     <link rel="stylesheet" href="css/public.css">
-    <link rel="stylesheet" href="css/head_pc.css">
+    <link rel="stylesheet" href="css/top_pc.css">
     <link rel="stylesheet" href="css/editor_content_pc.css">
 </head>
 <body>
-<header class="head" id="head">
-    <nav class="head_nav">
+<header class="site_top" id="site_top">
+    <nav class="top_nav">
         <div class="titles fl">
             <ul>
-                <li class="lis">首页</li>
-                <li class="lis">页面1</li>
-                <li class="lis">页面2</li>
-                <li class="lis">页面3</li>
+                <li class="lis"><a href="/">首页</a></li>
+                <li class="lis"><a href="/admin">管理</a></li>
+                <li class="lis"><a href="/login">登录</a></li>
+                <li class="lis"><a href="/search?sort=0&keyword=">查询</a></li>
             </ul>
         </div>
         <div class="userBox fr" id="user">
             <ul>
                 <li class="lis">联系客服</li>
                 <li class="lis">历史记录</li>
-                <li class="lis">购物车</li>
-                <li class="lis">
-                    <a :href="ahref" :title="user_name">个人中心</a>
+                <li class="lis"><a href="/car?pid" id="user_car">购物车</a></li>
+                <li class="lis" id="users">
+                    <img id="top_user_header" class="user_header" alt="头像加载失败" >
+                    <a id="top_user_name" title="user_name">个人中心</a>
+                    <div class="user_msg">
+                        <h2 id="u_name">暂未登录</h2>
+                        <div class="descript" id="u_descript">
+                            登录后享受更多快乐
+                        </div>
+                        <div class="btn_box">
+                            <a href="/login" class="btn" id="u_btn">前往登录</a>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>
     </nav>
 </header>
+<script>
+    function gi(id){return document.getElementById(id)}
+    function getXmlHttp(){
+        if (window.XMLHttpRequest)
+        {// 判断是否有该对象
+            return new XMLHttpRequest();
+        }
+        else if (window.ActiveXObject)
+        {// 判断是否是兼容ie5和ie6
+            return new ActiveXObject("Microsoft.XMLHTTP");
+        }else{
+            return null;
+        }
+    }
+    let user_name=gi('top_user_name');
+    let header=gi('top_user_header');
+    let u_btn=gi('u_btn');
+    let u_name=gi('u_name');
+    let u_descript=gi('u_descript');
+    if(window.localStorage.getItem('u')){
+        let user_obj=window.localStorage.getItem('u');
+        user_obj=JSON.parse(user_obj);
+        header.src='header?pid='+user_obj.pid;
+        user_name.href="/user/"+user_obj.pid+"?token="+user_obj.token;
+        u_btn.href="logout?pid="+user_obj.pid;
+        user_name.title="加载中";
+        u_btn.innerHTML="注销";
+        u_name.innerHTML="获取名称中";
+        u_descript.innerHTML="获取最新简介中";
+        let xml=getXmlHttp();
+        xml.open('POST','/log',true);
+        xml.send(JSON.stringify(user_obj));
+        xml.onreadystatechange=function(){
+            if(xml.readyState===4&&xml.status){
+                let response=xml.responseText;
+                response=JSON.parse(response);
+                if(response.err){
+                    header.style.display="none";
+                    user_name.href="/login";
+                    u_btn.href="/login";
+                    user_name.title="未登录";
+                    u_btn.innerHTML="前往登录";
+                    u_name.innerHTML="未登录";
+                    u_descript.innerHTML="登录享受更多特权";
+                    return console.log(response);
+                }
+                header.src='header?pid='+response.pid;
+                user_name.href="/user/"+response.pid+"?"+response.token;
+                u_btn.href='';
+                user_name.title=response.name+"的个人中心";
+                u_btn.innerHTML="注销";
+                u_btn.onclick=function(){
+                    let log_xml=getXmlHttp();
+                    let href='logout?pid='+response.pid;
+                    window.localStorage.removeItem("u");
+                    log_xml.open('GET',href,true);
+                    log_xml.send();
+                    log_xml.onreadystatechange=function(){
+                        header.style.display="none";
+                        user_name.href="/login";
+                        u_btn.href="/login";
+                        user_name.title="个人中心";
+                        u_btn.innerHTML="前往登录";
+                        u_name.innerHTML="未登录";
+                        u_descript.innerHTML="登录享受更多特权";
+                    }
+                };
+                u_name.innerHTML=response.name;
+                u_descript.innerHTML=response.brief;
+                window.localStorage.setItem('u',xml.responseText);
+            }
+        }
+    }else{
+        header.style.display="none";
+        user_name.href="/login";
+        u_btn.href="/login";
+        user_name.title="个人中心";
+        u_btn.innerHTML="前往登录";
+        u_name.innerHTML="未登录";
+        u_descript.innerHTML="登录享受更多特权";
+    }
+</script>
 <div class="content">
     <div class="uploadFile">
         <div class="file_box">
@@ -49,10 +141,15 @@
             生日:
             <input type="date" id="date" name="date">
         </label>
+        <label for="address" class="label">
+            地址:
+            <input type="text" id="address" placeholder="收货地址" name="address">
+        </label>
         <label for="msg" class="user_msg">
             <h3>个人简介:</h3>
             <textarea id="brief" name="msg" id="msg" cols="30" rows="10" placeholder="在此输入你想要的简介"></textarea>
         </label>
+
         <span class="btn" id="save">
             保存信息
         </span>

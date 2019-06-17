@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数码商城登录&注册</title>
+    <link rel="stylesheet" href="./css/public.css">
+    <link rel="stylesheet" href="./css/top_pc.css">
+    <link rel="stylesheet" href="./css/login.css">
+</head>
+<body>
+<div class="con_bg"></div>
+<header class="site_top" id="site_top">
+    <nav class="top_nav">
+        <div class="titles fl">
+            <ul>
+                <li class="lis">首页</li>
+                <li class="lis">页面1</li>
+                <li class="lis">页面2</li>
+                <li class="lis">页面3</li>
+            </ul>
+        </div>
+        <div class="userBox fr" id="user">
+            <ul>
+                <li class="lis">联系客服</li>
+                <li class="lis">历史记录</li>
+                <li class="lis">购物车</li>
+                <li class="lis">
+                    <a :href="ahref" :title="user_name">个人中心</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+    <div class="con">
+        <div class="input_box">
+            <div class="title">
+                <h1>用户登录</h1>
+            </div>
+            <form action="POST">
+                <label for="email">
+                    <span class="c">邮</span>
+                    <input type="text" class="inp" id="email" name="email" placeholder="邮箱或者手机号">
+                </label>
+                <label for="password">
+                    <span class="c"> 密</span>
+                    <input type="password" class="inp" id="password" name="password" placeholder="密码">
+                    <span class="eye">👁</span>
+                </label>
+                <div class="btn_box">
+                    <input type="button" value="确认登录" class="btn">
+                </div>
+                <div class="more">
+                    <span>没有账号?<a href="#">立即注册</a></span>
+                    <span>忘记密码?</span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

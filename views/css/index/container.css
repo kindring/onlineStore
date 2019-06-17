@@ -1,0 +1,170 @@
+.container{
+    display: flex;
+    position:relative;
+    width:1200px;
+    height:550px;
+    margin:0 auto;
+    background-color: #00b700;
+    overflow: hidden;
+}
+.Img_bg{
+    width: 100%;
+    height:100%;
+    position:absolute;
+    transition:all 0.8s;
+}
+.Img_bg ul{
+    display: block;
+    height:100%;
+    width:100%;
+}
+.Img_bg .lis{
+    display: block;
+    list-style: none;
+    width:100%;
+    height:100%;
+    position:relative;
+}
+.Img_bg img{
+    width:100%;
+    height:100%;
+    position: absolute;
+    left:0;
+    top:0;
+    margin:0;
+    padding:0;
+}
+.category{
+    width:270px;
+    height:100%;
+    position:relative;
+    z-index: 5;
+    background-color: rgba(0,0,0,0.8);
+}
+.category .lis{
+    display: flex;
+    width:230px;
+    padding:0 20px;
+    height:55px;
+    line-height:50px;
+    color:white;
+    font-size:20px;
+    justify-content: space-between;
+    text-align: center;
+
+}
+.category .lis:hover{
+    background-color: orangered;
+}
+
+
+.banner_b{
+    display: flex;
+    width:1200px;
+    height:230px;
+    justify-content: space-between;
+    margin:5px auto 0 auto;
+}
+.banner_b .chunk1{
+    display: flex;
+    width:260px;
+    height:220px;
+    background-color: #46494a;
+    padding:5px;
+}
+.banner_b .chunk1 .lis{
+    width:127px;
+    height:107px;
+    line-height: 115px;
+    margin:1px;
+    font-size:24px;
+    float: left;
+    text-align: center;
+    position:relative;
+    cursor: pointer;
+}
+.banner_b .chunk1 .lis a{
+    display: block;
+    width:100%;
+    height:100%;
+    color: #a2a2a2;
+    background-color: #fffefe;
+    position:absolute;
+    text-decoration: none;
+    text-align: center;
+}
+.banner_b .chunk1 .lis:hover a{
+    color: #ffffff;
+    background-color: #ff6129;
+}
+.banner_b .chunk1 .lis_1{
+    border-right:1px solid #636363;
+    border-bottom: 1px solid #636363;
+}
+.banner_b .chunk1 .lis_2{
+    border-left:1px solid #636363;
+    border-bottom: 1px solid #636363;
+}
+.banner_b .chunk1 .lis_3{
+    border-right:1px solid #636363;
+    border-top:1px solid #636363;
+}
+.banner_b .chunk1 .lis_4{
+    border-left:1px solid #636363;
+    border-top:1px solid #636363;
+}
+.banner {
+    width:925px;
+    height:100%;
+    float: right;
+    position:relative;
+}
+.banner *{
+    display: block;
+    position:absolute;
+    width:100%;
+    height:100%;
+}
+.ocx{
+    width:930px;
+    height:550px;
+    position:relative;
+
+}
+.ocx .btn{
+    position:absolute;
+    width:35px;
+    height:180px;
+    line-height:180px;
+    top:185px;
+    text-align: center;
+    background-color:rgba(0,0,0,0.6);
+    color:white;
+    font-size:24px;
+    z-index:9;
+    opacity: 0;
+    transition:all 0.7s
+}
+.ocx:hover .btn{
+   opacity: 1;
+}
+.ocx .left{
+    left:0;
+}
+.ocx .right{
+    right:0;
+}
+.ocx .carousel{
+    width:100%;
+    height:100%;
+    position:absolute;
+}
+.ocx .carousel a{
+    display: block;
+    width:100%;
+    height:100%;
+    position:absolute;
+    left:0;
+    top:0;
+    z-index:5;
+}

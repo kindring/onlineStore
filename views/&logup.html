@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>码商-用户注册</title>
+    <link rel="stylesheet" href="./css/public.css">
+    <link rel="stylesheet" href="./css/top_pc.css">
+    <link rel="stylesheet" href="./css/register.css">
+</head>
+<body>
+<div class="con_bg"></div>
+<header class="site_top" id="site_top">
+    <nav class="top_nav">
+        <div class="titles fl">
+            <ul>
+                <li class="lis">首页</li>
+                <li class="lis">页面1</li>
+                <li class="lis">页面2</li>
+                <li class="lis">页面3</li>
+            </ul>
+        </div>
+        <div class="userBox fr" id="user">
+            <ul>
+                <li class="lis">联系客服</li>
+                <li class="lis">历史记录</li>
+                <li class="lis">购物车</li>
+                <li class="lis">
+                    <a :href="ahref" :title="user_name">个人中心</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<div class="con">
+    <div class="title">
+        <h1>用户注册</h1>
+    </div>
+    <div class="form_box">
+        <div class="chunk">
+            <label for="user_name">
+                <span>用户名</span>
+                <input type="text" name="user_name" id="user_name" placeholder="用户名">
+            </label>
+            <span class="tips" id="name_tips"></span>
+        </div>
+        <div class="chunk">
+            <label for="email">
+                <span>邮箱</span>
+                <input type="text" name="email" id="email" placeholder="你的邮箱">
+            </label>
+            <span class="tips" id="email_tips"></span>
+        </div>
+        <div class="chunk">
+            <label for="password">
+                <span>密码</span>
+                <input type="text" name="password" id="password" placeholder="你的密码">
+            </label>
+            <span class="tips" id="password_tips"></span>
+        </div>
+        <div class="chunk">
+            <label for="password2">
+                <span>确认密码</span>
+                <input type="text" name="password2" id="password2" placeholder="确认密码">
+            </label>
+            <span class="tips" id="password2_tips">
+                密码必须为字符串
+                密码必须为字符串
+                密码必须为字符串
+                密码必须为字符串
+                密码必须为字符串
+            </span>
+        </div>
+
+
+        <textarea name="descript" id="descript" cols="30" rows="10" placeholder="你的个人简介"></textarea>
+    </div>
+    <div class="btn_box">
+        <label for="agreement">
+            <input type="radio" name="agreement" id="agreement" value="true">同意用户协议
+        </label>
+        <div class="btnS">
+            <div class="btn resitting">重置</div>
+            <div class="btn">注册</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

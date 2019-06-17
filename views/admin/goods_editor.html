@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理商品</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        html,body{
+            height:100%;
+        }
+    </style>
+    <link rel="stylesheet" href="../css/admin/public.css">
+    <link rel="stylesheet" href="../css/admin/goods_editor.css">
+    <script src="../js/admin.js"></script>
+</head>
+<body>
+<div class="content">
+    <div class="sidbar" id="sidbar">
+        <div class="title">
+            <h1><a href="/admin">管理中心</a></h1>
+        </div>
+        <div class="row">
+            <h2>商品管理</h2>
+            <ul>
+                <li class="lis">
+                    <a href="/goods_add">添加商品</a>
+                </li>
+                <li class="lis">
+                    <a href="/goods_lists">查询商品</a>
+                </li>
+                <li class="lis">
+                    <a href="/goods_lists">修改商品</a>
+                </li>
+                <li class="lis">
+                    <a href="/goods_lists">下架商品</a>
+                </li>
+                <li class="lis">
+                    <a href="/goods_lists">删除商品</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row hide">
+            <h2>订单管理</h2>
+            <ul>
+                <li class="lis">
+                    <a href="/order_list">订单列表</a>
+                </li>
+                <li class="lis">
+                    <a href="/order_wait">待发货</a>
+                </li>
+                <li class="lis">
+                    <a href="/order_rebate">退款订单</a>
+                </li>
+                <li class="lis">
+                    <a href="/order_server">售后订单</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row hide">
+            <h2>首页管理</h2>
+            <ul>
+                <li class="lis">
+                    <a href="/i_carousel">轮播商品</a>
+                </li>
+                <li class="lis">
+                    <a href="/i_hot">热门展示</a>
+                </li>
+                <li class="lis">
+                    <a href="/i_banner">横幅展示</a>
+                </li>
+                <li class="lis">
+                    <a href="/i_class">类别划分</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row hide">
+            <h2>数据统计</h2>
+            <ul>
+                <li class="lis">
+                    <a href="/data_vist">添加量</a>
+                </li>
+                <li class="lis">
+                    <a href="/data_month">成交量</a>
+                </li>
+                <li class="lis">
+                    <a href="/index_banner">退款量</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row hide">
+            <h2>活动中心</h2>
+            <ul>
+                <li class="lis">
+                    <a href="/data_vist">折扣</a>
+                </li>
+                <li class="lis">
+                    <a href="/data_month">优惠卷</a>
+                </li>
+                <li class="lis">
+                    <a href="/index_banner">活动页面</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="main" id="main">
+        <div class="top">
+            <div class="hide_sidbar" id="hide_sidbar">隐</div>
+        </div>
+        <div class="window" id="app">
+            <div class="title">
+                <h1>编辑商品</h1>
+            </div>
+            <div class="contents">
+                <div class="goods_editor" id="goods_editor">
+                    <div class="top">
+
+                        <div class="left_chunk">
+                            <input type="file" class="file" id="file" title="{{goods.gid}}">
+                            <div class="cover">
+                                <img src="goods_cover?gid={{goods.gid}}" alt="">
+                            </div>
+                            <div class="back">
+                                修改图片
+                            </div>
+                        </div>
+                        <div class="right_chunk">
+                            <h2>商品详情</h2>
+                            <div class="chunk">
+                                <div class="current">
+                                    当前名称:{{goods.name}}
+                                </div>
+                                <div class="new">
+                                    <label for="g_name">
+                                        <input type="text" id="g_name" placeholder="修改为">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="chunk">
+                                <div class="current" >
+                                    商品原价:{{goods.price}}
+                                </div>
+                                <div class="new">
+                                    <label for="g_price">
+                                        <input type="text" id="g_price" placeholder="修改为">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="chunk">
+                                <div class="current">
+                                    当前售价:{{goods.sell_price}}
+                                </div>
+                                <div class="new">
+                                    <label for="g_sell_price">
+                                        <input type="text" id="g_sell_price" placeholder="修改为">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="header">
+                        <div class="chunk">
+                            <div class="now">
+                                当前邮费:{{goods.postage}}
+                            </div>
+                            <div class="new">
+                                <label for="g_postage">
+                                    <input type="text" id="g_postage" placeholder="修改为">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="chunk chunk2">
+                            <div class="now">
+                                当前库存:{{goods.stock}}
+                            </div>
+                            <div class="new">
+                                <label for="stock">
+                                    <input type="text" id="stock" placeholder="修改为">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mid">
+                        <div class="old">
+                            <p>{{goods.descript}}</p>
+                        </div>
+                        <div class="new">
+                            <textarea name="describe" id="g_descript" placeholder="在填写新的商品介绍" id="" cols="30" rows="10"></textarea>
+                        </div>
+                    </div>
+                    <div class="btn_box">
+                        <div class="btn" id="btn">保存信息</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="msg" style="display: none;">
+        <span id="old_name">{{goods.name}}</span>
+        <span id="old_price">{{goods.price}}</span>
+        <span id="old_sell_price">{{goods.sell_price}}</span>
+    </div>
+</div>
+</body>
+<script>
+    function gi(id){return document.getElementById(id)};
+    let file=gi('file');
+    let gid=file.title;
+    console.log(gid);
+    let fileIsChange=false;
+    file.onchange=function(){
+        fileIsChange=true;
+        let files=file.files[0];
+        let formData=new FormData();
+        formData.append('file',files);
+        formData.append('gid',gid);
+        let xmlHttp=getXmlHttp();
+        xmlHttp.open('POST',"/cover_add",true);
+        xmlHttp.onload = function () {
+            let response=xmlHttp.responseText;
+            console.log(response);
+            alert(response);
+        };
+        xmlHttp.send(formData)
+    };
+
+    let g_name=gi('g_name');
+    let old_name=gi('old_name');
+
+    let g_price=gi('g_price');
+    let old_price=gi('old_price');
+
+
+    let g_sell_price=gi('g_sell_price');
+    let old_sell_price=gi('old_sell_price');
+    console.log(old_name.innerText);
+    console.log(old_price.innerText);
+    console.log(old_sell_price.innerText);
+    let g_postage=gi('g_postage');
+    let g_stock=gi('stock');
+    let g_descript=gi('g_descript');
+
+    let btn=gi('btn');
+    btn.onclick=function(){
+        let obj=create_obj();
+        let xml=getXmlHttp();
+        if(obj==={}){
+            return alert("")
+        }
+        obj.gid=gid;
+        obj=JSON.stringify(obj);
+        xml.open("POST","/edit_goods",true);
+        xml.send(obj);
+        xml.onreadystatechange=function(){
+            if(xml.readyState===4&&xml.status===200){
+                let response=xml.responseText;
+                response=JSON.parse(response);
+                if(response.errCode){
+                    console.log(response);
+                    return alert(response.describe)
+                }
+                console.log(response);
+                alert("商品更新完成")
+            }
+        }
+    };
+    function create_obj(){
+        let obj={};
+            obj.name=g_name.value||old_name.innerText;
+            obj.price=g_price.value||old_price.innerText;
+            obj.sell_price=g_sell_price.value||old_sell_price.innerText;
+
+        if(g_sell_price.value){
+            obj.sell_price=g_sell_price.value
+        }if(g_postage.value){
+            obj.postage=g_postage.value
+        }if(g_stock.value){
+            obj.stock=g_stock.value
+        }
+        if(g_descript.value){
+            obj.descript=g_descript.value;
+        }
+        return obj;
+    }
+    function getXmlHttp(){
+        if (window.XMLHttpRequest)
+        {// 判断是否有该对象
+            return new XMLHttpRequest();
+        }
+        else if (window.ActiveXObject)
+        {// 判断是否是兼容ie5和ie6
+            return new ActiveXObject("Microsoft.XMLHTTP");
+        }else{
+            return null;
+        }
+    }
+</script>
+</html>

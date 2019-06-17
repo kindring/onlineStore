@@ -71,7 +71,10 @@ exports.addHead=function(json,callback){
     });
 };
 
-// fs.readFile("./views/imgs/head_title.png",function(err,data){
+function addddd(){
+    //第一次启动的话调用此方法
+    
+   // fs.readFile("./views/imgs/head_title.png",function(err,data){
 //     if(err){
 //         return console.log(err);
 //     }
@@ -86,7 +89,9 @@ exports.addHead=function(json,callback){
 //         }
 //         console.log(data)
 //     })
-// });
+// }); 
+}
+
 exports.changeHead=change;
 exports.findPid=findPid;
 

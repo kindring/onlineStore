@@ -134,7 +134,7 @@ function update(pid,callback){
     })
 }
 function remove(pid,callback){
-    token.removeOne({pid:pid},function(err,data){
+    token.deleteOne({pid:pid},function(err,data){
         if(err){
             return callback({
                 errCode:"555",

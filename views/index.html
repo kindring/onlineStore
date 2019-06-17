@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数码商城</title>
+    <link rel="stylesheet" href="./css/public.css">
+    <link rel="stylesheet" href="./css/top_pc.css">
+    <link rel="stylesheet" href="./css/index/header.css">
+    <link rel="stylesheet" href="./css/index/container.css">
+    <link rel="stylesheet" href="./css/index/app.css">
+    <style>
+    </style>
+</head>
+<body>
+<header class="site_top" id="site_top">
+    <nav class="top_nav">
+        <div class="titles fl">
+            <ul>
+                <li class="lis"><a href="/">首页</a></li>
+                <li class="lis"><a href="/admin">管理</a></li>
+                <li class="lis"><a href="/login">登录</a></li>
+                <li class="lis"><a href="/search?sort=0&keyword=">查询</a></li>
+            </ul>
+        </div>
+        <div class="userBox fr" id="user">
+            <ul>
+                <li class="lis">联系客服</li>
+                <li class="lis">历史记录</li>
+                <li class="lis"><a href="/car?pid" id="user_car">购物车</a></li>
+                <li class="lis" id="users">
+                    <img id="top_user_header" class="user_header" alt="头像加载失败" >
+                    <a id="top_user_name" title="user_name">个人中心</a>
+                    <div class="user_msg">
+                        <h2 id="u_name">暂未登录</h2>
+                        <div class="descript" id="u_descript">
+                            登录后享受更多快乐
+                        </div>
+                        <div class="btn_box">
+                            <a href="/login" class="btn" id="u_btn">前往登录</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<script>
+    function gi(id){return document.getElementById(id)}
+    function getXmlHttp(){
+        if (window.XMLHttpRequest)
+        {// 判断是否有该对象
+            return new XMLHttpRequest();
+        }
+        else if (window.ActiveXObject)
+        {// 判断是否是兼容ie5和ie6
+            return new ActiveXObject("Microsoft.XMLHTTP");
+        }else{
+            return null;
+        }
+    }
+    let user_name=gi('top_user_name');
+    let header=gi('top_user_header');
+    let u_btn=gi('u_btn');
+    let u_name=gi('u_name');
+    let u_descript=gi('u_descript');
+    if(window.localStorage.getItem('u')){
+        let user_obj=window.localStorage.getItem('u');
+        user_obj=JSON.parse(user_obj);
+        header.src='header?pid='+user_obj.pid;
+        user_name.href="/user/"+user_obj.pid+"?token="+user_obj.token;
+        u_btn.href="logout?pid="+user_obj.pid;
+        user_name.title="加载中";
+        u_btn.innerHTML="注销";
+        u_name.innerHTML="获取名称中";
+        u_descript.innerHTML="获取最新简介中";
+        let xml=getXmlHttp();
+        xml.open('POST','/log',true);
+        xml.send(JSON.stringify(user_obj));
+        xml.onreadystatechange=function(){
+            if(xml.readyState===4&&xml.status){
+                let response=xml.responseText;
+                response=JSON.parse(response);
+                if(response.err){
+                    header.style.display="none";
+                    user_name.href="/login";
+                    u_btn.href="/login";
+                    user_name.title="未登录";
+                    u_btn.innerHTML="前往登录";
+                    u_name.innerHTML="未登录";
+                    u_descript.innerHTML="登录享受更多特权";
+                    return console.log(response);
+                }
+                header.src='header?pid='+response.pid;
+                user_name.href="/user/"+response.pid+"?"+response.token;
+                u_btn.href='';
+                user_name.title=response.name+"的个人中心";
+                u_btn.innerHTML="注销";
+                u_btn.onclick=function(){
+                    let log_xml=getXmlHttp();
+                    let href='logout?pid='+response.pid;
+                    window.localStorage.removeItem("u");
+                    log_xml.open('GET',href,true);
+                    log_xml.send();
+                    log_xml.onreadystatechange=function(){
+                        header.style.display="none";
+                        user_name.href="/login";
+                        u_btn.href="/login";
+                        user_name.title="个人中心";
+                        u_btn.innerHTML="前往登录";
+                        u_name.innerHTML="未登录";
+                        u_descript.innerHTML="登录享受更多特权";
+                    }
+                };
+                u_name.innerHTML=response.name;
+                u_descript.innerHTML=response.brief;
+                window.localStorage.setItem('u',xml.responseText);
+            }
+        }
+    }else{
+        header.style.display="none";
+        user_name.href="/login";
+        u_btn.href="/login";
+        user_name.title="个人中心";
+        u_btn.innerHTML="前往登录";
+        u_name.innerHTML="未登录";
+        u_descript.innerHTML="登录享受更多特权";
+    }
+</script>
+<div class="site_header">
+    <nav class="header_nav">
+        <div class="logo">
+            Logo
+        </div>
+        <div class="seach_box">
+            <form action="search" method="get">
+                <input type="text" name="sort" value="0" style="display: none">
+            <input type="text" name="keyword" id="seach_key" class="seach_key" placeholder="搜索">
+            <input type="submit" value="搜" id="seach_btn" class="seach_btn">
+            </form>
+        </div>
+        <script>
+            let search_btn=document.getElementById('search_btn')
+        </script>
+        <div class="car">
+            购物车
+        </div>
+    </nav>
+</div>
+<!--轮播与展示区域-->
+<div class="container" id="container">
+    <div class="Img_bg" id="img_bg">
+        <ul>
+            <li class="lis"><img src="goods_cover?gid=carousel1" alt="图片加载失败"></li>
+            <li class="lis"><img src="goods_cover?gid=carousel2" alt="图片加载失败"></li>
+            <li class="lis"><img src="goods_cover?gid=carousel3" alt="图片加载失败"></li>
+            <li class="lis"><img src="goods_cover?gid=carousel4" alt="图片加载失败"></li>
+            <li class="lis"><img src="goods_cover?gid=carousel5" alt="图片加载失败"></li>
+            <li class="lis"><img src="goods_cover?gid=carousel6" alt="图片加载失败"></li>
+        </ul>
+    </div>
+    <div class="category">
+        <ul>
+            <li class="lis">第一种商品 <span>></span></li>
+            <li class="lis">第2种商品<span>></span></li>
+            <li class="lis">第3种商品<span>></span></li>
+            <li class="lis">第4种商品<span>></span></li>
+            <li class="lis">第5种商品<span>></span></li>
+            <li class="lis">第6种商品<span>></span></li>
+            <li class="lis">第7种商品<span>></span></li>
+            <li class="lis">第8种商品<span>></span></li>
+            <li class="lis">第9种商品<span>></span></li>
+            <li class="lis">第10种商品<span>></span></li>
+        </ul>
+    </div>
+    <div class="ocx">
+        <div class="carousel">
+            <a href="" id="carousel_herf"></a>
+        </div>
+        <div class="btn left" id="btn_prev"><</div>
+        <div class="btn right" id="btn_next">></div>
+    </div>
+</div>
+<!--横幅与小链接-->
+<div class="banner_b">
+    <div class="chunk1">
+        <ul>
+            <li class="lis lis_1">
+                <a href="">团购通道</a>
+            </li>
+            <li class="lis lis_2">
+                <a href="">更多优惠</a>
+            </li>
+            <li class="lis lis_3">
+                <a href="">充值</a>
+            </li>
+            <li class="lis lis_4">
+                <a href="">购物车</a>
+            </li>
+        </ul>
+    </div>
+    <div class="banner">
+        <a href="#">
+            <img src="imgs/6.png" alt="">
+        </a>
+    </div>
+</div>
+
+<div class="app" id="app">
+    <div class="hot_goods">
+        <div class="hot_title">热门信息</div>
+        <div class="hots">
+            <div class="hot hot0">
+                <img src="goods_cover?gid=hot0" alt="加载中">
+                <a href="{{herf.hot0}}"></a>
+            </div>
+            <div class="hot hot1">
+                <img src="goods_cover?gid=hot1" alt="加载中">
+                <a href="{{herf.hot1}}"></a>
+            </div>
+            <div class="hot hot2">
+                <img src="goods_cover?gid=hot2" alt="加载中">
+                <a href="{{herf.hot2}}"></a>
+            </div>
+            <div class="hot hot3">
+                <img src="goods_cover?gid=hot3" alt="加载中">
+                <a href="{{herf.hot3}}"></a>
+            </div>
+            <div class="hot hot4">
+                <img src="goods_cover?gid=hot4" alt="加载中">
+                <a href="{{herf.hot4}}"></a>
+            </div>
+            <div class="hot hot5">
+                <img src="goods_cover?gid=hot5" alt="加载中">
+                <a href="{{herf.hot5}}"></a>
+            </div>
+            <div class="hot hot6">
+                <img src="goods_cover?gid=hot6" alt="加载中">
+                <a href="{{herf.hot6}}"></a>
+            </div>
+            <div class="hot hot7">
+                <img src="goods_cover?gid=hot7" alt="加载中">
+                <a href="{{herf.hot7}}"></a>
+            </div>
+            <div class="hot hot8">
+                <img src="goods_cover?gid=hot8" alt="加载中">
+                <a href="{{herf.hot8}}"></a>
+            </div>
+            <div class="hot hot9">
+                <img src="goods_cover?gid=hot9" alt="加载中">
+                <a href="{{herf.hot9}}"></a>
+            </div>
+        </div>
+    </div>
+    <div class="contain">
+
+        <div class="brick_box">
+            <div class="brick_top">
+                <div class="genre _left "><b>手机</b></div>
+                <div class="genre _right more">更多</div>
+            </div>
+            <div class="con con1">
+            <div class="left_chunk">
+                <img src="/goods_cover?gid=062251052" alt="">
+                <a href="/commodity?gid=062251052"></a>
+            </div>
+            <div class="right_chunk">
+                <ul>
+                    <li class="lis">
+
+                    </li>
+                    <li class="lis">
+                    </li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                </ul>
+            </div>
+        </div>
+        </div>
+
+    </div>
+    <div class="contain">
+        <div class="brick_box">
+            <div class="brick_top">
+                <div class="genre _left "><b>电脑</b></div>
+                <div class="genre _right more">更多</div>
+            </div>
+            <div class="con con1">
+            <div class="left_chunk">
+                <img src="./imgs/ver/dn.jpg" alt="">
+                <a href="/commodity?gid=226401531"></a>
+            </div>
+            <div class="right_chunk">
+                <ul>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                </ul>
+            </div>
+        </div>
+        </div>
+
+    </div>
+    <div class="contain">
+        <div class="brick_box">
+            <div class="brick_top">
+                <div class="genre _left "><b>笔记本</b></div>
+                <div class="genre _right more">更多</div>
+            </div>
+            <div class="con con1">
+            <div class="left_chunk">
+                <img src="./imgs/ver/bjb.jpg" alt="">
+                <a href="/commodity?gid=330122413"></a>
+            </div>
+            <div class="right_chunk">
+                <ul>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                </ul>
+            </div>
+        </div>
+        </div>
+
+    </div>
+    <div class="contain">
+        <div class="brick_box">
+            <div class="brick_top">
+                <div class="genre _left "><b>家电</b></div>
+                <div class="genre _right more">更多</div>
+            </div>
+            <div class="con con1">
+            <div class="left_chunk">
+                <img src="./imgs/ver/jd.jpg" alt="">
+                <a href="/commodity?gid=330122413"></a>
+            </div>
+            <div class="right_chunk">
+                <ul>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                </ul>
+            </div>
+        </div>
+        </div>
+
+    </div>
+    <div class="contain">
+        <div class="brick_box">
+            <div class="brick_top">
+                <div class="genre _left "><b>配件</b></div>
+                <div class="genre _right more">更多</div>
+            </div>
+            <div class="con con1">
+            <div class="left_chunk">
+                <img src="./imgs/ver/pj.jpg" alt="">
+                <a href="/commodity?gid=330122413"></a>
+            </div>
+            <div class="right_chunk">
+                <ul>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                    <li class="lis"></li>
+                </ul>
+            </div>
+        </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="admin" id="hide_admin_msg" style="display: none">
+    <span class="msg" id="carousel_herf1">{{herf.carousel1}}</span>
+    <span class="msg" id="carousel_herf2">{{herf.carousel2}}</span>
+    <span class="msg" id="carousel_herf3">{{herf.carousel3}}</span>
+    <span class="msg" id="carousel_herf4">{{herf.carousel4}}</span>
+    <span class="msg" id="carousel_herf5">{{herf.carousel5}}</span>
+    <span class="msg" id="carousel_herf6">{{herf.carousel6}}</span>
+</div>
+</body>
+
+<script>
+    //轮播代码,换链接轮播
+    let carousel_herf=gi('carousel_herf');
+    let hide_admin_msg=gi('hide_admin_msg');
+    let carousel_a_s=hide_admin_msg.getElementsByClassName('msg');
+    let btn_next=gi("btn_next");
+    let btn_prev=gi("btn_prev");
+    let img_bg=gi('img_bg');
+    let herf_arr=[];
+    let this_index=0;
+    let height_value=550;
+    let timer=null;
+    let container=gi('container');
+    container.onmouseover=function(){
+        clearInterval(timer);
+        timer=null;
+    };
+    container.onmouseout=function(){
+        timer=setInterval(function(){
+            nextImg();
+        },1500);
+    };
+    for(let i=0;i<carousel_a_s.length;i++){
+        herf_arr.push(carousel_a_s[i].innerHTML);
+    }
+    function nextImg(){
+        this_index++;
+        if(this_index>=carousel_a_s.length-1){
+            this_index=0;
+        }
+        showImg()
+    }
+    function prevImg(){
+        this_index--;
+        if(this_index<0){
+            this_index=carousel_a_s.length-1;
+        }
+        showImg()
+    }
+    function showImg(){
+        img_bg.style.top=0-(height_value*this_index)+"px";
+        carousel_herf.href=herf_arr[this_index];
+    }
+    showImg();
+    timer=setInterval(function(){
+        nextImg();
+    },1500);
+    btn_next.onclick=function(){
+        nextImg();
+    };
+    btn_prev.onclick=function(){
+        console.log("手动上一张");
+        prevImg();
+    }
+    console.log(herf_arr);
+    //'goods_cover?gid=
+</script>
+<script>
+    initialization()
+    function initialization(){
+        let app=document.getElementById('app');
+        let contain=app.getElementsByClassName('contain');
+        for(let i=0;i<contain.length;i++){
+            let lis=contain[i].getElementsByClassName('lis');
+            lis_add_elements(lis);
+        }
+
+        function lis_add_elements(el){
+            for(let i=0;i<el.length;i++){
+                let cover=cEl('div','cover');
+                let cover_img=cEl('img');
+                let a=cEl('a');
+                a.innerHTML="加载中......";
+                cover.appendChild(cover_img);
+                cover.appendChild(a);
+                let msg=cEl('div','msg');
+                let msg_name=cEl('div','name');
+                let msg_name_a=cEl('a');
+                    msg_name_a.innerHTML="加载中......";
+                    msg_name.appendChild(msg_name_a);
+                msg.appendChild(msg_name);
+                let msg_descript=cEl('div','descript');
+                msg_descript.innerHTML="加载中......";
+                msg.appendChild(msg_descript);
+                let price=cEl('div','price_box');
+                    price.innerHTML='<div class="p now_price"><span>0</span>元</div><div class="p old_price"><span>0</span>元</div>'
+                msg.appendChild(price);
+                el[i].appendChild(cover);
+                el[i].appendChild(msg);
+
+            }
+        }
+        function cEl(tagName,className){
+            let newEl=document.createElement(tagName);
+            if(className){
+                newEl.className=className;
+            }
+            return newEl;
+        }
+    }
+    function render(sort,list){
+        //手动渲染数据,只适用于当前页面
+        let app=document.getElementById('app');
+        let contain=app.getElementsByClassName('contain');
+        if(!contain[sort]){
+            return alert('下标为:'+sort+"的元素不存在");
+        }
+        contain=contain[sort];
+        let lis=contain.getElementsByClassName('lis');
+        console.log(lis);
+        for(let i = 0;i<lis.length;i++){
+            let cover_box=lis[i].getElementsByClassName('cover')[0];//获取到对应的元素
+            let msg=lis[i].getElementsByClassName('msg')[0];
+            let cover_img=cover_box.getElementsByTagName('img')[0];
+            let cover_a=cover_box.getElementsByTagName('a')[0];
+            let msg_name_a=lis[i].getElementsByClassName('name')[0].getElementsByTagName('a')[0];
+            let descript=lis[i].getElementsByClassName('descript')[0];
+            let now_price=lis[i].getElementsByClassName('now_price')[0].getElementsByTagName('span')[0];
+            let old_price=lis[i].getElementsByClassName('old_price')[0].getElementsByTagName('span')[0];
+            cover_img.src='goods_cover?gid='+list[i].gid;
+            msg_name_a.innerHTML=list[i].name||null;
+            msg_name_a.href='commodity?gid='+list[i].gid;
+            cover_a.href='commodity?gid='+list[i].gid;
+            descript.innerHTML=list[i].descript;
+            cover_a.innerHTML='';
+            now_price.innerHTML=list[i].sell_price;
+            old_price.innerHTML=list[i].price;
+
+        }
+
+    }
+</script>
+<!--vue实例部分-->
+<script>
+    let pageHeight=800;//页面的高度
+    let autoHeight=500;//每个板块的高度
+    let onLoad=0;//已经加载了的模块
+
+    let loading=true;
+    //懒加载
+    window.onscroll=function(){
+       let y=window.pageYOffset||document.documentElement.scrollTop;
+       let hideY=pageHeight+(onLoad*autoHeight);
+       if(y>=hideY){
+           //如果大于等于这个值则进行加载,加载执行不可逆
+           getGoodsList(onLoad+1);
+       }
+    };
+    function getGoodsList(num){
+        let xml=getXmlHttp();
+        let queryPath="/goods_list?";
+        queryPath+="limit=8";
+        queryPath+="&sort="+num;
+        queryPath+="&page="+1;
+        queryPath+="&rear=-1";
+        xml.open("GET",queryPath,true);
+        xml.send();
+        let this_sort=onLoad;
+        onLoad++;
+        xml.onreadystatechange=function(){
+            if(xml.readyState===4&&xml.status){
+                let response=xml.responseText;
+                response=response.split('*-*');
+                console.log(response);
+                for(let i=0;i<response.length;i++){
+                    response[i]=JSON.parse(response[i]);
+                }
+                render(this_sort,response);
+            }
+        }
+    };
+
+</script>
+</html>

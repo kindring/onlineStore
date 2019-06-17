@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查找商品</title>
+    <link rel="stylesheet" href="./css/public.css">
+    <link rel="stylesheet" href="./css/top_pc.css">
+    <link rel="stylesheet" href="./css/search_app.css">
+</head>
+<body>
+<header class="site_top" id="site_top">
+    <nav class="top_nav">
+        <div class="titles fl">
+            <ul>
+                <li class="lis"><a href="/">首页</a></li>
+                <li class="lis"><a href="/admin">管理</a></li>
+                <li class="lis"><a href="/login">登录</a></li>
+                <li class="lis"><a href="/search?sort=0&keyword=">查询</a></li>
+            </ul>
+        </div>
+        <div class="userBox fr" id="user">
+            <ul>
+                <li class="lis">联系客服</li>
+                <li class="lis">历史记录</li>
+                <li class="lis"><a href="/car?pid" id="user_car">购物车</a></li>
+                <li class="lis" id="users">
+                    <img id="top_user_header" class="user_header" alt="头像加载失败" >
+                    <a id="top_user_name" title="user_name">个人中心</a>
+                    <div class="user_msg">
+                        <h2 id="u_name">暂未登录</h2>
+                        <div class="descript" id="u_descript">
+                            登录后享受更多快乐
+                        </div>
+                        <div class="btn_box">
+                            <a href="/login" class="btn" id="u_btn">前往登录</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<script>
+    function gi(id){return document.getElementById(id)}
+    function getXmlHttp(){
+        if (window.XMLHttpRequest)
+        {// 判断是否有该对象
+            return new XMLHttpRequest();
+        }
+        else if (window.ActiveXObject)
+        {// 判断是否是兼容ie5和ie6
+            return new ActiveXObject("Microsoft.XMLHTTP");
+        }else{
+            return null;
+        }
+    }
+    let user_name=gi('top_user_name');
+    let header=gi('top_user_header');
+    let u_btn=gi('u_btn');
+    let u_name=gi('u_name');
+    let u_descript=gi('u_descript');
+    if(window.localStorage.getItem('u')){
+        let user_obj=window.localStorage.getItem('u');
+        user_obj=JSON.parse(user_obj);
+        header.src='header?pid='+user_obj.pid;
+        user_name.href="/user/"+user_obj.pid+"?token="+user_obj.token;
+        u_btn.href="logout?pid="+user_obj.pid;
+        user_name.title="加载中";
+        u_btn.innerHTML="注销";
+        u_name.innerHTML="获取名称中";
+        u_descript.innerHTML="获取最新简介中";
+        let xml=getXmlHttp();
+        xml.open('POST','/log',true);
+        xml.send(JSON.stringify(user_obj));
+        xml.onreadystatechange=function(){
+            if(xml.readyState===4&&xml.status){
+                let response=xml.responseText;
+                response=JSON.parse(response);
+                if(response.err){
+                    header.style.display="none";
+                    user_name.href="/login";
+                    u_btn.href="/login";
+                    user_name.title="未登录";
+                    u_btn.innerHTML="前往登录";
+                    u_name.innerHTML="未登录";
+                    u_descript.innerHTML="登录享受更多特权";
+                    return console.log(response);
+                }
+                header.src='header?pid='+response.pid;
+                user_name.href="/user/"+response.pid+"?"+response.token;
+                u_btn.href='';
+                user_name.title=response.name+"的个人中心";
+                u_btn.innerHTML="注销";
+                u_btn.onclick=function(){
+                    let log_xml=getXmlHttp();
+                    let href='logout?pid='+response.pid;
+                    window.localStorage.removeItem("u");
+                    log_xml.open('GET',href,true);
+                    log_xml.send();
+                    log_xml.onreadystatechange=function(){
+                        header.style.display="none";
+                        user_name.href="/login";
+                        u_btn.href="/login";
+                        user_name.title="个人中心";
+                        u_btn.innerHTML="前往登录";
+                        u_name.innerHTML="未登录";
+                        u_descript.innerHTML="登录享受更多特权";
+                    }
+                };
+                u_name.innerHTML=response.name;
+                u_descript.innerHTML=response.brief;
+                window.localStorage.setItem('u',xml.responseText);
+            }
+        }
+    }else{
+        header.style.display="none";
+        user_name.href="/login";
+        u_btn.href="/login";
+        user_name.title="个人中心";
+        u_btn.innerHTML="前往登录";
+        u_name.innerHTML="未登录";
+        u_descript.innerHTML="登录享受更多特权";
+    }
+</script>
+
+<div class="app">
+    <div class="content">
+        <div class="search_box">
+            <form action="search" method="get">
+            <div class="title">查找条件</div>
+            <div class="sort">
+                <span>商品类型</span>
+                <select name="sort" id="g_sort" value="{{search.sort}}" title="{{search.sort}}">
+                            <option value="0">无限制</option>
+                            <option value="1">手机</option>
+                            <option value="2">电脑</option>
+                            <option value="3">笔记本</option>
+                            <option value="4">家电</option>
+                            <option value="5">配件</option>
+                        </select>
+            </div>
+            <div class="keyword">
+               <label for="keyword">
+                <span>关键词:</span>
+                <input type="text" name="keyword" id="keyword" title="{{search.keyword}}" value="{{search.keyword}}" placeholder="关键词">
+               </label>
+            </div>
+            <div class="btn_box">
+                <input type="submit" value="查找">
+            </div>
+            </form>
+        </div>
+        <div class="goods_box" id="goods_box">
+            <ul id="ul">
+                {{each goods}}
+                <li class="lis" title="{{$value.gid}}">
+                    <div class="cover">
+                        <img src="goods_cover?gid={{$value.gid}}">
+                        <a href="commodity?gid={{$value.gid}}"></a>
+                    </div>
+                    <div class="msg">
+                        <div class="name">
+                            <a href="commodity?gid={{$value.gid}}">{{$value.name}}</a>
+                        </div>
+                        <div class="descript">{{$value.descript}}</div>
+                        <div class="price_box">
+                            <div class="p now_price">
+                                <span>{{$value.sell_price}}</span>元
+                            </div>
+                            <div class="p old_price">
+                                <span>{{$value.price}}</span>元
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {{/each}}
+
+            </ul>
+        </div>
+    </div>
+
+</div>
+<script>
+    let sort=document.getElementById('g_sort');
+    sort.value=sort.title;//获取当前属性设置默认显示效果
+
+    function gi(id){return document.getElementById(id)}
+    function getXmlHttp(){
+        if (window.XMLHttpRequest)
+        {// 判断是否有该对象
+            return new XMLHttpRequest();
+        }
+        else if (window.ActiveXObject)
+        {// 判断是否是兼容ie5和ie6
+            return new ActiveXObject("Microsoft.XMLHTTP");
+        }else{
+            return null;
+        }
+    }
+    function getPosition(el,attr){
+        let el_position_value=el[attr];
+        while(el=el.offsetParent){
+            el_position_value+=el[attr];
+        }
+        return el_position_value;
+    }
+    let goods_box=gi('goods_box');
+    let lis=goods_box.getElementsByClassName('lis');
+    let gidarr=[];
+    for(let i=0;i<lis.length;i++){
+        gidarr.push(lis[i].title);
+    }
+    let allHeight=(Math.ceil(lis.length/5))*310;
+    goods_box.style.height=allHeight+"px";
+    let query_lock=true;
+    let islod=true;
+    let page=1;
+    let ul=gi('ul');
+    window.onscroll=function(e){
+        let scrollTop=window.pageYOffset||document.documentElement.scrollTop;//获取已滚动的高度
+        var pageHeight=document.documentElement.clientHeight||document.body.clientHeight;
+        var showHeight=scrollTop+pageHeight;
+        if(showHeight>=allHeight+20){
+        if(query_lock){
+            query_lock=false;
+                if(islod){
+                    //加载
+                    console.log("加载数据");
+                    getlist(function(result){
+                    if(!result){
+                        return console.log('没有查找到数据请稍后再试');
+                    }
+                    page++;
+                    if(result.length<20){
+                        islod=false;
+                        page--;
+                        console.log('数据查询数量不足,于90s后才可尝试继续查询');
+                        setTimeout(function(){
+                            islod=true;
+                            console.log('已经可以继续查询');
+                        },30*1000)
+                    }
+                    for(let i=0;i<result.length;i++){
+                        if(!isrepeat(result[i].gid)){
+                            continue;//如果有重复,则跳过
+                        }
+                        let new_el=create_lis(result[i]);
+                        ul.appendChild(new_el)
+                    }
+                    query_lock=true;
+                })
+                }else{
+                    console.log('稍后再试')
+                }
+        }
+        }
+
+    };
+function isrepeat(gid){
+    let bo=true;
+    for(let i = 0;i<gidarr.length;i++){
+        if(gidarr[i]==gid){
+            bo=false;
+            break;
+        }
+    }
+    return bo;
+}
+function getlist(callback){
+        let keyword=gi('keyword').title;
+        let sort_title=sort.title;
+        let xml=getXmlHttp();
+        let queryPath="/goods_list?";
+        queryPath+="limit=20";
+        queryPath+="&page="+parseInt(page+1);
+        queryPath+="&sort="+sort_title;
+        queryPath+="&keyword="+keyword;
+        queryPath+="&rear=-1";
+        xml.open('GET',queryPath,true);
+        xml.send();
+    xml.open("GET",queryPath,true);
+    xml.send();
+    xml.onreadystatechange=function(){
+            if(xml.readyState===4&&xml.status===200){
+                let response=xml.responseText;
+                response=response.split('*-*');
+                if(response[0]===""){
+                    query_lock=true;
+                    callback(null)
+                }else{
+                    for(let i = 0;i<response.length;i++){
+                        response[i]=JSON.parse(response[i]);
+                    }
+                    callback(response);
+                }
+                query_lock=true;
+            }
+        };
+}
+function create_lis(json){
+    //往内容内添加元素
+    let newLi=cEl('li','lis');
+    let cover=cEl('div','cover');
+    let cover_img=cEl('img');
+    let a=cEl('a');
+    let msg=cEl('div','msg');
+    let msg_name=cEl('div','name');
+    let msg_name_a=cEl('a');
+    let msg_descript=cEl('div','descript');
+    let price=cEl('div','price_box');
+    cover_img.src='goods_cover?gid='+json.gid;
+    a.href='commodity?gid='+json.gid;
+    msg_name_a.href='commodity?gid='+json.gid;
+    cover.appendChild(cover_img);
+    cover.appendChild(a);
+    msg_name_a.innerHTML=json.name;
+    msg_name.appendChild(msg_name_a);
+    msg.appendChild(msg_name);
+    msg_descript.innerHTML=json.descript;
+    msg.appendChild(msg_descript);
+    price.innerHTML='<div class="p now_price"><span>'+json.sell_price+'</span>元</div><div class="p old_price"><span>'+json.price+'</span>元</div>'
+    msg.appendChild(price);
+    newLi.appendChild(cover);
+    newLi.appendChild(msg);
+    return newLi;
+}
+    function cEl(tagName,className){
+        let newEl=document.createElement(tagName);
+        if(className){
+            newEl.className=className;
+        }
+        return newEl;
+    }
+</script>
+</body>
+</html>

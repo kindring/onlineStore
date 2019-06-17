@@ -1,0 +1,83 @@
+.index_carousel{
+    width:94%;
+    padding:0.5%;
+    height:700px;
+    margin:0 auto;
+}
+.index_carousel .top{
+    display: flex;
+}
+.index_carousel .top .one{
+    width:auto;
+    height:50px;
+    line-height:50px;
+    padding:0 5px;
+    text-align: center;
+}
+.index_carousel .top .two{
+    width:90%;
+    height:50px;
+}
+.index_carousel .top .two select{
+    width:400px;
+    height:48px;
+    font-size:24px;
+    margin:1px;
+}
+.contents{
+    width:100%;
+    height:680px;
+}
+.contents .carousel_img{
+    width:1200px;
+    height:550px;
+    margin:0 auto;
+    position:relative;
+    background-color: #00b700;
+}
+.contents .carousel_img .file{
+    width:100%;
+    height:100%;
+    position:absolute;
+    z-index: 99;
+    opacity: 0;
+    cursor:pointer;
+}
+.contents .carousel_img .back{
+    width:100%;
+    height:100%;
+    line-height:550px;
+    text-align: center;
+    background-color: rgba(0,0,0,0.6);
+    color:white;
+    font-size:36px;
+    position:absolute;
+    z-index:5;
+}
+.contents .carousel_img:hover .back{
+    z-index: 7;
+}
+.contents .carousel_img img{
+    display: block;
+    width:100%;
+    height:100%;
+    position:absolute;
+    left:0;
+    top:0;
+    z-index:6;
+}
+.contents .now_carousel .change{
+    display: flex;
+    width:100%;
+    height:80px;
+    text-align: center;
+}
+.change .a_herf{
+    width:100%;
+}
+.goods_list .odds .odds_lis label select,input{
+    display: block;
+    width:100%;
+    height:40px;
+    font-size:24px;
+}

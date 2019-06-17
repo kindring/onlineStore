@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员页面</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        body{
+            width:100%;
+            height:100%;
+        }
+        .login_box{
+            width:450px;
+            height:700px;
+            margin:60px auto;
+            border-color: white;
+            box-shadow: 2px 2px 8px black;
+        }
+        .login_box label{
+            margin-top:15px;
+            display:block;
+            width:450px;
+            height:120px;
+        }
+        .login_box label span{
+            display: block;
+            width:70px;
+            height:45px;
+            font-size:28px;
+            text-align: center;
+            line-height: 45px;
+            float: left;
+        }
+        .login_box label input{
+            display: block;
+            width:370px;
+            height:45px;
+            font-size:24px;
+            float: left;
+        }
+        .btn{
+            width:210px;
+            height:45px;
+            line-height: 45px;
+            text-align: center;
+            font-size:30px;
+            margin:15px auto;
+            background-color: #00ca00;
+            color:white;
+            cursor:pointer;
+        }
+        .tips{
+            display: none;
+            position:absolute;
+            width:100%;
+            height:100%;
+        }
+        .tips .back{
+            display: block;
+            width:100%;
+            height:100%;
+            position:absolute;
+            z-index: 1;
+            opacity: 0.6;
+            background-color: black;
+        }
+        .tips .content{
+            position:absolute;
+            z-index: 2;
+            width:450px;
+            height:450px;
+            background-color: rgba(255,255,255,0.6);
+            text-align: center;
+            left:50%;
+            top:50%;
+            transform:translate(-50%,-50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="tips" id="tips">
+        <div class="back"></div>
+        <div class="content">
+            <h2>提示内容</h2>
+            <div id="con"></div>
+        </div>
+    </div>
+    <div class="login_box">
+        <h1>管理员页面.此页面必须登录</h1>
+        <label for="user">
+            <span>用户</span><input type="text" id="user" placeholder="用户名">
+        </label>
+        <label for="pas">
+            <span>密码</span><input type="password" id="pas" placeholder="动态密码,联系后端获取">
+        </label>
+        <div class="btn" id="log">
+            登录
+        </div>
+    </div>
+
+    <script>
+        const xmlHttp=getXmlHttp();
+        function getXmlHttp(){
+            if (window.XMLHttpRequest)
+            {// 判断是否有该对象
+                return new XMLHttpRequest();
+            }
+            else if (window.ActiveXObject)
+            {// 判断是否是兼容ie5和ie6
+                return new ActiveXObject("Microsoft.XMLHTTP");
+            }else{
+                return null;
+            }
+        }
+        const user=document.getElementById('user');
+        const pas=document.getElementById('pas');
+        const btn=document.getElementById('log');
+
+        const tips=document.getElementById('tips');
+        const con=document.getElementById('con');
+
+        btn.onclick=function(){
+            login();
+            showTips('正在进行验证请稍后')
+        };
+        function login(){
+            let user_value=user.value;
+            let pas_value=pas.value;
+            let json={
+                user:user_value,
+                password:pas_value,
+            };
+            json=JSON.stringify(json);
+            xmlHttp.open('POST','/admin_login',true);
+            xmlHttp.send(json);
+            xmlHttp.onreadystatechange=function(){
+                if(xmlHttp.status===200&&xmlHttp.readyState===4){
+                    let response=JSON.parse(xmlHttp.response);
+                    console.log(response);
+                    if(response.errCode){
+                        let newdiv=document.createElement('div');
+                        let newBtn=document.createElement('div');
+                        newBtn.className="btn";
+                        newBtn.innerText="确认";
+                        let newP=document.createElement('p');
+                        newP.innerText=response.describe;
+                        newdiv.appendChild(newP);
+                        newdiv.appendChild(newBtn);
+                        newBtn.onclick=function(){
+                            hideTips()
+                        };
+                        showTips(newdiv)
+                    }else{
+                        showTips(response.describe);
+                        let timer=null;
+                        let timer_number=5;
+                        timer=setInterval(function(){
+                            showTips("登录成功将在"+timer_number+"后自动跳转");
+                            timer_number--;
+                            if(timer_number<0){
+                                window.location.href="/admin";
+                                clearInterval(timer);
+                                timer=null;
+                            }
+                        },1000)
+                    }
+
+                }
+            }
+        }
+        function showTips(str){
+            tips.style.display="block";
+            con.innerHTML="";
+            console.log(typeof(str));
+            if(typeof(str)=="string"){
+                con.innerHTML=str;
+            }else{
+                con.appendChild(str);
+            }
+        }
+        function hideTips(){
+            tips.style.display="none";
+        }
+    </script>
+</body>
+</html>

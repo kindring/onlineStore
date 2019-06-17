@@ -28,6 +28,19 @@
     position:relative;
     margin:20px auto;
 }
+
+/*文字两端对齐*/
+.justify{
+    display: block;
+    width: 120px;
+    text-align: justify;
+}
+.justify:after{
+    content: "";
+    padding-left: 100%;
+    display: inline-block;
+}
+
 .fl{float:left;}
 .fr{float:right;}
 

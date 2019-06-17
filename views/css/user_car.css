@@ -72,7 +72,7 @@
     height:29px;
     border:1px solid black;
     float:right;
-    margin:34px 15px;
+    margin:34px 15px 34px 0;
     padding:2px;
 }
 .msg .on{
@@ -160,4 +160,26 @@
 .btn_box .settle:hover{
     background-color: #ce3a00;
     color: #d7d7d7;
+}
+
+.num_box{
+    width:45px;
+    height:99px;
+    float:left;
+    text-align: center;
+}
+.bt{
+    width:45px;
+    height:25px;
+    margin:2px 0;
+    background-color: #00b700;
+    color:white;
+    cursor:pointer;
+}
+
+.num{
+    line-height:41px;
+    font-size:24px;
+    width:45px;
+    height:41px;
 }

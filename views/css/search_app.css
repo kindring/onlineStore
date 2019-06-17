@@ -1,0 +1,219 @@
+.app{
+    width:100%;
+    height:auto;
+}
+.app .content{
+    width:1200px;
+    height:auto;
+    margin:10px auto;
+}
+.content .search_box{
+    width:1200px;
+    height:60px;
+    background-color: whitesmoke;
+    box-shadow: 1px 1px 1px black;
+}
+.content .search_box .title{
+    width:200px;
+    height:60px;
+    line-height:60px;
+    text-align: center;
+    font-size:36px;
+    color:orangered;
+    float: left;
+}
+.content .search_box .sort{
+    width:230px;
+    height:60px;
+    float: left;
+    font-size:24px;
+}
+.content .search_box .sort span{
+    display: inline-block;
+    width:100px;
+    height:40px;
+    line-height:40px;
+    float: left;
+    margin:10px 0;
+}
+.content .search_box .sort select{
+    display: block;
+    width:130px;
+    height:40px;
+    margin:10px 0;
+    float: left;
+    line-height:40px;
+    font-size:24px;
+}
+.content .search_box .keyword{
+    width:360px;
+    height:40px;
+    line-height:40px;
+    text-align:center;
+    float: left;
+    margin:10px 15px;
+    font-size:24px;
+}
+.content .search_box .keyword label{
+    display: block;
+    width:100%;
+    height:100%;
+}
+.content .search_box .keyword span{
+    display: block;
+    width:80px;
+    height:40px;
+    float: left;
+}
+.content .search_box .keyword input{
+    display: block;
+    width:260px;
+    height:40px;
+    font-size:24px;
+    float: left;
+}
+.content .search_box .postage{
+    width:120px;
+    height:40px;
+    line-height:40px;
+    font-size:24px;
+    margin:10px 0;
+    float: left;
+}
+.content .search_box .postage span{
+    display: inline-block;
+    float: left;
+    width:80px;
+    height:40px;
+}
+.content .search_box .postage .is_postage{
+    width:38px;
+    height:38px;
+    border:1px solid red;
+    float: left;
+}
+.content .search_box .btn_box{
+    width:210px;
+    height:40px;
+    line-height:40px;
+    text-align: center;
+    background-color: orangered;
+    color:white;
+    font-size:24px;
+    float:left;
+    margin:10px 15px;
+    border-radius:5px;
+    cursor:pointer;
+}
+.content .search_box .btn_box input{
+    width:210px;
+    height:40px;
+    line-height:40px;
+    text-align: center;
+    background-color: orangered;
+    color:white;
+    font-size:24px;
+    float:left;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.goods_box {
+    width:1150px;
+    padding:24px;
+}
+.goods_box  .lis{
+    width:220px;
+    height:300px;
+    margin:5px;
+    float: left;
+    background-color: #f6f9fa;
+}
+.goods_box  .lis:hover{
+    width:216px;
+    height:296px;
+    margin:5px 7px 9px 7px;
+    box-shadow: 1px 2px 7px 0px #929191;
+}
+.goods_box  .lis:hover .cover{
+    width:186px;
+    height:186px;
+}
+
+.goods_box .lis .cover{
+    display: block;
+    width:190px;
+    height:190px;
+    margin:5px auto;
+    position:relative;
+}
+.goods_box .lis .cover img{
+    display: block;
+    width:100%;
+    height:100%;
+    position:absolute;
+    left:0;
+    top:0;
+}
+.goods_box .lis .cover a{
+    display: block;
+    width:100%;
+    height:100%;
+    position:absolute;
+    left:0;
+    top:0;
+}
+.goods_box .lis .msg{
+    width:100%;
+    height:auto;
+}
+.goods_box .lis .msg .name{
+    width: 100%;
+    height:24px;
+    line-height: 24px;
+    text-align: center;
+    font-size:18px;
+}
+.goods_box .lis .msg .name a{
+    text-align: center;
+    color:black;
+    text-decoration:none;
+}
+.goods_box .lis .msg .name a:hover{
+    color:red;
+}
+.goods_box .lis .msg .descript{
+    width:100%;
+    height:24px;
+    line-height:24px;
+    font-size:14px;
+    color: #919191;
+    overflow: hidden;
+    text-align: center;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.goods_box .lis  .price_box{
+    display: flex;
+    width:100%;
+    height:40px;
+    line-height:40px;
+}
+.goods_box .lis .price_box .p{
+    width:46%;
+    height:40px;
+    line-height:40px;
+    padding:0 2%;
+    float: left;
+}
+.goods_box .lis .price_box .now_price{
+    color:red;
+    text-align: right;
+    font-size:20px;
+}
+.goods_box .lis .price_box .old_price{
+    color: #b0b0b0;
+    line-height:42px;
+    text-decoration: line-through;
+}

@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理商品</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        html,body{
+            height:100%;
+        }
+    </style>
+    <link rel="stylesheet" href="./css/admin_top.css">
+    <script src="./js/admin.js"></script>
+    <script src="./js/vue.js"></script>
+</head>
+<body>
+    <div class="content">
+        <div class="sidbar" id="sidbar">
+            <div class="title">
+                <h1>管理中心</h1>
+            </div>
+            <div class="row">
+                <h2>商品管理</h2>
+                <ul>
+                    <li class="lis">
+                        <a href="/goods_add">添加商品</a>
+                    </li>
+                    <li class="lis">
+                        <a href="/goods_lists">查询商品</a>
+                    </li>
+                    <li class="lis">
+                        <a href="/goods_change">修改商品</a>
+                    </li>
+                    <li class="lis">
+                        <a href="/goods_">下架商品</a>
+                    </li>
+                    <li class="lis">
+                        <a href="goods_del"></a>删除商品
+                    </li>
+                </ul>
+            </div>
+            <div class="row hide">
+                <h2>订单管理</h2>
+                <ul>
+                    <li class="lis">
+                        <a href="/order_list">订单列表</a>
+                    </li>
+                    <li class="lis">
+                        <a href="/order_wait">待发货</a>
+                    </li>
+                    <li class="lis">
+                        <a href="/order_rebate">退款订单</a>
+                    </li>
+                    <li class="lis">
+                        <a href="/order_server">售后订单</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row hide">
+                <h2>首页管理</h2>
+                <ul>
+                    <li class="lis">
+                        <a href="/index_carouse">轮播商品</a>
+                    </li>
+                    <li class="lis">
+                        <a href="/index_hot">热门展示</a>
+                    </li>
+                    <li class="lis">
+                        <a href="/index_banner">横幅展示</a>
+                    </li>
+                    <li class="lis">
+                        <a href="/index_class">类别划分</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row hide">
+                <h2>数据统计</h2>
+                <ul>
+                    <li class="lis">
+                        <a href="/data_vist">添加量</a>
+                    </li>
+                    <li class="lis">
+                        <a href="/data_month">成交量</a>
+                    </li>
+                    <li class="lis">
+                        <a href="/index_banner">退款量</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row hide">
+                <h2>活动中心</h2>
+                <ul>
+                    <li class="lis">
+                        <a href="/data_vist">折扣</a>
+                    </li>
+                    <li class="lis">
+                        <a href="/data_month">优惠卷</a>
+                    </li>
+                    <li class="lis">
+                        <a href="/index_banner">活动页面</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main" id="main">
+            <div class="top">
+                <div class="hide_sidbar" id="hide_sidbar">隐</div>
+            </div>
+            <div class="window" id="app">
+                <div class="title">
+                    <h1 v-text="title"></h1>
+                </div>
+                <div class="contents">
+                    <div class="index" id="index">
+                        <ul>
+                            <li class="item">
+                                <a href="/goods_add">添加商品</a>
+                            </li>
+                            <li class="item">
+                                <a href="">商品列表</a>
+                            </li>
+                            <li class="item">
+                                <a href="">主页轮播</a>
+                            </li>
+                            <li class="item">
+                                <a href="">热门商品</a>
+                            </li>
+                            <li class="item">
+                                <a href="">主页商品</a>
+                            </li>
+                            <li class="item">
+                                <a href="">订单管理</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="loading" id="loading">
+                        <h2>加载中...</h2>
+                        <div class="anime_loading">
+                            <ul>
+                                <li class="anime_lis lis1"></li>
+                                <li class="anime_lis lis2"></li>
+                                <li class="anime_lis lis3"></li>
+                                <li class="anime_lis lis4"></li>
+                                <li class="anime_lis lis5"></li>
+                                <li class="anime_lis lis6"></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="goods_add" id="goods_add">
+                        <div class="form_box">
+                            <div class="form_box_1">
+                                <label for="goods_name">
+                                    <input type="text" id="goods_name" placeholder="商品名称">
+                                </label>
+                                <label for="goods_price">
+                                    <input type="text" id="goods_price" placeholder="商品进价">
+                                </label>
+                                <label for="goods_seal_price">
+                                    <input type="text" id="goods_seal_price" placeholder="商品售价">
+                                </label>
+                                <label for="goods_descript">
+                                    <input type="text" id="goods_descript" placeholder="商品介绍">
+                                </label>
+                                <label for="goods_postage">
+                                    <input type="text" id="goods_postage" placeholder="邮费">
+                                </label>
+                                <label for="goods_data_key" title="每个数据之间使用'-'分隔">
+                                    <input type="text" id="goods_data_key" placeholder="商品详情key">
+                                </label>
+                                <label for="goods_data_value" title="每个数据之间使用'-'分隔">
+                                    <input type="text" id="goods_data_value" placeholder="商品详情value">
+                                </label>
+                            </div>
+                            <div class="form_box_2">
+                                <input type="file" class="file">
+                                <span class="tips">选择封面</span>
+
+                            </div>
+                            <div class="btn_box">
+                                <div class="btn">保存基本信息</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="goods_list" id="goods_list">
+                        <div class="odds">
+                            <ul>
+                                <li class="odds_lis">
+                                    <label for="goods_class">
+                                        <select name="goods_class" id="goods_class">
+                                            <option value="1">手机</option>
+                                            <option value="2">电脑</option>
+                                            <option value="3">笔记本</option>
+                                            <option value="4">耳机</option>
+                                            <option value="5">配件</option>
+                                        </select>
+                                    </label>
+                                </li>
+                                <li class="odds_lis">
+                                    <label for="goods_keyword">
+                                        <input type="text" id="goods_keyword" name="goods_keyword" placeholder="关键字">
+                                    </label>
+                                </li>
+                                <li class="odds_lis"></li>
+                                <li class="odds_lis">
+                                    <label for="is_postage">
+                                        <select name="is_postage" id="is_postage">
+                                            <option value="true">包邮</option>
+                                            <option value="false">不包邮</option>
+                                        </select>
+                                    </label>
+                                </li>
+                                <li class="odds_lis">
+                                    <div class="btn" id="screen">
+                                        筛选
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="list_box">
+                            <ul>
+                                <li class="lis">
+                                    <div class="chunk cover_box">
+                                        <img src="./imgs/0.png" alt="加载中">
+                                    </div>
+                                    <div class="chunk sell_data">
+                                        <div class="name">
+                                            小米手机
+                                        </div>
+                                        <div class="price_box">
+                                            <div class="cost original_cost">原价1700</div>
+                                            <div class="cost current_price">现价1500</div>
+                                        </div>
+                                    </div>
+                                    <div class="chunk describe">
+                                    </div>
+                                    <div class="chunk count">
+                                        <div class="number sold">已售:10</div>
+                                        <div class="number inventory">存货:20</div>
+                                    </div>
+                                    <div class="chunk edit">
+                                        <div class="btn">
+                                            <a href="goods_edit/45678">编辑商品</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="lis">
+                                    <div class="chunk cover_box">
+                                        <img src="./imgs/0.png" alt="加载中">
+                                    </div>
+                                    <div class="chunk sell_data">
+                                        <div class="name">
+                                            小米手机
+                                        </div>
+                                        <div class="price_box">
+                                            <div class="cost original_cost">原价1700</div>
+                                            <div class="cost current_price">现价1500</div>
+                                        </div>
+                                    </div>
+                                    <div class="chunk describe">
+                                    </div>
+                                    <div class="chunk count">
+                                        <div class="number sold">已售:10</div>
+                                        <div class="number inventory">存货:20</div>
+                                    </div>
+                                    <div class="chunk edit">
+                                        <div class="btn">
+                                            <a href="goods_edit/45678">编辑商品</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="lis">
+                                    <div class="chunk cover_box">
+                                        <img src="./imgs/0.png" alt="加载中">
+                                    </div>
+                                    <div class="chunk sell_data">
+                                        <div class="name">
+                                            小米手机
+                                        </div>
+                                        <div class="price_box">
+                                            <div class="cost original_cost">原价1700</div>
+                                            <div class="cost current_price">现价1500</div>
+                                        </div>
+                                    </div>
+                                    <div class="chunk describe">
+                                    </div>
+                                    <div class="chunk count">
+                                        <div class="number sold">已售:10</div>
+                                        <div class="number inventory">存货:20</div>
+                                    </div>
+                                    <div class="chunk edit">
+                                        <div class="btn">
+                                            <a href="goods_edit/45678">编辑商品</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="lis">
+                                    <div class="chunk cover_box">
+                                        <img src="./imgs/0.png" alt="加载中">
+                                    </div>
+                                    <div class="chunk sell_data">
+                                        <div class="name">
+                                            小米手机
+                                        </div>
+                                        <div class="price_box">
+                                            <div class="cost original_cost">原价1700</div>
+                                            <div class="cost current_price">现价1500</div>
+                                        </div>
+                                    </div>
+                                    <div class="chunk describe">
+                                    </div>
+                                    <div class="chunk count">
+                                        <div class="number sold">已售:10</div>
+                                        <div class="number inventory">存货:20</div>
+                                    </div>
+                                    <div class="chunk edit">
+                                        <div class="btn">
+                                            <a href="goods_edit/45678">编辑商品</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="lis">
+                                    <div class="chunk cover_box">
+                                        <img src="./imgs/0.png" alt="加载中">
+                                    </div>
+                                    <div class="chunk sell_data">
+                                        <div class="name">
+                                            小米手机
+                                        </div>
+                                        <div class="price_box">
+                                            <div class="cost original_cost">原价1700</div>
+                                            <div class="cost current_price">现价1500</div>
+                                        </div>
+                                    </div>
+                                    <div class="chunk describe">
+                                    </div>
+                                    <div class="chunk count">
+                                        <div class="number sold">已售:10</div>
+                                        <div class="number inventory">存货:20</div>
+                                    </div>
+                                    <div class="chunk edit">
+                                        <div class="btn">
+                                            <a href="goods_edit/45678">编辑商品</a>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="page_control">
+                            <div class="control">
+                                <div class="btn left">上一页</div>
+                                <div class="btn">当前第1页</div>
+                                <div class="btn right">下一页</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goods_editor" id="goods_editor">
+                        <div class="top">
+
+                            <div class="left_chunk">
+                                <input type="file" class="file" id="file">
+                                <div class="cover">
+                                    <img src="./imgs/0.png" alt="">
+                                </div>
+                                <div class="back">
+                                    添加商品
+                                </div>
+                            </div>
+                            <div class="right_chunk">
+                                <h2>商品详情</h2>
+                                <div class="chunk">
+                                    <div class="current">
+                                        当前名称:小米手机
+                                    </div>
+                                    <div class="new">
+                                        <label for="g_name">
+                                            <input type="text" placeholder="修改为">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="chunk">
+                                    <div class="current">
+                                        商品原价:1996
+                                    </div>
+                                    <div class="new">
+                                        <label for="g_name">
+                                            <input type="text" placeholder="修改为">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="chunk">
+                                    <div class="current">
+                                        当前售价:1996
+                                    </div>
+                                    <div class="new">
+                                        <label for="g_name">
+                                            <input type="text" placeholder="修改为">
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="header">
+                                <div class="chunk">
+                                    <div class="now">
+                                        当前邮费:10
+                                    </div>
+                                    <div class="new">
+                                        <label for="">
+                                            <input type="text" placeholder="修改为">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="chunk chunk2">
+                                    <div class="now">
+                                        当前库存:100
+                                    </div>
+                                    <div class="new">
+                                        <label for="">
+                                            <input type="text" placeholder="修改为">
+                                        </label>
+                                    </div>
+                                </div>
+                         </div>
+                        <div class="mid">
+                            <div class="old">
+                                <p>这是一个商品介绍</p>
+                            </div>
+                            <div class="new">
+                                <textarea name="describe" placeholder="在填写新的商品介绍" id="" cols="30" rows="10"></textarea>
+                            </div>
+                        </div>
+                        <div class="btn_box">
+                            <div class="btn">保存信息</div>
+                        </div>
+                    </div>
+                    <div class="index_carousel" id="index_carousel">
+                        <div class="top">
+                            <div class="one">
+                                <h2>当前查看:</h2>
+                            </div>
+                            <div class="two">
+                                <select name="carousel" id="carousel">
+                                    <option value="1">第一张轮播</option>
+                                    <option value="2">第二张轮播</option>
+                                    <option value="3">第三张轮播</option>
+                                    <option value="4">第四张轮播</option>
+                                    <option value="5">第五张轮播</option>
+                                    <option value="6">第六张轮播</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="contents">
+                            <div class="now_carousel">
+                                <div class="title">当前图片</div>
+                                <div class="carousel_img">
+                                    <img src="./imgs/0.png" alt="">
+                                    <div class="back">更换背景</div>
+                                    <input type="file" class="file">
+                                </div>
+                                <div class="change">
+                                    <div class="a_herf">
+                                        <input type="text" name="a_herf" id="a_herf" placeholder="该轮播对应的请求路径">
+                                    </div>
+                                </div>
+                                <div class="btn_box">
+                                    <div class="btn">保存信息</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="index_hot" id="index_hot">
+                        <div class="hots">
+                            <ul>
+                                <li class="hot hot0">
+                                    <div class="file_box">
+                                        <input type="file" class="file">
+                                        <div class="back">上传文件</div>
+                                    </div>
+                                    <div class="img_box">
+                                    </div>
+                                    <div class="a_herf_box">
+                                        <input type="text"  placeholder="链接地址">
+                                    </div>
+                                    <div class="btn_box">
+                                        <div class="btn">保存该项</div>
+                                    </div>
+                                </li>
+                                <li class="hot hot1">
+                                    <div class="file_box">
+                                        <input type="file" class="file">
+                                        <div class="back">上传文件</div>
+                                    </div>
+                                    <div class="img_box">
+                                    </div>
+                                    <div class="a_herf_box">
+                                        <input type="text" class="a_href" placeholder="链接地址">
+                                    </div>
+                                    <div class="btn_box">
+                                        <div class="btn">保存该项</div>
+                                    </div>
+                                </li>
+                                <li class="hot hot2">
+                                    <div class="file_box">
+                                        <input type="file" class="file">
+                                        <div class="back">上传文件</div>
+                                    </div>
+                                    <div class="img_box">
+                                    </div>
+                                    <div class="a_herf_box">
+                                        <input type="text" class="a_href" placeholder="链接地址">
+                                    </div>
+                                    <div class="btn_box">
+                                        <div class="btn">保存该项</div>
+                                    </div>
+                                </li>
+                                <li class="hot hot3">
+                                    <div class="file_box">
+                                        <input type="file" class="file">
+                                        <div class="back">上传文件</div>
+                                    </div>
+                                    <div class="img_box">
+                                    </div>
+                                    <div class="a_herf_box">
+                                        <input type="text" class="a_href" placeholder="链接地址">
+                                    </div>
+                                    <div class="btn_box">
+                                        <div class="btn">保存该项</div>
+                                    </div>
+                                </li>
+                                <li class="hot hot4">
+                                    <div class="file_box">
+                                        <input type="file" class="file">
+                                        <div class="back">上传文件</div>
+                                    </div>
+                                    <div class="img_box">
+                                    </div>
+                                    <div class="a_herf_box">
+                                        <input type="text" class="a_href" placeholder="链接地址">
+                                    </div>
+                                    <div class="btn_box">
+                                        <div class="btn">保存该项</div>
+                                    </div>
+                                </li>
+                                <li class="hot hot5">
+                                    <div class="file_box">
+                                        <input type="file" class="file">
+                                        <div class="back">上传文件</div>
+                                    </div>
+                                    <div class="img_box">
+                                    </div>
+                                    <div class="a_herf_box">
+                                        <input type="text" class="a_href" placeholder="链接地址">
+                                    </div>
+                                    <div class="btn_box">
+                                        <div class="btn">保存该项</div>
+                                    </div>
+                                </li>
+                                <li class="hot hot6">
+                                    <div class="file_box">
+                                        <input type="file" class="file">
+                                        <div class="back">上传文件</div>
+                                    </div>
+                                    <div class="img_box">
+                                    </div>
+                                    <div class="a_herf_box">
+                                        <input type="text" class="a_href" placeholder="链接地址">
+                                    </div>
+                                    <div class="btn_box">
+                                        <div class="btn">保存该项</div>
+                                    </div>
+                                </li>
+                                <li class="hot hot7">
+                                    <div class="file_box">
+                                        <input type="file" class="file">
+                                        <div class="back">上传文件</div>
+                                    </div>
+                                    <div class="img_box">
+                                    </div>
+                                    <div class="a_herf_box">
+                                        <input type="text" class="a_href" placeholder="链接地址">
+                                    </div>
+                                    <div class="btn_box">
+                                        <div class="btn">保存该项</div>
+                                    </div>
+                                </li>
+                                <li class="hot hot8">
+                                    <div class="file_box">
+                                        <input type="file" class="file">
+                                        <div class="back">上传文件</div>
+                                    </div>
+                                    <div class="img_box">
+                                    </div>
+                                    <div class="a_herf_box">
+                                        <input type="text" class="a_href" placeholder="链接地址">
+                                    </div>
+                                    <div class="btn_box">
+                                        <div class="btn">保存该项</div>
+                                    </div>
+                                </li>
+                                <li class="hot hot9">
+                                    <div class="file_box">
+                                        <input type="file" class="file">
+                                        <div class="back">上传文件</div>
+                                    </div>
+                                    <div class="img_box">
+                                    </div>
+                                    <div class="a_herf_box">
+                                        <input type="text" class="a_href" placeholder="链接地址">
+                                    </div>
+                                    <div class="btn_box">
+                                        <div class="btn">保存该项</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="index_item" id="index_item">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<template>
+    <div class="goods_add" >
+
+    </div>
+</template>
+</body>
+<script>
+    let vm=new Vue({
+        el:"#app",
+        data:{
+            title:"主页商品"
+        },
+        methods:{
+
+        }
+    })
+</script>
+</html>

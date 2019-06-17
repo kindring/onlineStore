@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理商品</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        html,body{
+            height:100%;
+        }
+    </style>
+    <link rel="stylesheet" href="../css/admin/public.css">
+    <link rel="stylesheet" href="../css/admin/goods_list.css">
+    <script src="../js/admin.js"></script>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+<div class="content">
+    <div class="sidbar" id="sidbar">
+        <div class="title">
+            <h1><a href="/admin">管理中心</a></h1>
+        </div>
+        <div class="row">
+            <h2>商品管理</h2>
+            <ul>
+                <li class="lis">
+                    <a href="/goods_add">添加商品</a>
+                </li>
+                <li class="lis">
+                    <a href="/goods_lists">查询商品</a>
+                </li>
+                <li class="lis">
+                    <a href="/goods_lists">修改商品</a>
+                </li>
+                <li class="lis">
+                    <a href="/goods_lists">下架商品</a>
+                </li>
+                <li class="lis">
+                    <a href="/goods_lists">删除商品</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row hide">
+            <h2>订单管理</h2>
+            <ul>
+                <li class="lis">
+                    <a href="/order_list">订单列表</a>
+                </li>
+                <li class="lis">
+                    <a href="/order_wait">待发货</a>
+                </li>
+                <li class="lis">
+                    <a href="/order_rebate">退款订单</a>
+                </li>
+                <li class="lis">
+                    <a href="/order_server">售后订单</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row hide">
+            <h2>首页管理</h2>
+            <ul>
+                <li class="lis">
+                    <a href="/i_carousel">轮播商品</a>
+                </li>
+                <li class="lis">
+                    <a href="/i_hot">热门展示</a>
+                </li>
+                <li class="lis">
+                    <a href="/i_banner">横幅展示</a>
+                </li>
+                <li class="lis">
+                    <a href="/i_class">类别划分</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row hide">
+            <h2>数据统计</h2>
+            <ul>
+                <li class="lis">
+                    <a href="/data_vist">添加量</a>
+                </li>
+                <li class="lis">
+                    <a href="/data_month">成交量</a>
+                </li>
+                <li class="lis">
+                    <a href="/index_banner">退款量</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row hide">
+            <h2>活动中心</h2>
+            <ul>
+                <li class="lis">
+                    <a href="/data_vist">折扣</a>
+                </li>
+                <li class="lis">
+                    <a href="/data_month">优惠卷</a>
+                </li>
+                <li class="lis">
+                    <a href="/index_banner">活动页面</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="main" id="main">
+        <div class="top">
+            <div class="hide_sidbar" id="hide_sidbar">隐</div>
+        </div>
+        <div class="window" id="app">
+            <div class="title">
+                <h1>商品列表</h1>
+            </div>
+            <div class="contents">
+                <div class="goods_list" id="goods_list">
+                    <div class="odds">
+                        <ul>
+                            <li class="odds_lis">
+                                <label for="goods_class">
+                                    <select name="goods_class" id="goods_class">
+                                        <option value="0">无限制</option>
+                                        <option value="1">手机</option>
+                                        <option value="2">电脑</option>
+                                        <option value="3">笔记本</option>
+                                        <option value="4">家电</option>
+                                        <option value="5">配件</option>
+                                    </select>
+                                </label>
+                            </li>
+                            <li class="odds_lis">
+                                <label for="goods_keyword">
+                                    <input type="text" id="goods_keyword" name="goods_keyword" placeholder="关键字">
+                                </label>
+                            </li>
+                            <li class="odds_lis"></li>
+                            <li class="odds_lis">
+                                <label for="is_postage">
+                                    <select name="is_postage" id="is_postage">
+                                        <option value="true">包邮</option>
+                                        <option value="false">不包邮</option>
+                                    </select>
+                                </label>
+                            </li>
+                            <li class="odds_lis">
+                                <div class="btn" id="screen">
+                                    筛选
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list_box">
+                        <ul>
+                            <li class="lis" v-for="(item,i) in goods_list" :key="item">
+                                <div class="chunk cover_box">
+                                    <img :src="'goods_cover?gid='+item.gid" alt="加载中">
+                                </div>
+                                <div class="chunk sell_data">
+                                    <div class="name" v-text="item.name">
+                                    </div>
+                                    <div class="price_box">
+                                        <div class="cost original_cost">原价<span v-text="item.price"></span></div>
+                                        <div class="cost current_price">现价<span v-text="item.sell_price"></span></div>
+                                    </div>
+                                </div>
+                                <div class="chunk describe">
+                                    <p v-text="item.descript"></p>
+                                </div>
+                                <div class="chunk count">
+                                    <div class="number sold">已售: <span v-text="item.sell_count"></span></div>
+                                    <div class="number inventory">存货: <span v-text="item.stock"></span></div>
+                                </div>
+                                <div class="chunk edit">
+                                    <div class="btn">
+                                        <a :href="'goods_edit?gid='+item.gid">编辑商品</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="page_control">
+                        <div class="control">
+                            <div class="btn left" id="prev_page">上一页</div>
+                            <div class="btn">当前第 <span v-text="page_num"></span>页</div>
+                            <div class="btn right" id="next_page">下一页</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    let vm= new Vue({
+        el:"#goods_list",
+        data:{
+            page_num:1,
+            loading:true,
+            goods_list:[],
+        }
+    });
+    let goods_class=document.getElementById('goods_class');
+    let goods_ketword=document.getElementById('goods_keyword');
+    let is_postage=document.getElementById('is_postage');
+
+    let arr=[];
+    arr[0]=goods_class;
+    arr[1]=goods_ketword;
+    arr[2]=is_postage;
+    for(let i =0 ;i<arr.length;i++){
+        arr[i].onchange=function(){
+            vm.page_num=1;
+        }
+    }
+    let prev=document.getElementById('prev_page');
+    let next=document.getElementById('next_page');
+
+    let screen=document.getElementById('screen');
+
+    screen.onclick=function(){
+        if(query_lock){
+            vm.page_num=1;
+            getGoods();
+        }
+    };
+
+    let query_lock=true;
+    prev.onclick=function(){
+        if(query_lock){
+            if(vm.page_num>1){
+                vm.page_num--;
+                getGoods();
+            }else{
+                alert("已经是第一页了")
+            }
+        }
+    };
+    next.onclick=function(){
+        if(query_lock){
+            if(vm.goods_list.length<5){
+                return alert("已经没有更多的数据了")
+            }
+            vm.page_num++;
+            getGoods();
+        }
+
+    };
+    function getGoods(){
+        query_lock=false;
+        let postage=is_postage.value?0:null;
+        let sort=goods_class.value;
+        let keyword=goods_ketword.value;
+        var xmlHttp=getXmlHttp();
+        function getXmlHttp(){
+            if (window.XMLHttpRequest)
+            {// 判断是否有该对象
+                return new XMLHttpRequest();
+            }
+            else if (window.ActiveXObject)
+            {// 判断是否是兼容ie5和ie6
+                return new ActiveXObject("Microsoft.XMLHTTP");
+            }else{
+                return null;
+            }
+        }
+        let queryPath="/goods_list?";
+        queryPath+="limit=5";
+        queryPath+="&page="+vm.page_num;
+        queryPath+="&sort="+sort;
+        queryPath+="&rear=-1";
+        if(postage){
+            queryPath+="&postage="+postage;
+        }
+        if(keyword){
+            queryPath+="&keyword="+keyword;
+        }
+        xmlHttp.open("GET",queryPath,true);
+        xmlHttp.send();
+        xmlHttp.onreadystatechange=function(){
+            if(xmlHttp.readyState===4&&xmlHttp.status===200){
+                let response=xmlHttp.responseText;
+                response=response.split('*-*');
+                console.log(response);
+                if(response[0]===""){
+                    query_lock=true;
+                    vm.goods_list=[];
+                }else{
+                    for(let i = 0;i<response.length;i++){
+                        response[i]=JSON.parse(response[i]);
+                    }
+                    vm.goods_list=response;
+                }
+                query_lock=true;
+            }
+        };
+    }
+    getGoods();
+</script>
+</html>

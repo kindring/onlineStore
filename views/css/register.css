@@ -1,0 +1,139 @@
+html,body{
+    height:100%;
+}
+.con_bg{
+    position:absolute;
+    width:100%;
+    height:100%;
+    z-index: 1;
+    /* Safari 5.1 - 6.0 */
+    background: -webkit-linear-gradient(left,red,orange,yellow,green,blue,indigo,violet);
+    /* Opera 11.1 - 12.0 */
+    background: -o-linear-gradient(left,red,orange,yellow,green,blue,indigo,violet);
+    /* Firefox 3.6 - 15 */
+    background: -moz-linear-gradient(left,red,orange,yellow,green,blue,indigo,violet);
+    /* 标准的语法 */
+    background: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
+}
+.con{
+    width:1190px;
+    height:700px;
+    margin:20px auto 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap:wrap ;
+    padding:5px;
+    position:relative;
+    z-index: 5;
+    background-color: whitesmoke;
+    box-shadow: 5px 5px 5px #f17f55;
+}
+.con .title{
+    width:100%;
+    height:39px;
+    padding:5px 0;
+    text-align: center;
+    border-bottom:1px solid red;
+}
+.con .form_box{
+    width:100%;
+    height:500px;
+}
+.con .chunk{
+    width:90%;
+    height:70px;
+    font-size:24px;
+    margin:15px 5%;
+}
+.con .chunk label{
+    display: flex;
+    width:90%;
+    height:40px;
+    margin:0 auto;
+    line-height:40px;
+}
+.con .chunk label span{
+    text-align: justify;
+    display:block;
+    width:130px;
+    height:40px;
+    float: left;
+    padding-right:5px;
+    margin-right:5px;
+    border-right:1px solid orangered;
+}
+.con .chunk label input{
+    display: block;
+    float: left;
+    width:90%;
+    height:40px;
+    font-size:22px;
+}
+.con .chunk label span:after{
+    content: "";
+    padding-left: 100%;
+    display: inline-block;
+}
+.con .chunk .tips{
+    display: block;
+    width:80%;
+    height:30px;
+    padding:0 10%;
+    line-height:30px;
+    font-size:22px;
+    color:red;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.con textarea{
+    display: block;
+    width:90%;
+    height:70px;
+    margin:0 auto;
+    font-size:24px;
+}
+.con .btn_box{
+    width:90%;
+    height:150px;
+    margin:10px auto;
+}
+.con .btn_box label{
+    display:block;
+    width:210px;
+    height:30px;
+    line-height:30px;
+    margin:0 auto;
+    font-size:20px;
+    text-align: center;
+    padding:5px;
+    border-radius:10px;
+    background-color: orange;
+}
+.con .btn_box .btnS{
+    display: flex;
+    width:70%;
+    height:120px;
+    margin:0 auto;
+    justify-content:space-between;
+}
+.con .btn_box .btnS .btn{
+    display: block;
+    width:210px;
+    height:40px;
+    line-height:40px;
+    border-radius:10px;
+    margin:40px;
+    text-align: center;
+    font-size:24px;
+    background-color: #00b700;
+}
+.con .btn_box .btnS .btn:hover{
+    color:white;
+    font-size:22px;
+    box-shadow: 1px 1px 5px black;
+}
+.con .btn_box .btnS .resitting{
+    background-color: #1c42ff;
+    color:white;
+}

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理商品</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        html,body{
+            height:100%;
+        }
+    </style>
+    <link rel="stylesheet" href="../css/admin/public.css">
+    <link rel="stylesheet" href="../css/admin/goods_add.css">
+    <script src="../js/admin.js"></script>
+</head>
+<body>
+<div class="content">
+    <div class="sidbar" id="sidbar">
+        <div class="title">
+            <h1><a href="/admin">管理中心</a></h1>
+        </div>
+        <div class="row">
+            <h2>商品管理</h2>
+            <ul>
+                <li class="lis">
+                    <a href="/goods_add">添加商品</a>
+                </li>
+                <li class="lis">
+                    <a href="/goods_lists">查询商品</a>
+                </li>
+                <li class="lis">
+                    <a href="/goods_lists">修改商品</a>
+                </li>
+                <li class="lis">
+                    <a href="/goods_lists">下架商品</a>
+                </li>
+                <li class="lis">
+                    <a href="/goods_lists">删除商品</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row hide">
+            <h2>订单管理</h2>
+            <ul>
+                <li class="lis">
+                    <a href="/order_list">订单列表</a>
+                </li>
+                <li class="lis">
+                    <a href="/order_wait">待发货</a>
+                </li>
+                <li class="lis">
+                    <a href="/order_rebate">退款订单</a>
+                </li>
+                <li class="lis">
+                    <a href="/order_server">售后订单</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row hide">
+            <h2>首页管理</h2>
+            <ul>
+                <li class="lis">
+                    <a href="/i_carousel">轮播商品</a>
+                </li>
+                <li class="lis">
+                    <a href="/i_hot">热门展示</a>
+                </li>
+                <li class="lis">
+                    <a href="/i_banner">横幅展示</a>
+                </li>
+                <li class="lis">
+                    <a href="/i_class">类别划分</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row hide">
+            <h2>数据统计</h2>
+            <ul>
+                <li class="lis">
+                    <a href="/data_vist">添加量</a>
+                </li>
+                <li class="lis">
+                    <a href="/data_month">成交量</a>
+                </li>
+                <li class="lis">
+                    <a href="/index_banner">退款量</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row hide">
+            <h2>活动中心</h2>
+            <ul>
+                <li class="lis">
+                    <a href="/data_vist">折扣</a>
+                </li>
+                <li class="lis">
+                    <a href="/data_month">优惠卷</a>
+                </li>
+                <li class="lis">
+                    <a href="/index_banner">活动页面</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="main" id="main">
+        <div class="top">
+            <div class="hide_sidbar" id="hide_sidbar">隐</div>
+        </div>
+        <div class="window" id="app">
+            <div class="title">
+                <h1>添加商品</h1>
+            </div>
+            <div class="contents">
+                <div class="goods_add" id="goods_add">
+                    <div class="form_box">
+                        <div class="form_box_1">
+                            <label for="goods_name">
+                                <input type="text" id="goods_name" placeholder="商品名称">
+                            </label>
+                            <label for="goods_price">
+                                <input type="text" id="goods_price" placeholder="商品原价">
+                            </label>
+                            <label for="goods_sell_price">
+                                <input type="text" id="goods_sell_price" placeholder="商品售价">
+                            </label>
+                            <label for="goods_descript">
+                                <input type="text" id="goods_descript" placeholder="商品介绍">
+                            </label>
+                            <label for="goods_postage">
+                                <input type="text" id="goods_postage" placeholder="邮费">
+                            </label>
+                            <label for="goods_sort" title="每个数据之间使用'-'分隔">
+                                <select name="goods_sort" id="goods_sort">
+                                    <option value="1">手机</option>
+                                    <option value="2">电脑</option>
+                                    <option value="3">笔记本</option>
+                                    <option value="4">家电</option>
+                                    <option value="5">数码配件</option>
+                                </select>
+                            </label>
+                            <label for="goods_stock" title="库存">
+                                <input type="text" id="goods_stock" placeholder="库存数量">
+                            </label>
+                        </div>
+                        <div class="form_box_2">
+                            <input type="file" class="file" id="file">
+                            <span class="tips">选择封面</span>
+
+                        </div>
+                        <div class="btn_box">
+                            <div class="btn" id="btn">保存基本信息</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    let name=document.getElementById('goods_name');
+    let price=document.getElementById('goods_price');
+    let sell_price=document.getElementById('goods_sell_price');
+    let descript=document.getElementById('goods_descript');
+    let postage=document.getElementById('goods_postage');
+    let goods_sort=document.getElementById('goods_sort');
+    let goods_stock=document.getElementById('goods_stock');
+    let cover_file=document.getElementById('file');
+    let btn=document.getElementById('btn');
+
+    btn.onclick=function(){
+        if(!name.value||!price.value||!sell_price.value){
+            return alert('请认真填写');
+        }
+        if(!cover_file.value){
+            return alert("必须上传图像文件");
+        }
+        add_goods(function(response){
+            console.log("------");
+            if(response.errCode){
+                return alert(response.describe);
+            }
+            add_cover(response.gid,function(res){
+                if(res.errCode){
+                    console.log("------");
+                    alert(res.describe);
+                   return show_err(res);
+                }
+                alert("添加成功");
+                console.log(response);
+            })
+        });
+    };
+    function add_goods(callback){
+        let name_value=name.value;
+        let price_value=price.value;
+        let sell_price_value=sell_price.value;
+        if(!name_value||!price_value||!sell_price_value){
+            return alert('请认真填写');
+        };
+        let xmlHttp=getXmlHttp();
+        let obj={
+            name:name_value,
+            price:price_value,
+            sell_price:sell_price_value,
+            descript:descript.value,
+            postage:postage.value,
+            sort:goods_sort.value,
+            stock:goods_stock.value
+        };
+        console.log(obj);
+        xmlHttp.open("POST","/goods_add",true);
+        //数据缺失性检测
+        xmlHttp.send(JSON.stringify(obj));
+        xmlHttp.onreadystatechange=function(){
+            console.log("abc");
+            if(xmlHttp.status===200&&xmlHttp.readyState===4){
+                let response=JSON.parse(xmlHttp.responseText);
+                callback(response)
+            }
+        }
+    }
+    function add_cover(gid,callback){
+        let file=cover_file.files[0];
+        if(!file){
+            return alert("没有封面,默认封面")
+        }
+        let formData=new FormData();
+        let xml=getXmlHttp();
+        formData.append("file",file);
+        formData.append("gid",gid);
+        xml.open('POST',"/cover_add",true);
+        xml.onload = function () {
+            let response=xml.responseText;
+            console.log(response);
+            response=JSON.parse(response);
+            return callback(response);
+        };
+        xml.send(formData)
+    }
+    function getXmlHttp(){
+        if (window.XMLHttpRequest)
+        {// 判断是否有该对象
+            return new XMLHttpRequest();
+        }
+        else if (window.ActiveXObject)
+        {// 判断是否是兼容ie5和ie6
+            return new ActiveXObject("Microsoft.XMLHTTP");
+        }else{
+            return null;
+        }
+    }
+
+</script>
+</html>

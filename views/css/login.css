@@ -1,0 +1,93 @@
+.con{
+    width:1200px;
+    height:auto;
+    margin:20px auto 0;
+    display: flex;
+    justify-content:flex-end;
+
+}
+.input_box{
+    width:410px;
+    height:300px;
+    z-index:9;
+    background-color: whitesmoke;
+    border:1px solid black;
+    box-shadow: 3px 2px 5px orangered;
+    padding:10px;
+    margin:40px 0;
+    float:left;
+}
+.input_box label{
+    display: flex;
+    width:365px;
+    height:80px;
+    justify-content: space-between;
+    position:relative;
+}
+.input_box label .c{
+    display: block;
+    width:43px;
+    height:46px;
+    border:1px solid black;
+    font-size:32px;
+    text-align: center;
+    margin:18px 0;
+    float: left;
+}
+.input_box label .inp{
+    display: block;
+    width:320px;
+    height:44px;
+    margin:18px 0;
+    float: right;
+}
+.eye{
+    display: block;
+    position:absolute;
+    font-size:34px;
+    right:0;
+    line-height: 80px;
+    text-decoration: line-through;
+    cursor:pointer;
+}
+.eye:hover{
+    color:red;
+}
+.btn_box .btn{
+    display: block;
+    width:210px;
+    height:45px;
+    margin:5px auto;
+    font-size:28px;
+    background-color:orangered;
+    color:white;
+    outline:none;
+    border:1px solid greenyellow;
+}
+.btn_box .btn:hover{
+    border:2px  solid greenyellow;
+    box-shadow: 1px 1px 1px #17d071;
+}
+.more{
+    width:100%;
+    height:40px;
+    margin-top:5px;
+}
+html,body{
+    height:100%;
+}
+.con_bg{
+    position:absolute;
+    width:100%;
+    height:100%;
+    /* Safari 5.1 - 6.0 */
+    background: -webkit-linear-gradient(left,red,orange,yellow,green,blue,indigo,violet);
+    /* Opera 11.1 - 12.0 */
+    background: -o-linear-gradient(left,red,orange,yellow,green,blue,indigo,violet);
+    /* Firefox 3.6 - 15 */
+    background: -moz-linear-gradient(left,red,orange,yellow,green,blue,indigo,violet);
+    /* 标准的语法 */
+    background: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
+}
+
+

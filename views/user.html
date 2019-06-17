@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <title>个人中心</title>
     <link rel="stylesheet" href="css/public.css">
-    <link rel="stylesheet" href="css/head_pc.css">
+    <link rel="stylesheet" href="css/top_pc.css">
     <link rel="stylesheet" href="css/user_content.css">
     <link rel="stylesheet" href="css/user_car.css">
     <script src="js/vue.js"></script>
 </head>
 <body>
-<header class="head" id="head">
-    <nav class="head_nav">
+<header class="site_top" id="site_top">
+    <nav class="top_nav">
         <div class="titles fl">
             <ul>
                 <li class="lis">首页</li>
@@ -87,7 +87,7 @@
     <div class="det">
         <div class="cars">
             <ul>
-                <li v-for="(item,i) in car_list" class="lis" @click="sele(item)">
+                <li v-for="(item,i) in car_list" class="lis" >
                     <div class="msg">
                         <div class="cover">
                             <img :src="item.cover" alt="图片无法加载">
@@ -102,10 +102,15 @@
                             <div class="old">加入时价格: <span v-text="item.old_money"></span></div>
                             <div class="now">当前价格: <span v-text="item.now_money"></span></div>
                         </div>
+                        <div class="num_box">
+                            <div class="add bt" @click="add(i)">+</div>
+                            <div class="num" v-text="item.number"></div>
+                            <div class="sub bt" @click="sub(i)">-</div>
+                        </div>
                         <div :class="{
                             check:true,
                             on:item.flag
-                        }">
+                        }" @click="sele(item)">
                             <div class="ch"></div>
                         </div>
                     </div>
@@ -126,7 +131,7 @@
     <div class="det">
         <div class="cars">
             <ul>
-                <li v-for="(item,i) in car_list" class="lis" @click="sele(item)">
+                <li v-for="(item,i) in car_list" class="lis">
                     <div class="msg">
                         <div class="cover">
                             <img :src="item.cover" alt="图片无法加载">
@@ -141,10 +146,15 @@
                             <div class="old">加入时价格: <span v-text="item.old_money"></span></div>
                             <div class="now">当前价格: <span v-text="item.now_money"></span></div>
                         </div>
+                        <div class="num_box">
+                            <div class="add bt" @click="add(i)">+-+</div>
+                            <div class="num">0</div>
+                            <div class="sub bt" @click="sub(i)">-</div>
+                        </div>
                         <div :class="{
                             check:true,
                             on:item.flag
-                        }">
+                        }" @click="sele(item)">
                             <div class="ch"></div>
                         </div>
                     </div>
@@ -161,6 +171,7 @@
         </div>
     </div>
 </template>
+
 <script>
     Vue.config.devtools = true;
     Vue.component('car',{
@@ -176,7 +187,8 @@
                             name:"大棒子",
                             describe:"这个棒子,用起来非常安全卫生,不仅卫生还特别有感觉,另一个优点就是粗这个棒子,用起来非常安全卫生,不仅卫生还特别有感觉,另一个优点就是粗",
                             now_money:"45.5",
-                            old_money:"52.4",
+                            old_money: "52.4",
+                            number:1,
                             flag:false,
                             cover:"imgs/0.png",
                         },
@@ -185,7 +197,8 @@
                             name:"大棒子2",
                             describe:"测试数据二号",
                             now_money:"45.5",
-                            old_money:"52.4",
+                            old_money: "52.4",
+                            number:1,
                             flag:false,
                             cover:"imgs/2.png",
                         },
@@ -194,7 +207,8 @@
                             name:"大棒子3",
                             describe:"一个非常非常大的大棒子",
                             now_money:"45.5",
-                            old_money:"52.4",
+                            old_money: "52.4",
+                            number:1,
                             flag:false,
                             cover:"imgs/5.png",
                         },
@@ -203,7 +217,8 @@
                             name:"大棒子4",
                             describe:"这个棒子,用起来非常非常",
                             now_money:"45.5",
-                            old_money:"52.4",
+                            old_money: "52.4",
+                            number:1,
                             flag:false,
                             cover:"imgs/0.png",
                         },
@@ -212,7 +227,8 @@
                             name:"大棒子5根据",
                             describe:"这个棒子,用起来非常非常非常",
                             now_money:"45.5",
-                            old_money:"52.4",
+                            old_money: "52.4",
+                            number:1,
                             flag:false,
                             cover:"imgs/3.png",
                         },
@@ -221,7 +237,8 @@
                             name:"大棒子6",
                             describe:"这个棒子,用起来非常非常非常非常非常非常",
                             now_money:"15.5",
-                            old_money:"2.4",
+                            old_money: "2.4",
+                            number:1,
                             flag:false,
                             cover:"imgs/7.png",
                         }
@@ -231,7 +248,8 @@
                             name:"商品",
                             describe:"这个棒子,用起来非常安全卫生,不仅卫生还特别有感觉,另一个优点就是粗这个棒子,用起来非常安全卫生,不仅卫生还特别有感觉,另一个优点就是粗",
                             now_money:"1425.5",
-                            old_money:"152.4",
+                            old_money: "152.4",
+                            number:1,
                             flag:false,
                             cover:"imgs/0.png",
                         },
@@ -240,7 +258,8 @@
                             name:"大棒子2",
                             describe:"测试数据二号",
                             now_money:"45.5",
-                            old_money:"52.4",
+                            old_money: "52.4",
+                            number:1,
                             flag:false,
                             cover:"imgs/2.png",
                         },
@@ -249,7 +268,8 @@
                             name:"大棒子3",
                             describe:"一个非常非常大的大棒子",
                             now_money:"45.5",
-                            old_money:"52.4",
+                            old_money: "52.4",
+                            number:1,
                             flag:false,
                             cover:"imgs/5.png",
                         },
@@ -258,7 +278,8 @@
                             name:"大棒子4",
                             describe:"这个棒子,用起来非常非常",
                             now_money:"45.5",
-                            old_money:"52.4",
+                            old_money: "52.4",
+                            number:1,
                             flag:false,
                             cover:"imgs/0.png",
                         },
@@ -267,7 +288,8 @@
                             name:"大棒子5根据",
                             describe:"这个棒子,用起来非常非常非常",
                             now_money:"45.5",
-                            old_money:"52.4",
+                            old_money: "52.4",
+                            number:1,
                             flag:false,
                             cover:"imgs/3.png",
                         },
@@ -276,7 +298,8 @@
                             name:"大棒子6",
                             describe:"这个棒子,用起来非常非常非常非常非常非常",
                             now_money:"15.5",
-                            old_money:"2.4",
+                            old_money: "2.4",
+                            number:1,
                             flag:false,
                             cover:"imgs/7.png",
                         }
@@ -286,7 +309,8 @@
                             name:"大棒子",
                             describe:"这个棒子,用起来非常安全卫生,不仅卫生还特别有感觉,另一个优点就是粗这个棒子,用起来非常安全卫生,不仅卫生还特别有感觉,另一个优点就是粗",
                             now_money:"45.5",
-                            old_money:"52.4",
+                            old_money: "52.4",
+                            number:1,
                             flag:false,
                             cover:"imgs/0.png",
                         },
@@ -295,7 +319,8 @@
                             name:"大棒子2",
                             describe:"测试数据二号",
                             now_money:"45.5",
-                            old_money:"52.4",
+                            old_money: "52.4",
+                            number:1,
                             flag:false,
                             cover:"imgs/2.png",
                         },
@@ -304,7 +329,8 @@
                             name:"大棒子3",
                             describe:"一个非常非常大的大棒子",
                             now_money:"45.5",
-                            old_money:"52.4",
+                            old_money: "52.4",
+                            number:1,
                             flag:false,
                             cover:"imgs/5.png",
                         },
@@ -313,7 +339,8 @@
                             name:"大棒子4",
                             describe:"这个棒子,用起来非常非常",
                             now_money:"45.5",
-                            old_money:"52.4",
+                            old_money: "52.4",
+                            number:1,
                             flag:false,
                             cover:"imgs/0.png",
                         },
@@ -322,16 +349,18 @@
                             name:"大棒子5根据",
                             describe:"这个棒子,用起来非常非常非常",
                             now_money:"45.5",
-                            old_money:"52.4",
+                            old_money: "52.4",
+                            number:1,
                             flag:false,
                             cover:"imgs/3.png",
                         },
                         {
                             goods_id:"33060155",
-                            name:"大棒子6",
+                            name:"最后的光辉",
                             describe:"这个棒子,用起来非常非常非常非常非常非常",
                             now_money:"15.5",
-                            old_money:"2.4",
+                            old_money: "2.4",
+                            number:1,
                             flag:false,
                             cover:"imgs/7.png",
                         }
@@ -365,7 +394,21 @@
                     this.page_num++;
                     alert("已经是第一页");
                 }
-            }
+            },
+            add(item){
+                console.log(item);
+                console.log(this.car_list[item]);
+                this.car_list[item].number++;
+            },
+			sub(item){
+                console.log(item);
+                this.car_list[item].number--;
+                if(this.car_list[item].number<=0){
+                	let newArr=collate(this.pageAll,this.page_num,item);
+                	console.log(newArr);
+                	this.car_list=this.pageAll[this.page_num];
+                }
+			}
         }
     });
     let vm=new Vue({
@@ -380,6 +423,26 @@
     });
     function addSelect(){
 
+    }
+
+    function collate(arr,page_num,number){
+    	if(arr[page_num][number+1]){
+    		//检测是否有当前页的内容
+    		arr[page_num][number]=arr[page_num][number+1];
+    		number++;
+    		collate(arr,page_num,number);
+    	}else if(arr[page_num+1]){
+    		//判断是否有下一页的内容;
+    		arr[page_num][number]=arr[page_num+1][0];
+    		page_num++;
+    		collate(arr,page_num,0);
+    	}else{
+    		console.log(arr[page_num]);
+    		arr[page_num].splice(number,1);
+    		if(arr[page_num].length<=0){
+    			arr.splice(page_num,1);
+    		}
+    	}
     }
 </script>
 </body>

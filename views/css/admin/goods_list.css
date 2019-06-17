@@ -1,0 +1,159 @@
+.goods_list{
+    width:80%;
+    margin:0 auto;
+    height:700px;
+}
+.goods_list .odds{
+    width:100%;
+    height:50px;
+    background-color: #e9e9e9;
+}
+.goods_list .odds .odds_lis{
+    display: block;
+    list-style: none;
+    width:18%;
+    height:40px;
+    line-height: 40px;
+    margin:5px 1%;
+    float: left;
+    background-color: white;
+}
+.goods_list .odds .odds_lis label{
+    display: block;
+    width:100%;
+    height:100%;
+}
+.goods_list .odds .odds_lis .btn{
+    width:100%;
+    text-align: center;
+    cursor:pointer;
+}
+.goods_list .odds .odds_lis .btn:hover{
+    background-color: #9a9a9a;
+    font-size:20px;
+    color:white;
+}
+.goods_list .odds .odds_lis label select,input{
+    display: block;
+    width:100%;
+    height:40px;
+    font-size:24px;
+}
+.goods_list .lis{
+    display: block;
+    list-style:none;
+    width:100%;
+    height:120px;
+    margin-top:5px;
+    border-bottom:1px solid black;
+    background-color: #eef5db;
+    position:relative;
+}
+.goods_list .lis .cover_box{
+    width:120px;
+    height:120px;
+    position:relative;
+}
+.goods_list .lis .chunk{
+    float: left;
+}
+.lis .cover_box img{
+    width:100%;
+    height:100%;
+}
+.lis .sell_data{
+    width:320px;
+    height:100%;
+    position:relative;
+}
+.lis .sell_data .name{
+    margin-top:1px;
+    width:100%;
+    height:44px;
+    line-height: 44px;
+    text-align: center;
+    font-size:24px;
+    box-shadow: 0px 3px 5px black;
+}
+.lis .sell_data .price_box{
+    width:100%;
+    height:70px;
+    margin-top:5px;
+}
+.lis .sell_data .price_box .cost{
+    float: left;
+    width:156px;
+    height:50px;
+    line-height:50px;
+    text-align: center;
+    margin:10px 2px;
+    font-size:20px;
+}
+.lis .sell_data .price_box .original_cost{
+    width:155px;
+    border-right:1px solid black;
+}
+.lis .describe{
+    width:400px;
+    height:114px;
+    font-size:18px;
+    margin:3px 0;
+    background-color:white;
+    box-shadow:1px 1px 4px black;
+    overflow:auto;
+}
+.lis .count{
+    width:150px;
+    height:120px;
+}
+.lis .count .number{
+    width:150px;
+    height:60px;
+    line-height: 60px;
+    text-align: center;
+    font-size:22px;
+}
+.lis .edit{
+    width:120px;
+    height:120px;
+}
+.lis .edit .btn{
+    width:120px;
+    height:46px;
+    line-height: 46px;
+    text-align: center;
+    font-size:24px;
+    margin:37px auto;
+    background-color: #00b700;
+    border-radius:5px;
+    border-radius:5px;
+}
+.list_box{
+    width:100%;
+    height:635px;
+    overflow: auto;
+}
+.page_control{
+    width:100%;
+    height:70px;
+    border-top:1px solid black;
+    box-shadow: 1px 1px 3px black;
+}
+.control{
+    display: flex;
+    width:80%;
+    height:70px;
+    margin:0 10%;
+    justify-content:space-between;
+}
+.control .btn{
+    width:100px;
+    height:40px;
+    line-height:40px;
+    text-align:center;
+    float: left;
+    margin:15px;
+    background-color: #00d900;
+    color:white;
+    cursor:pointer;
+}

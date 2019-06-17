@@ -82,6 +82,7 @@ exports.token_login=function(json,callback){
                     pid:user_data.pid,
                     email:user_data.email,
                     name:user_data.name,
+                    brief:user_data.brief,
                 })
             })
         })

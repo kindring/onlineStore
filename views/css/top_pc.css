@@ -1,0 +1,86 @@
+.site_top{
+    width:100%;
+    height:40px;
+    background-color: antiquewhite;
+    box-shadow: black  -2px -2px 7px 3px;
+    position:relative;
+    top:0;
+}
+.site_top .top_nav{
+    display: flex;
+    justify-content:space-between;
+    width:1200px;
+    height:40px;
+    margin:0 auto;
+    line-height:40px;
+    position:relative;
+}
+.top_nav .lis{
+    margin:0 5px;
+    padding:0 10px;
+    cursor:pointer;
+}
+
+.top_nav #users img{
+    width:40px;
+    position:relative;
+}
+.top_nav #users #user_name{
+    margin-left:40px;
+}
+.top_nav .lis a{
+    display: block;
+    float: left;
+    color:black;
+    padding:0 2px;
+    text-decoration: none;
+}
+.top_nav .lis a:hover{
+    color:red;
+}
+
+.top_nav .lis .user_header{
+    display: block;
+    width:38px;
+    height:38px;
+    margin:1px 6px;
+    border-radius:50%;
+    float: left;
+}
+.top_nav #users{
+    position:relative;
+}
+.top_nav #users .user_msg{
+    display: none;
+    position:absolute;
+    width:300px;
+    height:300px;
+    background-color: whitesmoke;
+    box-shadow: 1px 1px 5px black;
+    top:39px;
+    left:-100px;
+    z-index:99;
+    text-align: center;
+}
+.top_nav #users:hover .user_msg{
+    display: block;
+}
+.top_nav #users .btn_box{
+    width:100%;
+    height:auto;
+}
+.top_nav #users .btn_box .btn{
+    display: block;
+    width:160px;
+    height:35px;
+    line-height:35px;
+    text-align: center;
+    margin:0 67.5px;
+    border-radius: 10px;
+    background-color:green;
+    color:white;
+    cursor:pointer;
+}
+.top_nav #users .btn_box .btn:hover{
+    color:orangered;
+}

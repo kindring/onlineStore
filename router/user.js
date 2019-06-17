@@ -3,6 +3,7 @@ const user_db=require('../dbs/user');
 const art=require("art-template");
 const formidable=require('formidable');
 const mime=require('../mime.json');
+const goods=require('../dbs/goods.js');
 ht.post('/register',function(req,res){
     parseBody(req,function(body){
         body=JSON.parse(body);
@@ -89,8 +90,18 @@ ht.get('/logout',function(req,res){
     console.log("用户注销请求");
     let query=req.Pquery;
     let cookie=parseCookie(req);
-    if(query===cookie.id){
-        user_db.logout()
+    if(query.pid===cookie.id){
+        user_db.logout({
+            pid:query.pid,
+            token:cookie.token
+        },function(err,result){
+            if(err){
+                res.writeHead(200,{ 'Set-Cookie': ['id=null','token=null','email=null']});
+                return res.err(err);
+            }
+            res.writeHead(200,{ 'Set-Cookie': ['id=null','token=null','email=null']});
+            res.end();
+        })
     }
 });
 ht.get(/user/,function(req,res){
@@ -101,30 +112,46 @@ ht.get(/user/,function(req,res){
     console.log(`pid:${pid}`);
     console.log(`cookie.token:${cookie.token}`);
     console.log(`cookie.pid:${cookie.id}`);
-    if(cookie.token===query&&cookie.id===pid){
+    if(cookie.token&&cookie.id){
+        console.log("--------------");
         user_db.describe({
             pid:pid,
-            token:query,
+            token:cookie.token||query,
         },function(err,data){
             console.log("个人中心验证完成");
             console.log(data);
-            let user_obj={
-                user:{
-                    pid:data.pid,
-                    token:cookie.token,
-                    money:data.money||0,
-                    name:data.name||"无法获取用户名",
-                    payNum:data.payNum||0,
-                    brief:data.brief,
-                    notice_msg:data.notice_msg||data.brief||"天猫双十一"
-                },
+            if(data){
+                goods.find_goods(null,0,16,-1,function(err,goods_result){
+                    if(err){
+                        console.log("--------查找商品-------");
+                        console.log(err);
+                        return res.err(err);
+                    }
+                    res.art('user-center.html',{
+                        user:{
+                            pid:data.pid,
+                            token:cookie.token,
+                            money:data.money||0,
+                            name:data.name||"无法获取用户名",
+                            payNum:data.payNum||0,
+                            brief:data.brief,
+                            notice_msg:data.notice_msg||data.brief||"天猫双十一"
+                        },
+                        goods:goods_result,
+                    },art.render);
+                })
+            }else{
+                res.writeHead(302, {'Location': '/index'});
+                return res.end();
+            }
 
-            };
-            console.log(user_obj);
-            res.art('user.html',user_obj,art.render);
+
 
         });
     }else{
+        console.log('-----------cookie里无数据');
+        res.writeHead(302, {'Location': '/login'});
+        return res.end();
     }
 });
 ht.get(/editor/,function(req,res){
@@ -144,6 +171,7 @@ ht.get('/header',function(req,res){
         if(err){
            return res.err(err);
         }
+        console.log("用户头像-------------");
         res.writeHead(200,{"Content-Type":data.type});
         res.end(data.file);
     })
@@ -201,6 +229,8 @@ ht.post('/upload',function(req,res){
 
     })
 });
+
+
 
 function parseCookie(req){
     let Cookies = {};

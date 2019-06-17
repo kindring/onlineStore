@@ -1,0 +1,286 @@
+.app {
+    width:100%;
+    height:auto;
+    margin:15px auto;
+
+    background-color: #eeeeee;
+}
+.app .contain{
+    width:1200px;
+    height:auto;
+    display: flex;
+
+    margin:15px auto;
+}
+.app .brick_box{
+    width:1200px;
+    height:670px;
+    background-color: #eeeeee;
+}
+.brick_box .brick_top{
+    width:1200px;
+    height:45px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom:5px;
+}
+.brick_top .genre{
+    width:120px;
+    height:45px;
+    line-height:45px;
+    padding:0 5px;
+    cursor:pointer;
+}
+.brick_top .genre:hover{
+    background-color:whitesmoke;
+    border:1px solid red;
+}
+.brick_top .more:hover{
+    color:red;
+}
+._left{
+    font-size:30px;
+    text-align: left;
+    float: left;
+}
+._right{
+    font-size:26px;
+    text-align: right;
+    float:right;
+}
+.app .brick_box .con{
+    width:1200px;
+    height:620px;
+    display: flex;
+}
+.con1 .left_chunk{
+    width:270px;
+    height:620px;
+    background-color: #3cbbd8;
+    position:relative;
+}
+.con1 .left_chunk a,img{
+    display: block;
+    position:absolute;
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+}
+
+.con1 .left_chunk:hover{
+    width:268px;
+    height:618px;
+    margin:1px;
+}
+.con1 *{
+}
+.con1 .right_chunk{
+    display: flex;
+    width:930px;
+    height:620px;
+    margin-left:10px;
+}
+.con1 .right_chunk .lis{
+    width:220px;
+    height:300px;
+    margin:5px;
+    float: left;
+    background-color: #f6f9fa;
+}
+.con1 .right_chunk .lis:hover{
+    width:216px;
+    height:296px;
+    margin:5px 7px 9px 7px;
+    box-shadow: 1px 2px 7px 0px #929191;
+}
+.con1 .right_chunk .lis:hover .cover{
+    width:186px;
+    height:186px;
+}
+.con .lis .cover{
+    display: block;
+    width:190px;
+    height:190px;
+    margin:5px auto;
+    position:relative;
+}
+.con .lis .cover img{
+    display: block;
+    width:100%;
+    height:100%;
+    position:absolute;
+    left:0;
+    top:0;
+}
+.con .lis .cover a{
+    display: block;
+    width:100%;
+    height:100%;
+    position:absolute;
+    left:0;
+    top:0;
+}
+.con .lis .msg{
+    width:100%;
+    height:auto;
+}
+.con .lis .msg .name{
+    width: 100%;
+    height:24px;
+    line-height: 24px;
+    text-align: center;
+    font-size:18px;
+}
+.con .lis .msg .name a{
+    text-align: center;
+    color:black;
+    text-decoration:none;
+}
+.con .lis .msg .name a:hover{
+    color:red;
+}
+.con .lis .msg .descript{
+    width:100%;
+    height:24px;
+    line-height:24px;
+    font-size:14px;
+    color: #919191;
+    overflow: hidden;
+    text-align: center;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.con .lis  .price_box{
+    display: flex;
+    width:100%;
+    height:40px;
+    line-height:40px;
+}
+.con .lis .price_box .p{
+    width:46%;
+    height:40px;
+    line-height:40px;
+    padding:0 2%;
+    float: left;
+}
+.con .lis .price_box .now_price{
+    color:red;
+    text-align: right;
+    font-size:20px;
+}
+.con .lis .price_box .old_price{
+    color: #b0b0b0;
+    line-height:42px;
+    text-decoration: line-through;
+}
+
+.loading{
+
+}
+
+
+
+.hot_goods{
+    width:1200px;
+    height:620px;
+    margin:0 auto;
+}
+.hot_title{
+    width:1200px;
+    height:40px;
+    font-size:36px;
+    color:red;
+}
+.hots{
+    width:1200px;
+    height:570px;
+    padding:5px 0;
+    position:relative;
+}
+.hot img{
+    display: block;
+    position:absolute;
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+}
+.hot a{
+    display: block;
+    position:absolute;
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    z-index: 9;
+    background-color: rgba(0,0,0,0.35);
+}
+.hot a:hover{
+    background-color: rgba(0,0,0,0);
+}
+.hot{
+    position:absolute;
+    background-color: #17d071;
+    margin:2px;
+}
+.hot:hover{
+    background-color: #36d0cc;
+}
+.hot0{
+    width:426px;
+    height:236px;
+}
+.hot1{
+    left:430px;
+    width:196px;
+    height:186px;
+}
+.hot2{
+    left:630px;
+    width:196px;
+    height:186px;
+}
+.hot3{
+    left:830px;
+    width:366px;
+    height:366px;
+}
+.hot4{
+    top:244px;
+    width:211px;
+    height:326px;
+}
+.hot5{
+    top:244px;
+    left:215px;
+    width:211px;
+    height:326px;
+}
+.hot6{
+    left:430px;
+    top:194px;
+    width:396px;
+    height:196px;
+}
+.hot7{
+    left:430px;
+    top:394px;
+    width:196px;
+    height:176px;
+}
+.hot8{
+    left:630px;
+    top:394px;
+    width:196px;
+    height:176px;
+}
+.hot9{
+    left:830px;
+    top:374px;
+    width:366px;
+    height:196px;
+}
+

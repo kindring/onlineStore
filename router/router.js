@@ -1,5 +1,6 @@
 const page=require('./page.js');
 const user=require('./user.js');
+const admin=require('./admin.js');
 
 
 

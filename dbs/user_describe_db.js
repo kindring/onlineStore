@@ -142,7 +142,7 @@ function change(json,callback){
             });
         }
         obj={
-            name:json.name
+            name:json.name,
             money:json.money||data.money,
             brief:json.brief||data.brief,
             birthday:json.birthday||data.birthday,

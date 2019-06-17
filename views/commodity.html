@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>码商-{{goods.name}}</title>
+    <link rel="stylesheet" href="./css/public.css">
+    <link rel="stylesheet" href="./css/top_pc.css">
+    <link rel="stylesheet" href="./css/commodity_content.css">
+    <script>
+        function gi(id){return document.getElementById(id)}
+        function getXmlHttp(){
+            if (window.XMLHttpRequest)
+            {// 判断是否有该对象
+                return new XMLHttpRequest();
+            }
+            else if (window.ActiveXObject)
+            {// 判断是否是兼容ie5和ie6
+                return new ActiveXObject("Microsoft.XMLHTTP");
+            }else{
+                return null;
+            }
+        }
+    </script><!--基础通用js方法-->
+
+</head>
+<body>
+<header class="site_top" id="site_top">
+    <nav class="top_nav">
+        <div class="titles fl">
+            <ul>
+                <li class="lis"><a href="/">首页</a></li>
+                <li class="lis"><a href="/admin">管理</a></li>
+                <li class="lis"><a href="/login">登录</a></li>
+                <li class="lis"><a href="/search?sort=0&keyword=">查询</a></li>
+            </ul>
+        </div>
+        <div class="userBox fr" id="user">
+            <ul>
+                <li class="lis">联系客服</li>
+                <li class="lis">历史记录</li>
+                <li class="lis"><a href="/car?pid" id="user_car">购物车</a></li>
+                <li class="lis" id="users">
+                    <img id="top_user_header" class="user_header" alt="头像加载失败" >
+                    <a id="top_user_name" title="user_name">个人中心</a>
+                    <div class="user_msg">
+                        <h2 id="u_name">暂未登录</h2>
+                        <div class="descript" id="u_descript">
+                            登录后享受更多快乐
+                        </div>
+                        <div class="btn_box">
+                            <a href="/login" class="btn" id="u_btn">前往登录</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<script>
+    function gi(id){return document.getElementById(id)}
+    function getXmlHttp(){
+        if (window.XMLHttpRequest)
+        {// 判断是否有该对象
+            return new XMLHttpRequest();
+        }
+        else if (window.ActiveXObject)
+        {// 判断是否是兼容ie5和ie6
+            return new ActiveXObject("Microsoft.XMLHTTP");
+        }else{
+            return null;
+        }
+    }
+    let user_name=gi('top_user_name');
+    let header=gi('top_user_header');
+    let u_btn=gi('u_btn');
+    let u_name=gi('u_name');
+    let u_descript=gi('u_descript');
+    if(window.localStorage.getItem('u')){
+        let user_obj=window.localStorage.getItem('u');
+        user_obj=JSON.parse(user_obj);
+        header.src='header?pid='+user_obj.pid;
+        user_name.href="/user/"+user_obj.pid+"?token="+user_obj.token;
+        u_btn.href="logout?pid="+user_obj.pid;
+        user_name.title="加载中";
+        u_btn.innerHTML="注销";
+        u_name.innerHTML="获取名称中";
+        u_descript.innerHTML="获取最新简介中";
+        let xml=getXmlHttp();
+        xml.open('POST','/log',true);
+        xml.send(JSON.stringify(user_obj));
+        xml.onreadystatechange=function(){
+            if(xml.readyState===4&&xml.status){
+                let response=xml.responseText;
+                response=JSON.parse(response);
+                if(response.err){
+                    header.style.display="none";
+                    user_name.href="/login";
+                    u_btn.href="/login";
+                    user_name.title="未登录";
+                    u_btn.innerHTML="前往登录";
+                    u_name.innerHTML="未登录";
+                    u_descript.innerHTML="登录享受更多特权";
+                    return console.log(response);
+                }
+                header.src='header?pid='+response.pid;
+                user_name.href="/user/"+response.pid+"?"+response.token;
+                u_btn.href='';
+                user_name.title=response.name+"的个人中心";
+                u_btn.innerHTML="注销";
+                u_btn.onclick=function(){
+                    let log_xml=getXmlHttp();
+                    let href='logout?pid='+response.pid;
+                    window.localStorage.removeItem("u");
+                    log_xml.open('GET',href,true);
+                    log_xml.send();
+                    log_xml.onreadystatechange=function(){
+                        header.style.display="none";
+                        user_name.href="/login";
+                        u_btn.href="/login";
+                        user_name.title="个人中心";
+                        u_btn.innerHTML="前往登录";
+                        u_name.innerHTML="未登录";
+                        u_descript.innerHTML="登录享受更多特权";
+                    }
+                };
+                u_name.innerHTML=response.name;
+                u_descript.innerHTML=response.brief;
+                window.localStorage.setItem('u',xml.responseText);
+            }
+        }
+    }else{
+        header.style.display="none";
+        user_name.href="/login";
+        u_btn.href="/login";
+        user_name.title="个人中心";
+        u_btn.innerHTML="前往登录";
+        u_name.innerHTML="未登录";
+        u_descript.innerHTML="登录享受更多特权";
+    }
+</script>
+<div class="app">
+    <div class="content">
+        <div class="left_chunk">
+            <div class="cover_box" id="cover_box">
+                <div class="img_box">
+                    <img src="goods_cover?gid={{goods.gid}}" alt="">
+                </div>
+                <span class="imagezoom" id="imagezoom" style="display: none"></span>
+                <div class="detial_img_box" id="detial_img_box" style="display: none">
+                    <img src="goods_cover?gid={{goods.gid}}" id="show_hide_img" alt="">
+                </div>
+            </div>
+            <div class="not_name">
+                当前商品剩余存货: <span>{{goods.stock}}</span>
+            </div>
+        </div>
+        <div class="right_chunk">
+            <div class="title">
+                <b>{{goods.name}}</b>
+            </div>
+            <div class="price_box">
+                <div class="left_price">
+                    <div class="history">历史价格<span>{{goods.price}}</span>元</div>
+                    <div class="now_price">当前价格:<span>{{goods.sell_price}}</span>元</div>
+                </div>
+                <div class="right_data">
+                    <div class="num">{{goods.sell_count}}</div>
+                    <div class="sold">已售</div>
+                </div>
+            </div>
+            <div class="postage">
+                邮费: <span>{{goods.postage}}</span>元
+            </div>
+            <div class="descript_box">
+                <h2>商品详情</h2>
+                <div class="descript">
+                    {{goods.descript}}
+                </div>
+            </div>
+            <div class="select">
+                <div class="class_box">
+                    <h3>样式选择</h3>
+                    <ul>
+                        <li class="lis on"><b>默认样式</b></li>
+                    </ul>
+                </div>
+                <div class="num_box">
+                    <h3>数量选择</h3>
+                    <div class="select_num">
+                        <div class="left_btn c btn_c">-</div>
+                        <div class="number_box c ">1</div>
+                        <div class="right_btn c btn_c">+</div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn_box">
+                <div class="btn">结算</div>
+                <div class="btn">加入购物车</div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<!--展示细节功能部分-->
+<script>
+    //展示细节js
+
+    let cover_box=gi('cover_box');
+    let show_hide_img=gi('show_hide_img');
+    let imagezoom=gi('imagezoom');
+    let detial_img_box=gi('detial_img_box');
+    function getPosition(el,attr){
+        let el_position_value=el[attr];
+        while(el=el.offsetParent){
+            el_position_value+=el[attr];
+        }
+        return el_position_value;
+    }
+    function move(e){
+        e=e||window.event;
+        imagezoom.style.display='block';
+        detial_img_box.style.display='block';
+        let pageX=e.pageX;
+        let pageY=e.pageY;
+        moveImageZoom(pageX,pageY);
+    }
+    cover_box.onmouseover=move;
+    cover_box.onmousemove=move;//绑定事件调用移动方法
+    function moveImageZoom(x,y){
+        var offsetLeft=getPosition(cover_box,'offsetLeft');//获取元素相对于屏幕左方的绝对距离
+        var offsetTop=getPosition(cover_box,'offsetTop');//获取元素相对于屏幕上方的绝对距离
+        let trueX=Math.min(x-offsetLeft,300);
+        let trueY=Math.min(y-offsetTop,300);
+            trueX=Math.max(100,trueX);
+            trueY=Math.max(100,trueY);
+        let imagezoom_left=trueX-100;//偏移值,偏移回去
+        let imagezoom_top=trueY-100;
+            imagezoom.style.left=imagezoom_left+"px";
+            imagezoom.style.top=imagezoom_top+"px";
+        show_hide_img.style.left=(0-(2*imagezoom_left))+"px";
+        show_hide_img.style.top=(0-(2*imagezoom_top))+"px";
+    }
+    cover_box.onmouseout=function(){
+        imagezoom.style.display='none';
+        detial_img_box.style.display='none';
+    };
+</script>
+<script>
+    let add_car=gi('add_car');
+</script>
+</body>
+</html>
