@@ -122,5 +122,6 @@ exports.find_goods=goods.find;//查询商品
 exports.find_cover=cover.find;//查询封面
 
 exports.find_goods_one=goods.findOne;
+exports.find_all=goods.arrFind;
 
 
